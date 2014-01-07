@@ -1,11 +1,3 @@
-class TestProvider
-  def tests
-    Dir.glob("#{EXAMPLE_DIR}/test*.rb").each_with_index.map do |path, index|
-      Test.new(index, File.read(path))
-    end
-  end
-end
-
 class Test
   attr_reader :id, :predicate
   

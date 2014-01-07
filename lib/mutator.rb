@@ -2,8 +2,8 @@ require "parser/current"
 require "unparser"
 
 require_relative "mutant"
-require_relative "ast_pattern"
-require_relative "ast_replacer"
+require_relative "ast/pattern"
+require_relative "ast/replacer"
 
 class Mutator
   attr_reader :mo
@@ -34,13 +34,13 @@ class BinaryOperatorMutation
   
 private
   def pattern
-    AstPattern.new do |ast|
+    Ast::Pattern.new do |ast|
       ast.type == :send && operators.include?(ast.children[1])
     end
   end
   
   def replacer(alternative_operator)
-    AstReplacer.new do |old_ast|
+    Ast::Replacer.new do |old_ast|
       new_children = old_ast.children.dup
       new_children[1] = alternative_operator
       Parser::AST::Node.new(old_ast.type, new_children)

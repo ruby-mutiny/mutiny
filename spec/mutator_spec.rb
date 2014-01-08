@@ -2,13 +2,15 @@ require "mutator"
 
 describe "mutator" do
   it "changes the operator to other operators" do
-    Mutator.new.mutate("a < b").map(&:code).should =~ [
+    mutants = Mutator.new.mutate("a < b")
+    
+    expect(mutants.map(&:code)).to match_array([
       "a <= b",
       "a == b",
       "a != b",
       "a > b",
       "a >= b"
-    ]
+    ])
   end
   
   it "changes a nested operator" do
@@ -28,6 +30,8 @@ class Simple
 end # Simple
 eos
     
-    Mutator.new.mutate(program).first.code.should eq(mutant.strip)
+    first_mutant = Mutator.new.mutate(program).first
+    
+    expect(first_mutant.code).to eq(mutant.strip)
   end
 end

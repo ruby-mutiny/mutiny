@@ -6,14 +6,14 @@ module Ast
       ast = Parser::CurrentRuby.parse("foo.bar")
       match = Match.new(ast, [])
       
-      match.matched.should eq(ast)
+      expect(match.matched).to eq(ast)
     end
     
     it "should locate nested elements" do
       ast = Parser::CurrentRuby.parse("def run\nfoo.bar\nbaz.baaz\nend")
       match = Match.new(ast, [2, 1])
       
-      match.matched.should eq(ast.children[2].children[1])
+      expect(match.matched).to eq(ast.children[2].children[1])
     end
     
     it "should error on non-existent element" do
@@ -29,14 +29,14 @@ module Ast
       ast = Parser::CurrentRuby.parse("foo.bar")
       match = Match.new(ast, [0])
       
-      match.child.should eq(Match.new(Parser::CurrentRuby.parse("foo"), []))
+      expect(match.child).to eq(Match.new(Parser::CurrentRuby.parse("foo"), []))
     end
     
     it "should return nil for empty location" do
       ast = Parser::CurrentRuby.parse("foo.bar")
       match = Match.new(ast, [])
       
-      match.child.should be_nil
+      expect(match.child).to be_nil
     end
   end
   
@@ -48,8 +48,8 @@ module Ast
       new_root = Parser::CurrentRuby.parse("a")
       match.replace { new_root }
 
-      match.matched.should eq(new_root)
-      match.ast.should eq(new_root)
+      expect(match.matched).to eq(new_root)
+      expect(match.ast).to eq(new_root)
     end
     
     it "should replace nested element" do
@@ -59,8 +59,8 @@ module Ast
       new_leaf = Parser::CurrentRuby.parse("a")
       match.replace { new_leaf }
 
-      match.matched.should eq(new_leaf)
-      match.ast.should eq(Parser::CurrentRuby.parse("a.bar"))
+      expect(match.matched).to eq(new_leaf)
+      expect(match.ast).to eq(Parser::CurrentRuby.parse("a.bar"))
     end
     
     it "should replace doubly nested element" do
@@ -70,8 +70,8 @@ module Ast
       new_leaf = Parser::CurrentRuby.parse("a")
       match.replace { new_leaf }
 
-      match.matched.should eq(new_leaf)
-      match.ast.should eq(Parser::CurrentRuby.parse("a.bar.baz"))
+      expect(match.matched).to eq(new_leaf)
+      expect(match.ast).to eq(Parser::CurrentRuby.parse("a.bar.baz"))
     end
     
     it "should replace last child" do
@@ -81,8 +81,8 @@ module Ast
       new_leaf = :a
       match.replace { new_leaf }
 
-      match.matched.should eq(new_leaf)
-      match.ast.should eq(Parser::CurrentRuby.parse("foo.bar.a"))
+      expect(match.matched).to eq(new_leaf)
+      expect(match.ast).to eq(Parser::CurrentRuby.parse("foo.bar.a"))
     end
   end
 end

@@ -1,13 +1,16 @@
 require_relative "mutation_harness"
 require_relative "equivalence_detector"
-require_relative "test"
+require_relative "test_suite"
 require_relative "mutation_test_runner"
 
 class Mutiny
-  attr_reader :program, :tests, :options
+  attr_reader :program, :test_suite, :options
   
-  def initialize(program, tests, options = { noisy: false })
-    @program, @tests, @options = program, tests, options
+  def initialize(program, test_suite, options = { noisy: false })
+    @program, @test_suite, @options = program, test_suite, options
+    
+    @program = File.read(File.expand_path("../../examples/max/lib/max.rb", __FILE__))
+    @test_suite = TestSuite.new(File.expand_path("../../examples/max/spec/max_spec.rb", __FILE__))
   end
   
   def run
@@ -36,6 +39,6 @@ private
   end
   
   def runner
-    @runner ||= MutationTestRunner.new(program, tests, options)
+    @runner ||= MutationTestRunner.new(program, test_suite, options)
   end  
 end

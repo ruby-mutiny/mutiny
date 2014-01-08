@@ -1,29 +1,27 @@
 require_relative "results"
 
-class MutationTestRunner
-  attr_reader :program, :tests, :options
-  
-  def initialize(program, tests, options = { noisy: false })
-    @program, @tests, @options = program, tests, options
-  end
-  
+class MutationTestRunner < Struct.new(:program, :test_suite, :options)
   def run(mutants)
     results = Results.new
-    mutants.each {|m| results.record(m, run_tests(m)) }
+    mutants.each {|m| results.record(m, run_suite(m)) }
     results
   end
 
 private  
-  def run_tests(mutant)
-    tests.each do |test|
-      # FIXME caching of test.run(program)
-      unless test.run(mutant.executable) == test.run(program)
-        say ""
-        say "Killed:"
-        say mutant.readable
-        say "with: #{test.predicate}"
-        return :killed
-      end
+  def run_suite(mutant)
+    # FIXME caching of test_suite.run(program)
+    original_results = test_suite.run(program)
+    mutant_results = test_suite.run(mutant.executable)
+    
+    p original_results
+    p mutant_results
+    
+    unless mutant_results == original_results
+      say ""
+      say "Killed:"
+      say mutant.readable
+      say "with: #{test.predicate}"
+      return :killed
     end
   
     say ""

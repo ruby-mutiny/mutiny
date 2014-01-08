@@ -1,7 +1,10 @@
+
 class Max
   def run(left, right)
     max = left
-    max = right if right > left
+    if right > left
+      max = right
+    end
     max
   end
 end

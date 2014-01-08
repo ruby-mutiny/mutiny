@@ -15,9 +15,17 @@ Feature: Mutiny
       """
     And I have the following test suite:
       """
-      Cond.new.run(4, 3) == 1
-      Cond.new.run(4, 4) == 2
-      Cond.new.run(4, 5) == 2
+      describe Cond do
+        it "test1" do
+          expect(Cond.new.run(4, 3)).to eq(1)
+        end
+        it "test2" do
+          expect(Cond.new.run(4, 4)).to eq(2)
+        end
+        it "test3" do
+          expect(Cond.new.run(4, 5)).to eq(2)
+        end
+      end
       """
     When I run mutiny
     Then I should receive the following results:
@@ -42,9 +50,17 @@ Feature: Mutiny
       """
     And I have the following test suite:
       """
-      Max.new.run(4, 4) == 4
-      Max.new.run(4, 3) == 4
-      Max.new.run(3, 4) == 3
+      describe Max do
+        it "test1" do
+          expect(Max.new.run(4, 4)).to eq(4)
+        end
+        it "test2" do
+          expect(Max.new.run(4, 3)).to eq(4)
+        end
+        it "test3" do
+          expect(Max.new.run(3, 4)).to eq(3)
+        end
+      end
       """
     When I run mutiny
     Then I should receive the following results:

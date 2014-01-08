@@ -3,7 +3,6 @@ require "unparser"
 
 require_relative "mutant"
 require_relative "ast/pattern"
-require_relative "ast/replacer"
 
 class Mutator
   attr_reader :mo
@@ -21,13 +20,17 @@ end
 class BinaryOperatorMutation
   def mutate(ast)
     pattern.match(ast).map do |match|
-      operators_without(match.matched.children[1]).map do |alternative_operator|
-        mutated_ast = replacer(alternative_operator).replace(ast, match.location)
-        mutated_code = Unparser.unparse(mutated_ast)
-        line_number = match.matched.loc.line
-        change = alternative_operator
+      line = match.matched.loc.line
+      matched_operator = match.matched.children[1] 
+      
+      operators_without(matched_operator).map do |alternative_operator|
+        match.replace do
+          new_children = match.matched.children.dup
+          new_children[1] = alternative_operator
+          Parser::AST::Node.new(match.matched.type, new_children)
+        end
         
-        Mutant.new(mutated_code, line_number, change)
+        Mutant.new(Unparser.unparse(match.ast), line, alternative_operator)
       end
     end.flatten
   end
@@ -39,14 +42,6 @@ private
     end
   end
   
-  def replacer(alternative_operator)
-    Ast::Replacer.new do |old_ast|
-      new_children = old_ast.children.dup
-      new_children[1] = alternative_operator
-      Parser::AST::Node.new(old_ast.type, new_children)
-    end
-  end
-  
   def operators_without(operator)
     operators.select { |o| o != operator }
   end
@@ -55,11 +50,3 @@ private
     [:<, :<=, :==, :!=, :>, :>=]
   end
 end
-
-# (send
-# - (send nil :a) :<
-# - (send nil :b))
-
-# (send
-# - A :<
-# - B

@@ -1,3 +1,5 @@
+require_relative "match"
+
 module Ast
   class Pattern
     attr_reader :matcher
@@ -7,8 +9,9 @@ module Ast
     end
   
     def match(ast, location = [])
+      @root ||= ast
       matches = []
-      matches << Ast::MatchResult.new(ast, location) if matcher.call(ast)
+      matches << Match.new(@root, location) if matcher.call(ast)
       matches << match_children(ast, location)
       matches.flatten
     end
@@ -19,15 +22,6 @@ module Ast
         .each_with_index
         .map { |child, index| match(child, location.dup << index) if child.is_a? Parser::AST::Node }
         .compact
-    end
-  end
-  
-  class MatchResult
-    attr_reader :matched, :location
-  
-    def initialize(matched, location)
-      @matched = matched
-      @location = location
     end
   end
 end

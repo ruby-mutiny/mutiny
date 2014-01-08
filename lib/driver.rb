@@ -1,12 +1,17 @@
 require_relative "mutiny"
 require_relative "test"
 
-EXAMPLE_DIR = ARGV[0]
-program = File.read("#{EXAMPLE_DIR}/original.rb")
+program = File.read(ARGV[0])
+puts "Program:"
 puts program
+puts ""
 
-tests = Dir.glob("#{EXAMPLE_DIR}/test*.rb").each_with_index.map do |path, index|
-  Test.new(index, File.read(path))
+test_suite = File.read(ARGV[1])
+puts "Test suite:"
+puts test_suite
+
+tests = test_suite.lines.each_with_index.map do |source, index|
+  Test.new(index, source)
 end
 
 puts Mutiny.new(program, tests, noisy: true).run

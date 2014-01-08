@@ -15,11 +15,15 @@ Feature: Mutiny
       """
     And I have the following test:
       """
+      Cond.new.run(4, 3) == 1
+      """
+    And I have the following test:
+      """
       Cond.new.run(4, 4) == 2
       """
     And I have the following test:
       """
-      Cond.new.run(4, 3) == 1
+      Cond.new.run(4, 5) == 2
       """
     When I run mutiny
     Then I should receive the following results:

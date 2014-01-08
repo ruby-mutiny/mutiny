@@ -12,7 +12,7 @@ class Results
   end
   
   def kill_count
-    test_results.values.select { |r| r == :killed }.size
+    table.values.select { |r| r == :killed }.size
   end
   
   def score
@@ -20,7 +20,7 @@ class Results
   end
 
   def to_s
-    "\nkilled #{kill_count}; total #{total}; score #{score}"
+    "\nkilled #{kill_count}; total #{length}; score #{score}"
   end
 
 private

@@ -27,7 +27,7 @@ class Simple
   def run
     a <= b
   end
-end # Simple
+end
 eos
     
     first_mutant = Mutator.new.mutate(program).first

@@ -1,9 +1,9 @@
 Feature: Mutiny
 
   Scenario: Cond
-    Given I have the following program:
+    Given I have the following program at "lib/cond.rb":
       """
-      class Cond
+      class ::Cond
         def run(x, y)
           if x > y
             1
@@ -13,8 +13,10 @@ Feature: Mutiny
         end
       end
       """
-    And I have the following test suite:
+    And I have the following spec at "spec/cond_spec.rb":
       """
+      require_relative '../lib/cond'
+      
       describe Cond do
         it "test1" do
           expect(Cond.new.run(4, 3)).to eq(1)
@@ -27,7 +29,7 @@ Feature: Mutiny
         end
       end
       """
-    When I run mutiny
+    When I run mutiny on "spec/cond_spec.rb"
     Then I should receive the following results:
       | Line | Change | Result |
       | 3    | <      | killed |
@@ -38,9 +40,9 @@ Feature: Mutiny
 
 
   Scenario: Max
-    Given I have the following program:
+    Given I have the following program at "lib/max.rb":
       """
-      class Max
+      class ::Max
         def run(left, right)
           max = left
           max = right if right > left
@@ -48,8 +50,10 @@ Feature: Mutiny
         end
       end
       """
-    And I have the following test suite:
+    And I have the following spec at "spec/max_spec.rb":
       """
+      require_relative '../lib/max'
+      
       describe Max do
         it "test1" do
           expect(Max.new.run(4, 4)).to eq(4)
@@ -58,11 +62,11 @@ Feature: Mutiny
           expect(Max.new.run(4, 3)).to eq(4)
         end
         it "test3" do
-          expect(Max.new.run(3, 4)).to eq(3)
+          expect(Max.new.run(3, 4)).to eq(4)
         end
       end
       """
-    When I run mutiny
+    When I run mutiny on "spec/max_spec.rb"
     Then I should receive the following results:
       | Line | Change | Result |
       | 4    | <      | killed |

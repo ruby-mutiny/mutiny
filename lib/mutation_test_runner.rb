@@ -13,14 +13,11 @@ private
     original_results = test_suite.run(program)
     mutant_results = test_suite.run(mutant.executable)
     
-    p original_results
-    p mutant_results
-    
     unless mutant_results == original_results
       say ""
       say "Killed:"
       say mutant.readable
-      say "with: #{test.predicate}"
+      say "with: #{test_suite}"
       return :killed
     end
   

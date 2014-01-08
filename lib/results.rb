@@ -12,7 +12,7 @@ class Results
   end
   
   def kill_count
-    table.values.select { |r| r == :killed }.size
+    table.values.count { |r| r == :killed }
   end
   
   def score

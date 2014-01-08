@@ -12,10 +12,9 @@ module Ast
 
     def replace(&replacer)
       if location.empty?
-        replaced = replacer.call(ReplacementHelper.new(ast))
+        replaced = replacer.call(replacement_helper)
       else
-        helper = ReplacementHelper.new(ast)
-        replaced = helper.replace_child(location.first, child.replace(&replacer).ast)
+        replaced = replacement_helper.replace_child(location.first, child.replace(&replacer).ast)
       end
       Match.new(replaced, location)
     end
@@ -25,6 +24,11 @@ module Ast
         first, *rest = *location
         Match.new(ast.children[first], rest)
       end
+    end
+  
+  private
+    def replacement_helper
+      ReplacementHelper.new(ast)
     end
   end
   

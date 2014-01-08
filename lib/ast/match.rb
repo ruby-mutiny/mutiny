@@ -5,13 +5,19 @@ module Ast
         current_node.children.fetch(child_index)
       end
     end
+    
+    def line
+      matched.loc.line
+    end
 
     def replace(&replacer)
       if location.empty?
-        self.ast = replacer.call
+        replaced = replacer.call(ReplacementHelper.new(ast))
       else
-        self.ast = replace_child(ast, location.first, child.replace(&replacer))
+        helper = ReplacementHelper.new(ast)
+        replaced = helper.replace_child(location.first, child.replace(&replacer).ast)
       end
+      Match.new(replaced, location)
     end
     
     def child
@@ -20,12 +26,13 @@ module Ast
         Match.new(ast.children[first], rest)
       end
     end
+  end
   
-  private
-    def replace_child(node, index, child)
-      new_children = node.children.dup
+  class ReplacementHelper < Struct.new(:ast)
+    def replace_child(index, child)
+      new_children = ast.children.dup
       new_children[index] = child
-      Parser::AST::Node.new(node.type, new_children)
+      Parser::AST::Node.new(ast.type, new_children)
     end
   end
 end

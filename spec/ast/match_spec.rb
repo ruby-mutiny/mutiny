@@ -46,7 +46,7 @@ module Ast
       match = Match.new(ast, [])
       
       new_root = Parser::CurrentRuby.parse("a")
-      match.replace { new_root }
+      match = match.replace { new_root }
 
       expect(match.matched).to eq(new_root)
       expect(match.ast).to eq(new_root)
@@ -57,7 +57,7 @@ module Ast
       match = Match.new(ast, [0])
       
       new_leaf = Parser::CurrentRuby.parse("a")
-      match.replace { new_leaf }
+      match = match.replace { new_leaf }
 
       expect(match.matched).to eq(new_leaf)
       expect(match.ast).to eq(Parser::CurrentRuby.parse("a.bar"))
@@ -68,7 +68,7 @@ module Ast
       match = Match.new(ast, [0, 0])
       
       new_leaf = Parser::CurrentRuby.parse("a")
-      match.replace { new_leaf }
+      match = match.replace { new_leaf }
 
       expect(match.matched).to eq(new_leaf)
       expect(match.ast).to eq(Parser::CurrentRuby.parse("a.bar.baz"))
@@ -79,7 +79,7 @@ module Ast
       match = Match.new(ast, [1])
       
       new_leaf = :a
-      match.replace { new_leaf }
+      match = match.replace { new_leaf }
 
       expect(match.matched).to eq(new_leaf)
       expect(match.ast).to eq(Parser::CurrentRuby.parse("foo.bar.a"))

@@ -1,11 +1,5 @@
 module Ast
-  class Match
-    attr_reader :ast, :location
-  
-    def initialize(ast, location)
-      @ast, @location = ast, location
-    end
-    
+  class Match < Struct.new(:ast, :location)  
     def matched
       location.inject(ast) do |current_node, child_index|
         current_node.children.fetch(child_index)
@@ -14,9 +8,9 @@ module Ast
 
     def replace(&replacer)
       if location.empty?
-        @ast = replacer.call
+        self.ast = replacer.call
       else
-        @ast = replace_child(ast, location.first, child.replace(&replacer))
+        self.ast = replace_child(ast, location.first, child.replace(&replacer))
       end
     end
     
@@ -25,12 +19,6 @@ module Ast
         first, *rest = *location
         Match.new(ast.children[first], rest)
       end
-    end
-    
-    def ==(other)
-      other.instance_of?(Match) &&
-      other.ast == ast &&
-      other.location == location
     end
   
   private

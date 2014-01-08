@@ -1,4 +1,4 @@
-# Mutiny
+# Mutiny [![Build Status](https://travis-ci.org/louismrose/mutiny.png?branch=master)](https://travis-ci.org/louismrose/mutiny)
 
 A tiny mutation testing framework.
 

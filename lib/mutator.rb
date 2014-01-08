@@ -19,7 +19,7 @@ end
 
 class BinaryOperatorMutation
   def mutate(ast)
-    pattern.match(ast).map do |match|
+    pattern.match(ast).flat_map do |match|
       line = match.matched.loc.line
       matched_operator = match.matched.children[1] 
       
@@ -32,7 +32,7 @@ class BinaryOperatorMutation
         
         Mutant.new(Unparser.unparse(match.ast), line, alternative_operator)
       end
-    end.flatten
+    end
   end
   
 private

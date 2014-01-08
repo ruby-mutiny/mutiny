@@ -43,10 +43,10 @@ private
   end
   
   def operators_without(operator)
-    operators.select { |o| o != operator }
+    operators.reject { |o| o == operator }
   end
   
   def operators
-    [:<, :<=, :==, :!=, :>, :>=]
+    [:<, :<=, :==, :'!=', :>, :>=]
   end
 end

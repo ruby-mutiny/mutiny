@@ -8,4 +8,5 @@ group :test do
   gem "rake", "~> 10.1.1"
   gem "rspec", "~> 2.14.1"
   gem "cucumber", "~> 1.3.10"
+  gem 'coveralls', require: false
 end

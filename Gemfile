@@ -1,8 +1,8 @@
 ruby '2.0.0'
 source "https://rubygems.org"
 
-gem "parser", "~> 2.1.2"
-gem "unparser", "~> 0.1.7"
+gem "parser", "~> 2.1.4"
+gem "unparser", "~> 0.1.9"
 
 group :test do
   gem "rake", "~> 10.1.1"

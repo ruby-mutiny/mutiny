@@ -32,7 +32,7 @@ GEM
     mime-types (2.0)
     multi_json (1.8.2)
     multi_test (0.0.3)
-    parser (2.1.2)
+    parser (2.1.4)
       ast (~> 1.1)
       slop (~> 3.4, >= 3.4.5)
     procto (0.0.2)
@@ -59,7 +59,7 @@ GEM
     thread_safe (0.1.3)
       atomic
     tins (0.13.1)
-    unparser (0.1.7)
+    unparser (0.1.9)
       abstract_type (~> 0.0.7)
       adamantium (~> 0.1)
       concord (~> 0.1.4)
@@ -73,7 +73,7 @@ PLATFORMS
 DEPENDENCIES
   coveralls
   cucumber (~> 1.3.10)
-  parser (~> 2.1.2)
+  parser (~> 2.1.4)
   rake (~> 10.1.1)
   rspec (~> 2.14.1)
-  unparser (~> 0.1.7)
+  unparser (~> 0.1.9)

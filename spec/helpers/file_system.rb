@@ -9,7 +9,7 @@ module Helpers
     def write(filename, content)
       dirname = File.dirname(path(filename))
       FileUtils.mkdir_p(dirname) unless File.directory?(dirname)
-      File.open(path(filename), 'w') {|f| f.write(content) }
+      File.open(path(filename), 'w') { |f| f.write(content) }
     end
 
     def path(filename = "")

@@ -35,8 +35,7 @@ module Mutiny
           world.example_groups.ordered.map {|g| g.run(reporter)}
         end
 
-        # Extract a passed / failed value for each example
-        json_formatter.output_hash[:examples].map { |e| e[:status] }
+        json_formatter.output_hash[:examples]
       end
       
       def json_formatter

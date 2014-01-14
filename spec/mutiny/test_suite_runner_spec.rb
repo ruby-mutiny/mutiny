@@ -3,8 +3,8 @@ require "mutiny/test_suite_runner"
 module Mutiny
   describe TestSuiteRunner, :include_file_system_helpers do
     before (:each) do
-      ::RSpec.world.reset
       clean_tmp_dir
+      
       
       write("lib/calc.rb", program)
       write("spec/calc_spec.rb", passing_suite)
@@ -12,30 +12,32 @@ module Mutiny
     end
   
     it "reports success" do
-      result = @test_suite.run(program)
-      expect(result).to eq(["passed"])
+      expect(run_suite(program)).to eq(["passed"])
     end
   
     it "reports failure when spec changes to incorrect" do
       # obtain original results
-      @test_suite.run(program) 
+      run_suite(program)
     
       # change the spec
       write("spec/calc_spec.rb", failing_suite)
     
-      result = @test_suite.run(program)
+      result = run_suite(program)
       expect(result).to eq(["failed"])
     end
   
     it "reports failure for (non-equivalent) mutant" do
       # obtain original results
-      @test_suite.run(program) 
+      run_suite(program) 
   
       # change the program
       write("lib/calc.rb", incorrect_program)
   
-      result = @test_suite.run(incorrect_program)
-      expect(result).to eq(["failed"])
+      expect(run_suite(incorrect_program)).to eq(["failed"])
+    end
+    
+    def run_suite(program)
+      @test_suite.run(program).map{|r| r["status"]}
     end
 
     def failing_suite

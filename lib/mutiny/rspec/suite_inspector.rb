@@ -2,7 +2,8 @@ module Mutiny
   module RSpec
     class SuiteInspector < Struct.new(:test_suite_path)
       def paths_of_described_classes
-        load test_suite_path
+        configuration.files_or_directories_to_run = [test_suite_path]
+        configuration.load_spec_files
         
         ::RSpec.world.example_groups.map do |group|
           path_of_class_described_by(group)
@@ -15,6 +16,12 @@ module Mutiny
         method = clazz.instance_method(clazz.instance_methods.first)
         path, line = method.source_location
         path
+      end
+      
+      def configuration
+        # Reuse the built-in RSpec configuration, as it seems to be
+        # preconfigured with useful options (e.g., expectation framework)
+        @configuration ||= ::RSpec.configuration
       end
     end
   end

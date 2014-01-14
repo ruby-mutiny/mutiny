@@ -32,4 +32,6 @@ A tiny mutation testing framework.
             00     | 12      | passed
             01     | 12      | failed
 
+    * Consider refactoring mutant.rb so that it does not contain a code attribute (perhaps instead it should compute code by passing the file and line number to its operator?)
+
 * Extend framework to explore Program Analyser and more sophisticated Test Case Provider components (see OmniGraffle diagram)

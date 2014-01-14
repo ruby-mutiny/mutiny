@@ -19,11 +19,15 @@ module Mutiny
       def add_to_environment(program)
         # Evaluate the (potentially mutated) program, overidding any
         # existing version.
+        
+        # We evaluate in the context of TOPLEVEL_BINDING as this code
+        # resides in the Mutiny::RSpec module, and we want the program
+        # to be evaluated in its usual namespace. 
 
         # NB: If we run into problems with eval(), we wight want to 
         # consider customising require and require_relative to allow
         # swapping in a mutant when a class is loaded by a spec?
-        eval(program)
+        eval(program, TOPLEVEL_BINDING)
       end
       
       def run_specs

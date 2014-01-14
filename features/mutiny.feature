@@ -3,7 +3,7 @@ Feature: Mutiny
   Scenario: Cond
     Given I have the following program at "lib/cond.rb":
       """
-      class ::Cond
+      class Cond
         def run(x, y)
           if x > y
             1
@@ -42,7 +42,7 @@ Feature: Mutiny
   Scenario: Max
     Given I have the following program at "lib/max.rb":
       """
-      class ::Max
+      class Max
         def run(left, right)
           max = left
           max = right if right > left

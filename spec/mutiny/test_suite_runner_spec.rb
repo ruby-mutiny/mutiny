@@ -1,9 +1,11 @@
 require "mutiny/test_suite_runner"
 
 module Mutiny
-  describe TestSuiteRunner do
+  describe TestSuiteRunner, :include_file_system_helpers do
     before (:each) do
       ::RSpec.world.reset
+      clean_tmp_dir
+      
       write("lib/calc.rb", program)
       write("spec/calc_spec.rb", passing_suite)
       @test_suite = TestSuiteRunner.new(path("spec/calc_spec.rb"))
@@ -35,14 +37,6 @@ module Mutiny
       result = @test_suite.run(incorrect_program)
       expect(result).to eq(["failed"])
     end
-  
-    def write(filename, content)
-      File.open(path(filename), 'w') {|f| f.write(content) }
-    end
-  
-    def path(filename)
-      File.expand_path("../../../.tmp/#{filename}", __FILE__)
-    end
 
     def failing_suite
       """
@@ -71,7 +65,7 @@ module Mutiny
   
     def program
       """
-      class ::Calc
+      class Calc
         def add(x, y)
           x + y
         end
@@ -81,7 +75,7 @@ module Mutiny
   
     def incorrect_program
       """
-      class ::Calc
+      class Calc
         def add(x, y)
           x - y
         end

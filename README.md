@@ -28,7 +28,7 @@ A tiny mutation testing framework.
             12 | lib/calc.rb | adds
             
             Results
-            mutant | example | result
+            mutant | example | status
             00     | 12      | passed
             01     | 12      | failed
 

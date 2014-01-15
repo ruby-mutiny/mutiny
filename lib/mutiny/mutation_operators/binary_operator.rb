@@ -27,7 +27,12 @@ module Mutiny
           helper.replace_child(1, new_operator)
         end
     
-        Mutiny::Mutant.new(Unparser.unparse(mutated.ast), mutation_point.line, new_operator, BinaryOperator)
+        Mutiny::Mutant.new(
+          code: Unparser.unparse(mutated.ast),
+          line: mutation_point.line,
+          change: new_operator,
+          operator: BinaryOperator
+        )
       end
   
       def pattern

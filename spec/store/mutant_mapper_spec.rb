@@ -1,10 +1,9 @@
 require "mutiny/store/mutant_mapper"
-require "mutiny/mutant"
 
 module Mutiny::Store
   describe MutantMapper do
     before(:each) do
-      @mutant = Mutiny::Mutant.new(nil, 4, :<, MyOperator)
+      @mutant = Mutiny::Mutant.new(line: 4, change: :<, operator: MyOperator)
       @memento = { line: 4, change: :<, operator: "Mutiny::Store::MyOperator" }
     end
     
@@ -14,7 +13,13 @@ module Mutiny::Store
     
     it "should deserialise a hash to a mutant" do
       expect(subject.deserialise(@memento)).to eq(@mutant)
-    end     
+    end
+    
+    it "should not alter the memento" do
+      original = @memento.dup
+      subject.deserialise(@memento)
+      expect(@memento).to eq(original)
+    end    
     
     class MyOperator; end
   end

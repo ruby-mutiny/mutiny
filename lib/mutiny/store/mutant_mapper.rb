@@ -1,3 +1,5 @@
+require "mutiny/mutant"
+
 module Mutiny
   module Store
     class MutantMapper
@@ -9,10 +11,15 @@ module Mutiny
         }
       end
       
-      def deserialise(mutant)
-        operator = mutant[:operator].split("::").inject (Object) { |o,n| o.const_get(n) }
-        
-        Mutant.new(nil, mutant[:line], mutant[:change], operator)
+      def deserialise(memento)
+        memento = memento.dup
+        memento[:operator] = resolve(memento[:operator])
+        Mutant.new(memento)
+      end
+    
+    private
+      def resolve(class_name)
+        class_name.split("::").inject (Object) { |type,name| type.const_get(name) }
       end
     end
   end

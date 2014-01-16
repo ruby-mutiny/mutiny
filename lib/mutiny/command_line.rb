@@ -2,6 +2,7 @@ require_relative "mutation_harness"
 require_relative "equivalence_detector"
 require_relative "mutation_test_runner"
 require_relative "rspec/suite_inspector"
+require_relative "rspec/runner"
 
 module Mutiny
   class CommandLine
@@ -43,8 +44,8 @@ module Mutiny
     end
   
     def runner
-      @runner ||= MutationTestRunner.new(program, test_suite_path, options)
-    end 
+      @runner ||= MutationTestRunner.new(program, Mutiny::RSpec::Runner.new(test_suite_path), options)
+    end
     
     def suite_inspector
       @suite_inspector ||= Mutiny::RSpec::SuiteInspector.new(test_suite_path)

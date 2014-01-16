@@ -1,8 +1,7 @@
-require_relative "test_suite_runner"
 require_relative "results"
 
 module Mutiny
-  class MutationTestRunner < Struct.new(:program, :test_suite_path, :options)
+  class MutationTestRunner < Struct.new(:program, :test_suite_runner, :options)
     def run(mutants)
       results = Mutiny::Results.new
       mutants.each {|m| results.record(m, run_suite(m)) }
@@ -43,10 +42,6 @@ module Mutiny
   
     def say(message)
       puts message if options[:noisy]
-    end
-  
-    def test_suite_runner
-      @test_suite_runner ||= Mutiny::TestSuiteRunner.new(test_suite_path)
     end
   end
 end

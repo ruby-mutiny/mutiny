@@ -1,14 +1,14 @@
-require "mutiny/test_suite_runner"
+require "mutiny/rspec/runner"
 
-module Mutiny
-  describe TestSuiteRunner, :include_file_system_helpers do
+module Mutiny::RSpec
+  describe Runner, :include_file_system_helpers do
     before (:each) do
       clean_tmp_dir
       
       
       write("lib/calc.rb", program)
       write("spec/calc_spec.rb", passing_suite)
-      @test_suite = TestSuiteRunner.new(path("spec/calc_spec.rb"))
+      @test_suite = Runner.new(path("spec/calc_spec.rb"))
     end
   
     it "reports success" do

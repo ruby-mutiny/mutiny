@@ -11,7 +11,7 @@ module Mutiny
     def initialize(test_suite_path, options = { noisy: false })
       @test_suite_path = test_suite_path
       @options = options
-      @program = programs.first
+      @program = Mutiny::Mutant.new(code: programs.first)
     end
   
     def run

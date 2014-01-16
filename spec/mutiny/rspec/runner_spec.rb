@@ -5,48 +5,49 @@ module Mutiny::RSpec
     before (:each) do
       clean_tmp_dir
       
-      
-      write("lib/calc.rb", program)
+      write("lib/calc.rb", program.code)
       write("spec/calc_spec.rb", passing_suite)
+      
       @test_suite = Runner.new(path("spec/calc_spec.rb"))
+      @expected_example = Mutiny::Example.new(spec_path: path("spec/calc_spec.rb"), name: "adds", line: 5)
     end
   
     it "reports success" do
-      expect(run_suite(program)).to eq(["passed"])
+      expected_result = Mutiny::Result.new(mutant: program, example: @expected_example, status: "passed")
+      expect(@test_suite.run(program)).to eq([expected_result])
     end
   
     it "reports failure when spec changes to incorrect" do
+      expected_result = Mutiny::Result.new(mutant: program, example: @expected_example, status: "failed")
+      
       # obtain original results
-      run_suite(program)
+      @test_suite.run(program)
     
       # change the spec
       write("spec/calc_spec.rb", failing_suite)
     
-      result = run_suite(program)
-      expect(result).to eq(["failed"])
+      expect(@test_suite.run(program)).to eq([expected_result])
     end
   
     it "reports failure for (non-equivalent) mutant" do
+      expected_result = Mutiny::Result.new(mutant: incorrect_program, example: @expected_example, status: "failed")
+      
       # obtain original results
-      run_suite(program) 
+      @test_suite.run(program) 
   
       # change the program
-      write("lib/calc.rb", incorrect_program)
+      write("lib/calc.rb", incorrect_program.code)
   
-      expect(run_suite(incorrect_program)).to eq(["failed"])
+      expect(@test_suite.run(incorrect_program)).to eq([expected_result])
     end
     
-    def run_suite(program)
-      @test_suite.run(program).map{|r| r["status"]}
-    end
-
     def failing_suite
       """
       require_relative \"../lib/calc\"
     
       describe Calc do
         it \"adds\" do
-          expect(Calc.new.add(2, 3)).to be(4)
+          expect(Calc.new.add(2, 3)).to eq(4)
         end
       end
       """
@@ -59,13 +60,17 @@ module Mutiny::RSpec
     
       describe Calc do
         it \"adds\" do
-          expect(Calc.new.add(2, 3)).to be(5)
+          expect(Calc.new.add(2, 3)).to eq(5)
         end
       end
       """
     end
-  
+    
     def program
+      Mutiny::Mutant.new(code: code)
+    end
+  
+    def code
       """
       class Calc
         def add(x, y)
@@ -74,8 +79,12 @@ module Mutiny::RSpec
       end
       """
     end
-  
+    
     def incorrect_program
+      Mutiny::Mutant.new(code: incorrect_code)
+    end
+  
+    def incorrect_code
       """
       class Calc
         def add(x, y)

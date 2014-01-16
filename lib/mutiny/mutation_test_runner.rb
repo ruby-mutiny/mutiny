@@ -12,9 +12,9 @@ module Mutiny
     def run_suite(mutant)
       # FIXME caching of test_suite.run(program)
       original_results = test_suite_runner.run(program)
-      mutant_results = test_suite_runner.run(mutant.executable)
+      mutant_results = test_suite_runner.run(mutant)
     
-      unless mutant_results == original_results        
+      unless mutant_results.map(&:status) == original_results.map(&:status)
         say ""
         say "Killed:"
         say mutant.readable
@@ -31,13 +31,13 @@ module Mutiny
     def discriminating_examples(mutant_results, original_results)
       mutant_results.
         zip(original_results). # combine results
-        select { |r| r.first["status"] != r.last["status"] }. # filter out those results with differing statuses
-        map { |r| summarise(r.first) }. # transform examples into summaries for user
+        select { |r| r.first.status != r.last.status }. # filter out those results with differing statuses
+        map { |r| summarise(r.first.example) }. # transform examples into summaries for user
         uniq # remove any duplicates
     end
     
     def summarise(example)
-      example["full_description"] + " (" + example["file_path"] + ":" + example["line_number"].to_s + ")"
+      example.name + " (" + example.spec_path + ":" + example.line.to_s + ")"
     end
   
     def say(message)

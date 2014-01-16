@@ -1,9 +1,6 @@
-require "mutiny/attributable"
+require "key_struct"
 
 module Mutiny
-  class Result
-    extend Attributable
-    
-    attributes :mutant, :example, :status
+  class Result < KeyStruct.reader(:mutant, :example, :status)
   end
 end

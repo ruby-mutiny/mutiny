@@ -1,6 +1,8 @@
 ruby '2.0.0'
 source "https://rubygems.org"
 
+gem "key_struct", "~> 0.4.2"
+
 gem "parser", "~> 2.1.4"
 gem "unparser", "~> 0.1.9"
 

@@ -1,10 +1,7 @@
-require "mutiny/attributable"
+require "key_struct"
 
 module Mutiny
-  class Mutant
-    extend Attributable
-    
-    attributes :id, :code, :line, :change, :operator
+  class Mutant < KeyStruct.reader(:id, :code, :line, :change, :operator)
 
     alias_method :executable, :code
     alias_method :readable, :code

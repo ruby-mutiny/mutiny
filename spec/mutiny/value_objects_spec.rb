@@ -1,19 +1,16 @@
-require "mutiny/attributable"
+# This spec doesn't (necessarily) exercise any the code defined in Mutiny,
+# but rather tests the requirements of the library we use to define
+# value objects. Currently, we use the key_struct gem for this purpose,
+# though earlier versions of the code have also used plain old Structs,
+# and a bespoke mixin (Attributable).
+
+require "key_struct"
 
 module Mutiny
-  class User
-    extend Attributable
-    
-    attributes :id, :forename, :surname
+  class User < KeyStruct.reader(:id, :forename, :surname)
   end
   
-  class Admin
-    extend Attributable
-    
-    attributes :id, :forename, :surname
-  end
-  
-  describe Attributable do
+  describe "ValueObjects" do
     describe "construction" do
       it "should accept a hash" do
         i = User.new(id: 1, forename: 'John', surname: 'Doe')
@@ -56,13 +53,6 @@ module Mutiny
       it "should distinguish between objects with different attribute values" do
         i = User.new(id: 1, forename: 'John', surname: 'Doe')
         j = User.new(id: 1, forename: 'Jane', surname: 'Doe')
-      
-        expect(i).not_to eq(j)
-      end
-      
-      it "should distinguish between objects with same attribute but of different classes" do
-        i = User.new(id: 1, forename: 'John', surname: 'Doe')
-        j = Admin.new(id: 1, forename: 'John', surname: 'Doe')
       
         expect(i).not_to eq(j)
       end

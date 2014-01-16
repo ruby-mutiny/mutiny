@@ -38,7 +38,7 @@ module Mutiny::RSpec
   
       describe Calc do
         it \"adds\" do
-          expect(Calc.new.add(2, 3)).to be(4)
+          expect(Calc.new.add(2, 3)).to eq(4)
         end
       end
       """
@@ -60,7 +60,7 @@ module Mutiny::RSpec
   
       describe Trig do
         it \"sins\" do
-          expect(Trig.new.sin(0)).to be(0)
+          expect(Trig.new.sin(0)).to eq(0)
         end
       end
       """

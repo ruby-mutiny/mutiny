@@ -1,7 +1,7 @@
-require "mutiny/results"
+require "mutiny/mutants"
 
 module Mutiny
-  describe Results do
+  describe Mutants do
     it "distinguishes between mutants with different lines and changes" do
       mutants = [
         FakeMutant2.new(4, :<, :killed),
@@ -9,7 +9,7 @@ module Mutiny
         FakeMutant2.new(5, :>, :unknown)
       ]
       
-      mutants.each { |m| subject.add(m) }
+      subject = Mutants.new(mutants)
       
       expect(subject.for(4, :<)).to eq(mutants[0])
       expect(subject.for(5, :<)).to eq(mutants[1])

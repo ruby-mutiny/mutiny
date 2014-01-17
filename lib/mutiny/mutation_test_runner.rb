@@ -1,10 +1,10 @@
 require "key_struct"
-require_relative "results"
+require_relative "mutants"
 
 module Mutiny
   class MutationTestRunner < KeyStruct.reader(:program, :test_suite_runner, options: {})
     def run(mutants)
-      results = Mutiny::Results.new
+      results = Mutiny::Mutants.new
       mutants.each {|m| run_suite(m); results.add(m) }
       results
     end

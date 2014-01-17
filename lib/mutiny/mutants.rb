@@ -1,13 +1,21 @@
 module Mutiny
-  class Results  
-    def for(line, change)
-      mutants.find { |m| m.line == line && m.change == change }
+  class Mutants
+    def initialize(mutants = [])
+      @mutants = mutants.dup
     end
-  
+    
     def add(mutant)
       mutants << mutant
     end
-  
+    
+    def each(&block)
+      mutants.each(&block)
+    end
+      
+    def for(line, change)
+      mutants.find { |m| m.line == line && m.change == change }
+    end
+    
     def length
       mutants.length
     end
@@ -26,7 +34,7 @@ module Mutiny
 
   private
     def mutants
-      @mutants ||= []
+      @mutants
     end
   end
 end

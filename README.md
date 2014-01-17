@@ -19,9 +19,9 @@ A tiny mutation testing framework.
     * Need a way of persisting results to disk. Schema:
 
             Mutants
-            id | source_file | line | operator       | operator_state
-            00 | lib/calc.rb |      |                |
-            01 | lib/calc.rb | 4    | BinaryOperator | >             
+            id | source_file | line | operator       | operator_state | status
+            00 | lib/calc.rb |      |                |                | killed
+            01 | lib/calc.rb | 4    | BinaryOperator | >              | alive
             
             Examples
             id | spec_file   | name

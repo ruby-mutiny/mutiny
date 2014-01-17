@@ -12,7 +12,7 @@ Then(/^I should receive the following results:$/) do |expected_results|
     line = row['Line'].to_i
     change = row['Change'].to_sym
     
-    actual = @results.for(line, change)
+    actual = @results.for(line, change).killed? ? :killed : :alive
     expected = row['Result'].to_sym
     message = "expected the mutant on line #{line} with change #{change} to be #{expected}, but it was #{actual}"
     

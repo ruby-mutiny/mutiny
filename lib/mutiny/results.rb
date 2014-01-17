@@ -1,19 +1,19 @@
 module Mutiny
   class Results  
     def for(line, change)
-      table[[line, change]]
+      mutants.find { |m| m.line == line && m.change == change }
     end
   
-    def record(mutant, result)
-      table[[mutant.line, mutant.change]] = result
+    def add(mutant)
+      mutants << mutant
     end
   
     def length
-      table.length
+      mutants.length
     end
   
     def kill_count
-      table.values.count { |r| r == :killed }
+      mutants.count { |r| r.killed? }
     end
   
     def score
@@ -25,8 +25,8 @@ module Mutiny
     end
 
   private
-    def table
-      @table ||= {}
+    def mutants
+      @mutants ||= []
     end
   end
 end

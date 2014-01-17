@@ -5,7 +5,7 @@ module Mutiny
   class MutationTestRunner < KeyStruct.reader(:program, :test_suite_runner, options: {})
     def run(mutants)
       results = Mutiny::Results.new
-      mutants.each {|m| results.record(m, run_suite(m)) }
+      mutants.each {|m| run_suite(m); results.add(m) }
       results
     end
 

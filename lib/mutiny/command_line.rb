@@ -15,16 +15,16 @@ module Mutiny
     end
   
     def run
-      test_results
+      calculate_results
     end
   
   private
-    def test_results
-      @test_results ||= runner.run(non_equivalent_mutants)
+    def calculate_results
+      runner.run(non_equivalent_mutants)
     end
 
     def non_equivalent_mutants
-      equivalence_detector.remove_equivalents(mutants)
+      @non_equivalent_mutants ||= Mutiny::Mutants.new(equivalence_detector.remove_equivalents(mutants))
     end
 
     def mutants

@@ -4,9 +4,7 @@ require_relative "mutants"
 module Mutiny
   class MutationTestRunner < KeyStruct.reader(:program, :test_suite_runner, options: {})
     def run(mutants)
-      results = Mutiny::Mutants.new
-      mutants.each {|m| run_suite(m); results.add(m) }
-      results
+      mutants.each { |m| run_suite(m) }
     end
 
   private  

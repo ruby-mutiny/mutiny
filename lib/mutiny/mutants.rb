@@ -10,6 +10,7 @@ module Mutiny
     
     def each(&block)
       mutants.each(&block)
+      self
     end
       
     def for(line, change)

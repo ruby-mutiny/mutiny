@@ -1,7 +1,8 @@
+require "key_struct"
 require_relative "results"
 
 module Mutiny
-  class MutationTestRunner < Struct.new(:program, :test_suite_runner, :options)
+  class MutationTestRunner < KeyStruct.reader(:program, :test_suite_runner, options: {})
     def run(mutants)
       results = Mutiny::Results.new
       mutants.each {|m| results.record(m, run_suite(m)) }
@@ -15,17 +16,26 @@ module Mutiny
       mutant_results = test_suite_runner.run(mutant)
     
       unless mutant_results.map(&:status) == original_results.map(&:status)
-        say ""
-        say "Killed:"
-        say mutant.readable
-        say "with: #{discriminating_examples(mutant_results, original_results)}"
+        mutant.kill
+        report_killing(mutant) if options[:noisy]
         return :killed
       end
   
-      say ""
-      say "Didn't kill:"
-      say mutant.readable
-      :alive
+      report_survival(mutant) if options[:noisy]
+      return :alive
+    end
+    
+    def report_killing(mutant)
+      puts ""
+      puts "Killed:"
+      puts mutant.readable
+      puts "with: #{discriminating_examples(mutant_results, original_results)}"
+    end
+    
+    def report_survival(mutant)
+      puts ""
+      puts "Didn't kill:"
+      puts mutant.readable
     end
     
     def discriminating_examples(mutant_results, original_results)
@@ -38,10 +48,6 @@ module Mutiny
     
     def summarise(example)
       example.name + " (" + example.spec_path + ":" + example.line.to_s + ")"
-    end
-  
-    def say(message)
-      puts message if options[:noisy]
     end
   end
 end

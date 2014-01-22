@@ -7,7 +7,8 @@ module Mutiny
         { 
           line: mutant.line,
           change: mutant.change,
-          operator: mutant.operator.to_s
+          operator: mutant.operator.to_s,
+          alive: mutant.alive?
         }
       end
       

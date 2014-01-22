@@ -34,10 +34,10 @@ A tiny mutation testing framework.
 
     * Consider refactoring mutant.rb so that it does not contain a code attribute (perhaps instead it should compute code by passing the file and line number to its operator?)
     
-    * Tests for Session.
+    * Should Mutant be immutable? (Currently, mutable due to the kill method).
     
     * Examples and Results should be stored to disk as well as mutants.
     
-    * Should Mutant be immutable? (Currently, mutable due to the kill method).
-
+    * Tests for Session.
+    
 * Extend framework to explore Program Analyser and more sophisticated Test Case Provider components (see OmniGraffle diagram)

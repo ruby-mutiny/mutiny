@@ -5,7 +5,7 @@ module Mutiny
   class Session < Struct.new(:path)
     def persist(mutants)
       File.open(path, 'w') do |file|
-        yaml_store = Mutiny::Store::YamlStore.new(file)
+        yaml_store = Mutiny::Store::YamlStore.new(file, :write_only)
         yaml_store.save_all(:mutants, serialise(mutants))
         yaml_store.finalise(file)
       end

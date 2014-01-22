@@ -1,10 +1,11 @@
 module Mutiny
   module Store
     class YamlStore
-      attr_reader :type_stores
+      attr_reader :type_stores, :mode
       
-      def initialize(io = nil)
-        @type_stores = YamlTypeStores.new(read(io))
+      def initialize(io = nil, mode = :read_write)
+        @type_stores = YamlTypeStores.new(load(io, mode))
+        @mode = mode
       end
       
       def all(type)
@@ -24,22 +25,22 @@ module Mutiny
       end
       
       def finalise(io)
-        begin
-          io.puts Psych.dump(type_stores.serialisable)
-          io
-        rescue IOError
-          # Recover when IO cannot be written to
-        end
+        io.puts Psych.dump(type_stores.serialisable) unless mode == :read_only
+        io
       end
       
     private
-      def read(io)
-        begin
-          data = io.nil? ? "" : io.readlines.join
-          data.empty? ? {} : Psych.load(data)
-        rescue IOError
-          {} # Recover when the IO cannot be read
+      def load(io, mode)
+        if io.nil? || mode == :write_only
+          {}
+        else
+          read(io)
         end
+      end
+    
+      def read(io)
+        yaml = io.readlines.join
+        yaml.empty? ? {} : Psych.load(yaml)
       end
       
       class YamlTypeStores

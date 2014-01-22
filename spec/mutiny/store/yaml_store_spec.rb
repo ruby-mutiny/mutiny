@@ -46,21 +46,39 @@ module Mutiny::Store
       expect(store.types).to eq([:users, :admins])
     end
     
-    it "should not try to read from an IO object if it is not open for reading" do
-      write_only_file = File.open(path_to_new_tmp_file, "w")
-      store = YamlStore.new(write_only_file)
-
-      expect(store.types).to eq([])
-    end
-
-    it "should not try to write to an IO object if it is not open for writing" do
-      read_only_file = File.open(path_to_new_tmp_file(:touch), "r")
-      data = { users: [ { id: 1, name: "John Doe" } ] }
-
-      expect{serialise(data, read_only_file)}.to_not raise_error
-    end
-
+    describe "when IO cannot be read" do
+      it "raises error on initialisation" do
+        write_only_file = File.open(path_to_new_tmp_file, "w")
+        
+        expect{YamlStore.new(write_only_file)}.to raise_error(IOError)
+      end
     
+      it "does not access IO during initialisation when in write-only mode" do
+        io = double("io", readlines: [])
+        store = YamlStore.new(io, :write_only)
+          
+        expect(io).not_to have_received(:readlines)
+        expect(store.all(:users)).to eq([])
+      end
+    end
+    
+    describe "when IO cannot be written" do
+      it "raises error during finalisation" do
+        read_only_file = File.open(path_to_new_tmp_file(:touch), "r")
+        data = { users: [ { id: 1, name: "John Doe" } ] }
+
+        expect{serialise(data, read_only_file)}.to raise_error(IOError)
+      end
+    
+      it "does not access IO finalisation when in read-only mode" do
+        data = { users: [ { id: 1, name: "John Doe" } ] }
+        io = double("io", puts: true)
+        serialise(data, io, :read_only)
+          
+        expect(io).not_to have_received(:puts)
+      end
+    end
+
     # Use a store to write to an IO, and then
     # instantiate a fresh store using that IO.
     def serialise_and_reload(data)
@@ -69,8 +87,8 @@ module Mutiny::Store
       reading_store = YamlStore.new(io)
     end
     
-    def serialise(data, io)
-      writing_store = YamlStore.new
+    def serialise(data, io, mode = :read_write)
+      writing_store = YamlStore.new(nil, mode)
       
       data.each do |type, objects|
         writing_store.save_all(type, objects)

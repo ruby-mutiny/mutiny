@@ -34,11 +34,6 @@ A tiny mutation testing framework.
 
     * Consider refactoring mutant.rb so that it does not contain a code attribute (perhaps instead it should compute code by passing the file and line number to its operator?)
     
-    * Have YamlStore take read & write flags, and to bubble IOErrors to clients. Currently
-      we fail silently if reading / writing fails, assuming that the client does not expect
-      the read / write to succeed. This will mask errors caused by, for example, a client 
-      passing a typo-ed filename.
-    
     * Tests for Session.
     
     * Examples and Results should be stored to disk as well as mutants.

@@ -1,5 +1,7 @@
 module Mutiny
   class Mutants
+    include Enumerable
+    
     def initialize(mutants = [])
       @mutants = mutants.dup
     end

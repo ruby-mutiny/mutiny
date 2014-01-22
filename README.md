@@ -24,8 +24,8 @@ A tiny mutation testing framework.
             01 | lib/calc.rb | 4    | BinaryOperator | >              | alive
             
             Examples
-            id | spec_file   | name
-            12 | lib/calc.rb | adds
+            id | spec_file        | name
+            12 | lib/calc_spec.rb | adds
             
             Results
             mutant | example | status

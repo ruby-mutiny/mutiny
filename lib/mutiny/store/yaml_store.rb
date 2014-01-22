@@ -15,6 +15,10 @@ module Mutiny
         type_stores.types
       end
       
+      def save_all(type, objects)
+        objects.each { |object| save(type, object) }
+      end
+      
       def save(type, object)
         type_stores.for(type).save(object)
       end

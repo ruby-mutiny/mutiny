@@ -73,9 +73,7 @@ module Mutiny::Store
       writing_store = YamlStore.new
       
       data.each do |type, objects|
-        objects.each do |object|
-          writing_store.save(type, object)
-        end
+        writing_store.save_all(type, objects)
       end 
       
       writing_store.finalise(io)

@@ -1,6 +1,7 @@
 require_relative "mutation_harness"
 require_relative "equivalence_detector"
 require_relative "mutation_test_runner"
+require_relative "session"
 require_relative "rspec/suite_inspector"
 require_relative "rspec/runner"
 
@@ -15,7 +16,13 @@ module Mutiny
     end
   
     def run
-      calculate_results
+      mutants = calculate_results
+      
+      if options.has_key?(:results_file)
+        Mutiny::Session.new(options[:results_file]).persist(mutants)
+      end
+      
+      mutants
     end
   
   private

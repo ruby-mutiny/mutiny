@@ -11,20 +11,31 @@ module Mutiny
         type_stores.for(type).all
       end
       
+      def types
+        type_stores.types
+      end
+      
       def save(type, object)
-        raise "Cannot store objects that do not have an id." unless object.has_key?(:id)
         type_stores.for(type).save(object)
       end
       
       def finalise(io)
-        io.puts Psych.dump(type_stores.serialisable)
-        io
+        begin
+          io.puts Psych.dump(type_stores.serialisable)
+          io
+        rescue IOError
+          # Recover when IO cannot be written to
+        end
       end
       
     private
       def read(io)
-        data = io.nil? ? "" : io.readlines.join 
-        data.empty? ? {} : Psych.load(data)
+        begin
+          data = io.nil? ? "" : io.readlines.join
+          data.empty? ? {} : Psych.load(data)
+        rescue IOError
+          {} # Recover when the IO cannot be read
+        end
       end
       
       class YamlTypeStores
@@ -32,6 +43,10 @@ module Mutiny
       
         def initialize(hash)
           @type_stores = hash.each_with_object({}) { |(type, data), hash| hash[type] = YamlTypeStore.new(type, data) }
+        end
+        
+        def types
+          type_stores.keys
         end
       
         def for(type)
@@ -49,7 +64,13 @@ module Mutiny
         end
       
         def save(object)
+          (object[:id] = next_id) unless object.has_key?(:id) && object[:id]
           data[object[:id]] = object
+        end
+        
+        def next_id
+          @next_id ||= 0
+          @next_id += 1
         end
       end
     end

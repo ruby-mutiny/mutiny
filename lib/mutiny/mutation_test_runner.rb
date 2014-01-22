@@ -5,6 +5,7 @@ module Mutiny
   class MutationTestRunner < KeyStruct.reader(:program, :test_suite_runner, options: {})
     def run(mutants)
       mutants.each { |m| run_suite(m) }
+      mutants
     end
 
   private  
@@ -16,11 +17,9 @@ module Mutiny
       unless mutant_results.map(&:status) == original_results.map(&:status)
         mutant.kill
         report_killing(mutant) if options[:noisy]
-        return :killed
       end
   
       report_survival(mutant) if options[:noisy]
-      return :alive
     end
     
     def report_killing(mutant)

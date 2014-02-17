@@ -5,6 +5,7 @@ module Mutiny
     class MutantMapper
       def serialise(mutant)
         {
+          path: mutant.path,
           line: mutant.line,
           change: mutant.change,
           operator: mutant.operator.to_s,

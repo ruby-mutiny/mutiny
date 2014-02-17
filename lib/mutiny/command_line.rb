@@ -12,7 +12,7 @@ module Mutiny
     def initialize(test_suite_path, options = { noisy: false })
       @test_suite_path = test_suite_path
       @options = options
-      @program = Mutiny::Mutant.new(code: programs.first)
+      @program = Mutiny::Mutant.new(path: programs_paths.first, code: File.read(programs_paths.first))
     end
   
     def run
@@ -38,8 +38,8 @@ module Mutiny
       harness.generate_mutants(program)
     end
     
-    def programs
-      suite_inspector.paths_of_described_classes.map { |path| File.read(path) }
+    def programs_paths
+      @program_paths ||= suite_inspector.paths_of_described_classes
     end
   
     def harness

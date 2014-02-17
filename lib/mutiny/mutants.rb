@@ -15,8 +15,8 @@ module Mutiny
       self
     end
       
-    def for(line, change)
-      mutants.find { |m| m.line == line && m.change == change }
+    def for(path, line = nil, change = nil)
+      mutants.find { |m| m.path == path && (line.nil? || m.line == line) && (change.nil? || m.change == change) }
     end
     
     def length

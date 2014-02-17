@@ -31,12 +31,12 @@ Feature: Mutiny
       """
     When I run mutiny on "spec/cond_spec.rb"
     Then I should receive the following results:
-      | Line | Change | Result |
-      | 3    | <      | killed |
-      | 3    | <=     | killed |
-      | 3    | ==     | killed |
-      | 3    | !=     | killed |
-      | 3    | >=     | killed |
+      | Path        | Line | Change | Result |
+      | lib/cond.rb | 3    | <      | killed |
+      | lib/cond.rb | 3    | <=     | killed |
+      | lib/cond.rb | 3    | ==     | killed |
+      | lib/cond.rb | 3    | !=     | killed |
+      | lib/cond.rb | 3    | >=     | killed |
 
 
   Scenario: Max
@@ -68,10 +68,10 @@ Feature: Mutiny
       """
     When I run mutiny on "spec/max_spec.rb"
     Then I should receive the following results:
-      | Line | Change | Result |
-      | 4    | <      | killed |
-      | 4    | <=     | killed |
-      | 4    | ==     | killed |
-      | 4    | !=     | killed |
-      | 4    | >=     | alive  |
+      | Path       | Line | Change | Result |
+      | lib/max.rb | 4    | <      | killed |
+      | lib/max.rb | 4    | <=     | killed |
+      | lib/max.rb | 4    | ==     | killed |
+      | lib/max.rb | 4    | !=     | killed |
+      | lib/max.rb | 4    | >=     | alive  |
     # Note that mutating > to >= produces an equivalent mutant

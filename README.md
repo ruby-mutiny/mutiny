@@ -16,7 +16,7 @@ A tiny mutation testing framework.
             head, previous = g.log[0], g.log[1]
             g.diff(head, previous).map(&:path)
 
-    * Need a way of persisting results to disk. Schema:
+    * Need a way of loading existing results from disk to determine which results need to be recalculated. Schema:
 
             Mutants
             id | source_file | line | operator       | operator_state | status
@@ -34,9 +34,9 @@ A tiny mutation testing framework.
 
     * Consider refactoring mutant.rb so that it does not contain a code attribute (perhaps instead it should compute code by passing the file and line number to its operator?)
     
-    * Should Mutant be immutable? (Currently, mutable due to the kill method).
+    * Should Mutant be immutable? (Currently, mutable due to the kill method and due to the results and id methods).
     
-    * Examples and Results should be stored to disk as well as mutants.
+    * Should IDs be handled differently? Currently calculated by the store and then the session updates the in-memory objects. However, ids seems to only be necessary for persisting to disk...
     
     * Tests for Session.
     

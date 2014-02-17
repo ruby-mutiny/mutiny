@@ -10,6 +10,8 @@ A tiny mutation testing framework.
 #### To do list
 * Consume a "diff", compute new results for impacted files, and merge into previous round of results
 
+    * Get incrementality.feature passing: first step is to adjust command line so that mutants are created from all described classes ("programs under test"), and not just the first program under test
+
     * Need a way of determining impacted files. The following should be a reasonable starting point:
 
             g = Git.open(dir)

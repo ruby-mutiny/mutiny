@@ -4,9 +4,9 @@ require "rspec/core/formatters/json_formatter"
 
 module Mutiny
   module RSpec
-    class Suite < KeyStruct.reader(:path, options: { autoload: true })
+    class Suite < Struct.new(:path)
       def results_for(program)
-        load_specs
+        load_specs if world.example_count.zero?
         add_to_environment(program)
         run_specs
       end
@@ -14,7 +14,7 @@ module Mutiny
     private
       def load_specs
         configuration.files_to_run = [path]
-        configuration.load_spec_files unless options[:autoload]
+        configuration.load_spec_files
       end
       
       def add_to_environment(program)

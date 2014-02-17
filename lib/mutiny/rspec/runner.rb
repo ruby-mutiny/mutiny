@@ -4,7 +4,7 @@ require_relative "suite"
 
 module Mutiny
   module RSpec
-    class Runner < KeyStruct.reader(:path, options: { autoload: true })
+    class Runner < Struct.new(:path)
   
       def run(program)
         rspec_results = environment.run { rspec_suite.results_for(program.code) }
@@ -40,7 +40,7 @@ module Mutiny
       end
   
       def rspec_suite
-        @suite ||= Mutiny::RSpec::Suite.new(path: path, options: options)
+        @suite ||= Mutiny::RSpec::Suite.new(path)
       end
     end
   end

@@ -4,17 +4,16 @@ require_relative "mutants"
 module Mutiny
   class MutationTestRunner < KeyStruct.reader(:program, :test_suite_runner, options: {})
     def run(mutants)
+      program.results = test_suite_runner.run(program)
       mutants.each { |m| run_suite(m) }
       mutants
     end
 
   private  
     def run_suite(mutant)
-      # FIXME caching of test_suite.run(program)
-      original_results = test_suite_runner.run(program)
-      mutant_results = test_suite_runner.run(mutant)
+      mutant.results = test_suite_runner.run(mutant)
     
-      unless mutant_results.map(&:status) == original_results.map(&:status)
+      unless mutant.results.map(&:status) == program.results.map(&:status)
         mutant.kill
         report_killing(mutant) if options[:noisy]
       end

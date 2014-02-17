@@ -3,8 +3,8 @@ require "mutiny/store/example_mapper"
 module Mutiny::Store
   describe ExampleMapper do
     before(:each) do
-      @example = Mutiny::Example.new(spec_path: "specs/calculator_spec.rb", name: "should add")
-      @memento = { spec_path: "specs/calculator_spec.rb", name: "should add" }
+      @example = Mutiny::Example.new(spec_path: "specs/calculator_spec.rb", name: "should add", line: 5)
+      @memento = { spec_path: "specs/calculator_spec.rb", name: "should add", line: 5 }
     end
     
     it "should serialise an example to a hash" do

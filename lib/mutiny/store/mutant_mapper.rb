@@ -4,7 +4,7 @@ module Mutiny
   module Store
     class MutantMapper
       def serialise(mutant)
-        { 
+        {
           line: mutant.line,
           change: mutant.change,
           operator: mutant.operator.to_s,

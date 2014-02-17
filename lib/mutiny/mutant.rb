@@ -1,7 +1,9 @@
 require "key_struct"
 
 module Mutiny
-  class Mutant < KeyStruct.reader(:id, :code, :line, :change, :operator, alive: true)
+  class Mutant < KeyStruct.reader(:code, :line, :change, :operator, alive: true)
+    attr_accessor :id
+    attr_accessor :results
 
     alias_method :executable, :code
     alias_method :readable, :code

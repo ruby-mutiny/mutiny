@@ -8,7 +8,7 @@ module Mutiny::RSpec
       write("lib/calc.rb", program.code)
       write("spec/calc_spec.rb", passing_suite)
       
-      @test_suite = Runner.new(path("spec/calc_spec.rb"))
+      @test_suite = Runner.new(path: path("spec/calc_spec.rb"), options: { autoload: false } )
       @expected_example = Mutiny::Example.new(spec_path: path("spec/calc_spec.rb"), name: "adds", line: 5)
     end
   

@@ -4,9 +4,10 @@ module Mutiny
   module Store
     class ExampleMapper
       def serialise(example)
-        { 
+        {
           spec_path: example.spec_path,
-          name: example.name
+          name: example.name,
+          line: example.line
         }
       end
       

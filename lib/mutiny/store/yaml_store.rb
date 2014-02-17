@@ -17,7 +17,7 @@ module Mutiny
       end
       
       def save_all(type, objects)
-        objects.each { |object| save(type, object) }
+        objects.collect { |object| save(type, object) }
       end
       
       def save(type, object)
@@ -71,6 +71,7 @@ module Mutiny
         def save(object)
           (object[:id] = next_id) unless object.has_key?(:id) && object[:id]
           data[object[:id]] = object
+          object[:id]
         end
         
         def next_id

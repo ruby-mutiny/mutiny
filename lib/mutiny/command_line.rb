@@ -51,7 +51,7 @@ module Mutiny
     end
   
     def runner
-      @runner ||= MutationTestRunner.new(program: program, test_suite_runner: Mutiny::RSpec::Runner.new(test_suite_path), options: options)
+      @runner ||= MutationTestRunner.new(program: program, test_suite_runner: Mutiny::RSpec::Runner.new(path: test_suite_path), options: options)
     end
     
     def suite_inspector

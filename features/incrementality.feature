@@ -1,4 +1,4 @@
-Feature: Persistent results
+Feature: Incrementality
   
   Scenario: When a test case changes, only re-evaluates impacted mutants
     Given I have the following program at "lib/max.rb":

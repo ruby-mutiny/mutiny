@@ -37,7 +37,7 @@ eos
     end
   
     def mutate(program)
-      BinaryOperator.new.mutate(Parser::CurrentRuby.parse(program))
+      BinaryOperator.new.mutate(Parser::CurrentRuby.parse(program), "foo.rb")
     end
   end
 end

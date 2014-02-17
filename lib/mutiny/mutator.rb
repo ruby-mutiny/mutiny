@@ -5,7 +5,7 @@ module Mutiny
   class Mutator
     def mutate(program)
       ast = Parser::CurrentRuby.parse(program.code)
-      operators.flat_map { |operator| operator.mutate(ast) }
+      operators.flat_map { |operator| operator.mutate(ast, program.path) }
     end
   
   private

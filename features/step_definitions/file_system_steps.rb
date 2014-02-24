@@ -1,5 +1,5 @@
-Given(/^I have the following program at "(.*?)":$/) do |path, program|
-  write(path, program)
+Given(/^I have the following unit at "(.*?)":$/) do |path, unit|
+  write(path, unit)
 end
 
 Given(/^I have the following spec at "(.*?)":$/) do |path, spec|

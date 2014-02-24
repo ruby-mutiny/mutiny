@@ -2,7 +2,7 @@
 Feature: Incrementality
   
   Scenario: When a test case changes, only re-evaluates impacted mutants
-    Given I have the following program at "lib/max.rb":
+    Given I have the following unit at "lib/max.rb":
       """
       class Max
         def run(left, right)
@@ -28,7 +28,7 @@ Feature: Incrementality
         end
       end
       """
-    And I have the following program at "lib/min.rb":
+    And I have the following unit at "lib/min.rb":
       """
       class Min
         def run(left, right)

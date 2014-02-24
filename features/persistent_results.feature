@@ -1,7 +1,7 @@
 Feature: Persistent results
   
   Scenario: Stores mutants
-    Given I have the following program at "lib/max.rb":
+    Given I have the following unit at "lib/max.rb":
       """
       class Max
         def run(left, right)

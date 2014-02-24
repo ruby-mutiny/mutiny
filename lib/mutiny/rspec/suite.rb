@@ -5,10 +5,10 @@ require "rspec/core/formatters/json_formatter"
 module Mutiny
   module RSpec
     class Suite < Struct.new(:path)
-      def results_for(program)
+      def results_for(unit)
         load_specs if world.example_count.zero?
-        add_to_environment(program)
-        run_specs
+        add_to_environment(unit.code)
+        run_specs_for(unit)
       end
       
     private
@@ -17,23 +17,26 @@ module Mutiny
         configuration.load_spec_files
       end
       
-      def add_to_environment(program)
-        # Evaluate the (potentially mutated) program, overidding any
+      def add_to_environment(code)
+        # Evaluate the (potentially mutated) unit, overidding any
         # existing version.
         
         # We evaluate in the context of TOPLEVEL_BINDING as this code
-        # resides in the Mutiny::RSpec module, and we want the program
+        # resides in the Mutiny::RSpec module, and we want the unit
         # to be evaluated in its usual namespace. 
 
         # NB: If we run into problems with eval(), we wight want to 
         # consider customising require and require_relative to allow
         # swapping in a mutant when a class is loaded by a spec?
-        eval(program, TOPLEVEL_BINDING)
+        eval(code, TOPLEVEL_BINDING)
       end
       
-      def run_specs
+      def run_specs_for(unit)
         reporter.report(world.example_count) do |reporter|
-          world.example_groups.ordered.map {|g| g.run(reporter)}
+          g = world.example_groups
+            .ordered
+            .select { |g| unit.class_name == g.described_class.name }
+            .map {|g| g.run(reporter)}
         end
 
         json_formatter.output_hash[:examples]

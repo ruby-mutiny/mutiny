@@ -15,7 +15,7 @@ module Mutiny::MutationOperators
     end
 
     it "changes a nested operator" do
-      program = <<-eos
+      unit = <<-eos
          class Simple
            def run
              a < b
@@ -31,13 +31,13 @@ class Simple
 end
 eos
   
-      first_mutant = mutate(program).first
+      first_mutant = mutate(unit).first
   
       expect(first_mutant.code).to eq(mutant.strip)
     end
   
-    def mutate(program)
-      BinaryOperator.new.mutate(Parser::CurrentRuby.parse(program), "foo.rb")
+    def mutate(unit)
+      BinaryOperator.new.mutate(Parser::CurrentRuby.parse(unit), "foo.rb")
     end
   end
 end

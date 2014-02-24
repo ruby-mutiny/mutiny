@@ -6,16 +6,16 @@ module Mutiny
   module RSpec
     class Runner < Struct.new(:path)
   
-      def run(program)
-        rspec_results = environment.run { rspec_suite.results_for(program.code) }
-        convert_to_mutiny_results(rspec_results, program)
+      def run(unit)
+        rspec_results = environment.run { rspec_suite.results_for(unit) }
+        convert_to_mutiny_results(rspec_results, unit)
       end
 
     private
     
-      def convert_to_mutiny_results(rspec_results, program)
+      def convert_to_mutiny_results(rspec_results, unit)
         rspec_results.map do |result|
-          Result.new(mutant: program, example: example_for(result), status: result["status"])
+          Result.new(mutant: unit, example: example_for(result), status: result["status"])
         end
       end
       

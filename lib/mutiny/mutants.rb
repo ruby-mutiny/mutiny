@@ -10,6 +10,10 @@ module Mutiny
       mutants << mutant
     end
     
+    def concat(other_mutants)
+      mutants.concat(other_mutants.send(:mutants))
+    end
+    
     def each(&block)
       mutants.each(&block)
       self

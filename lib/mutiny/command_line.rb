@@ -2,17 +2,18 @@ require_relative "mutation_harness"
 require_relative "equivalence_detector"
 require_relative "mutation_test_runner"
 require_relative "session"
+require_relative "unit"
 require_relative "rspec/suite_inspector"
 require_relative "rspec/runner"
 
 module Mutiny
   class CommandLine
-    attr_reader :program, :test_suite_path, :options
+    attr_reader :units, :test_suite_path, :options
   
     def initialize(test_suite_path, options = { noisy: false })
       @test_suite_path = test_suite_path
       @options = options
-      @program = Mutiny::Mutant.new(path: programs_paths.first, code: File.read(programs_paths.first))
+      @units = unit_paths.map { |p| Mutiny::Unit.new(path: p, code: File.read(p)) }
     end
   
     def run
@@ -35,11 +36,11 @@ module Mutiny
     end
 
     def mutants
-      harness.generate_mutants(program)
+      harness.generate_mutants(units)
     end
     
-    def programs_paths
-      @program_paths ||= suite_inspector.paths_of_described_classes
+    def unit_paths
+      @unit_paths ||= suite_inspector.paths_of_described_classes
     end
   
     def harness
@@ -51,7 +52,7 @@ module Mutiny
     end
   
     def runner
-      @runner ||= MutationTestRunner.new(program: program, test_suite_runner: Mutiny::RSpec::Runner.new(path: test_suite_path), options: options)
+      @runner ||= MutationTestRunner.new(units: units, test_suite_runner: Mutiny::RSpec::Runner.new(path: test_suite_path), options: options)
     end
     
     def suite_inspector

@@ -5,7 +5,7 @@ module Mutiny::RSpec
     before (:each) do
       clean_tmp_dir
       
-      write("lib/calc.rb", program.code)
+      write("lib/calc.rb", unit.code)
       write("spec/calc_spec.rb", passing_suite)
       
       @test_suite = Runner.new(path("spec/calc_spec.rb"))
@@ -13,32 +13,32 @@ module Mutiny::RSpec
     end
   
     it "reports success" do
-      expected_result = Mutiny::Result.new(mutant: program, example: @expected_example, status: "passed")
-      expect(@test_suite.run(program)).to eq([expected_result])
+      expected_result = Mutiny::Result.new(mutant: unit, example: @expected_example, status: "passed")
+      expect(@test_suite.run(unit)).to eq([expected_result])
     end
   
     it "reports failure when spec changes to incorrect" do
-      expected_result = Mutiny::Result.new(mutant: program, example: @expected_example, status: "failed")
+      expected_result = Mutiny::Result.new(mutant: unit, example: @expected_example, status: "failed")
       
       # obtain original results
-      @test_suite.run(program)
+      @test_suite.run(unit)
     
       # change the spec
       write("spec/calc_spec.rb", failing_suite)
     
-      expect(@test_suite.run(program)).to eq([expected_result])
+      expect(@test_suite.run(unit)).to eq([expected_result])
     end
   
     it "reports failure for (non-equivalent) mutant" do
-      expected_result = Mutiny::Result.new(mutant: incorrect_program, example: @expected_example, status: "failed")
+      expected_result = Mutiny::Result.new(mutant: incorrect_unit, example: @expected_example, status: "failed")
       
       # obtain original results
-      @test_suite.run(program) 
+      @test_suite.run(unit) 
   
-      # change the program
-      write("lib/calc.rb", incorrect_program.code)
+      # change the unit
+      write("lib/calc.rb", incorrect_unit.code)
   
-      expect(@test_suite.run(incorrect_program)).to eq([expected_result])
+      expect(@test_suite.run(incorrect_unit)).to eq([expected_result])
     end
     
     def failing_suite
@@ -66,8 +66,8 @@ module Mutiny::RSpec
       """
     end
     
-    def program
-      Mutiny::Mutant.new(code: code)
+    def unit
+      Mutiny::Mutant.new(code: code, path: "lib/calc.rb")
     end
   
     def code
@@ -80,8 +80,8 @@ module Mutiny::RSpec
       """
     end
     
-    def incorrect_program
-      Mutiny::Mutant.new(code: incorrect_code)
+    def incorrect_unit
+      Mutiny::Mutant.new(code: incorrect_code, path: "lib/calc.rb")
     end
   
     def incorrect_code

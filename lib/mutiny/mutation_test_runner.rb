@@ -2,18 +2,26 @@ require "key_struct"
 require_relative "mutants"
 
 module Mutiny
-  class MutationTestRunner < KeyStruct.reader(:program, :test_suite_runner, options: {})
+  class MutationTestRunner < KeyStruct.reader(:units, :test_suite_runner, options: {})
     def run(mutants)
-      program.results = test_suite_runner.run(program)
-      mutants.each { |m| run_suite(m) }
+      units.each do |unit|
+        relevant_mutants = mutants.select { |mutant| mutant.path == unit.path }
+        run_unit(unit, relevant_mutants)
+      end
+      
       mutants
     end
 
   private  
-    def run_suite(mutant)
+    def run_unit(unit, mutants)
+      unit.results = test_suite_runner.run(unit)
+      mutants.each { |mutant| run_suite(unit, mutant) }
+    end
+  
+    def run_suite(unit, mutant)
       mutant.results = test_suite_runner.run(mutant)
     
-      unless mutant.results.map(&:status) == program.results.map(&:status)
+      unless mutant.results.map(&:status) == unit.results.map(&:status)
         mutant.kill
         report_killing(mutant) if options[:noisy]
       end

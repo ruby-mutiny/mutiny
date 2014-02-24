@@ -13,12 +13,10 @@ A tiny mutation testing framework.
     * Get incrementality.feature passing:
       * Make unit and mutant immutable?
         * Remove need for id attr on unit and mutant
-        * Remove need for reults attr on unit and mutant
+        * Remove need for results attr on unit and mutant
         * Remove need for kill method on mutant
-      * Move other value objects over to Valuable
-      * Extract valuable into separate gem file
-
-    * Need a way of determining impacted files. The following should be a reasonable starting point:
+        
+      * Next step to passing feature is to determine impacted files:
 
             g = Git.open(dir)
             head, previous = g.log[0], g.log[1]

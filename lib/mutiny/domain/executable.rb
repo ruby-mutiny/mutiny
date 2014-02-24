@@ -1,10 +1,10 @@
-require_relative "../valuable/valuable"
+require "attributable"
 require "parser/current"
 require_relative "../ast/match"
 
 module Mutiny
   module Executable
-    extend Valuable
+    extend Attributable
     
     attributes :code
     

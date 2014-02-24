@@ -1,8 +1,8 @@
-require_relative "../valuable/valuable"
+require "attributable"
 
 module Mutiny
   class Example
-    extend Valuable
+    extend Attributable
     attributes :spec_path, :name, :line
 
     attr_accessor :id

@@ -1,9 +1,9 @@
-require_relative "valuable/valuable"
+require "attributable"
 require_relative "domain/mutants"
 
 module Mutiny
   class MutationTestRunner
-    extend Valuable
+    extend Attributable
     attributes :units, :test_suite_runner, options: {}
     
     def run(mutants)

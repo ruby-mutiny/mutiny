@@ -1,4 +1,4 @@
-require_relative "../valuable/valuable"
+require "attributable"
 require_relative "executable"
 require_relative "unit"
 
@@ -6,7 +6,7 @@ module Mutiny
   class Mutant
     include Executable
     
-    extend Valuable
+    extend Attributable
     specialises Unit
     attributes :line, :change, :operator, alive?: true
 

@@ -1,4 +1,3 @@
-require "key_struct"
 require "rspec"
 require "rspec/core/formatters/json_formatter"
 

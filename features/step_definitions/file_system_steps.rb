@@ -16,7 +16,7 @@ Then(/^the file at "(.*?)" should contain the following mutants:$/) do |path, ex
   expected_results.map_column!("Path") { |v| path(v) }
   expected_results.map_column!("Line") { |v| v.to_i }
   expected_results.map_column!("Change") { |v| v.to_sym }
-  expected_results.map_column!("Alive") { |v| v == "true" }
+  expected_results.map_column!("Alive?") { |v| v == "true" }
 
   expect(deserialised[:mutants].values).to eq(expected_results.hashes)
 end

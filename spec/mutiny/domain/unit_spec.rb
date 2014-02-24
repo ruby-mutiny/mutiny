@@ -1,4 +1,4 @@
-require "mutiny/unit"
+require "mutiny/domain/unit"
 
 module Mutiny
   describe Unit do

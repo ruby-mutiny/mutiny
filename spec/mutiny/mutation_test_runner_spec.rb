@@ -1,5 +1,5 @@
 require "mutiny/mutation_test_runner"
-require "mutiny/result"
+require "mutiny/domain/result"
 
 module Mutiny
   describe MutationTestRunner do

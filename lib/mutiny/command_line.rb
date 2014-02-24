@@ -2,7 +2,7 @@ require_relative "mutation_harness"
 require_relative "equivalence_detector"
 require_relative "mutation_test_runner"
 require_relative "session"
-require_relative "unit"
+require_relative "domain/unit"
 require_relative "rspec/suite_inspector"
 require_relative "rspec/runner"
 

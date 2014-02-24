@@ -11,8 +11,12 @@ A tiny mutation testing framework.
 * Consume a "diff", compute new results for impacted files, and merge into previous round of results
 
     * Get incrementality.feature passing:
-      
-      * Adjust command line so that mutants are created from all described classes ("programs under test"), and not just the first program under test
+      * Make unit and mutant immutable?
+        * Remove need for id attr on unit and mutant
+        * Remove need for reults attr on unit and mutant
+        * Remove need for kill method on mutant
+      * Move other value objects over to Valuable
+      * Extract valuable into separate gem file
 
     * Need a way of determining impacted files. The following should be a reasonable starting point:
 

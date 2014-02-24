@@ -1,4 +1,4 @@
-require "mutiny/example"
+require "mutiny/domain/example"
 
 module Mutiny
   module Store

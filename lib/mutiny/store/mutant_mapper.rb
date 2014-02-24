@@ -1,4 +1,4 @@
-require "mutiny/mutant"
+require "mutiny/domain/mutant"
 
 module Mutiny
   module Store
@@ -9,7 +9,7 @@ module Mutiny
           line: mutant.line,
           change: mutant.change,
           operator: mutant.operator.to_s,
-          alive: mutant.alive?
+          alive?: mutant.alive?
         }
       end
       

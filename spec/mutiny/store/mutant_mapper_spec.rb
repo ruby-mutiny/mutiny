@@ -3,8 +3,8 @@ require "mutiny/store/mutant_mapper"
 module Mutiny::Store
   describe MutantMapper do
     before(:each) do
-      @mutant = Mutiny::Mutant.new(path: "foo.rb", line: 4, change: :<, operator: MyOperator, alive: false)
-      @memento = { path: "foo.rb", line: 4, change: :<, operator: "Mutiny::Store::MyOperator", alive: false }
+      @mutant = Mutiny::Mutant.new(path: "foo.rb", line: 4, change: :<, operator: MyOperator, alive?: false)
+      @memento = { path: "foo.rb", line: 4, change: :<, operator: "Mutiny::Store::MyOperator", alive?: false }
     end
     
     it "should serialise a mutant to a hash" do

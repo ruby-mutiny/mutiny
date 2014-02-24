@@ -1,8 +1,11 @@
-require "key_struct"
-require_relative "mutants"
+require_relative "valuable/valuable"
+require_relative "domain/mutants"
 
 module Mutiny
-  class MutationTestRunner < KeyStruct.reader(:units, :test_suite_runner, options: {})
+  class MutationTestRunner
+    extend Valuable
+    attributes :units, :test_suite_runner, options: {}
+    
     def run(mutants)
       units.each do |unit|
         relevant_mutants = mutants.select { |mutant| mutant.path == unit.path }

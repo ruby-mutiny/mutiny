@@ -1,6 +1,6 @@
 require "unparser"
 
-require_relative "../mutant"
+require_relative "../domain/mutant"
 require_relative "../ast/pattern"
 
 module Mutiny

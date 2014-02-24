@@ -1,4 +1,4 @@
-require "mutiny/mutant"
+require "mutiny/domain/mutant"
 
 module Mutiny
   describe Mutant do

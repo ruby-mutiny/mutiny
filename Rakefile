@@ -8,7 +8,7 @@ task default: ["test:acceptance", "test:unit"]
 
 namespace :test do
   Cucumber::Rake::Task.new(:acceptance) do |t|
-    t.cucumber_opts = "features --format pretty"
+    t.cucumber_opts = "features --format pretty --tags ~@wip"
   end
   
   RSpec::Core::RakeTask.new(:unit)

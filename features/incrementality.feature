@@ -1,3 +1,4 @@
+@wip
 Feature: Incrementality
   
   Scenario: When a test case changes, only re-evaluates impacted mutants

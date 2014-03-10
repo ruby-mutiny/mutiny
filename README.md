@@ -11,10 +11,6 @@ A tiny mutation testing framework.
 * Consume a "diff", compute new results for impacted files, and merge into previous round of results
 
     * Get incrementality.feature passing:
-      * Make unit and mutant immutable?
-        * Remove need for results attr on unit and mutant
-        * Remove need for kill method on mutant
-        
       * Next step to passing feature is to determine impacted files:
 
             g = Git.open(dir)

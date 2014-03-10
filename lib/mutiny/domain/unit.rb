@@ -7,7 +7,5 @@ module Mutiny
     
     extend Attributable
     attributes :path
-    
-    attr_accessor :results
   end
 end

@@ -8,16 +8,6 @@ module Mutiny
     
     extend Attributable
     specialises Unit
-    attributes :line, :change, :operator, alive?: true
-
-    attr_accessor :results
-    
-    def killed?
-      !alive?
-    end
-    
-    def kill
-      @attributes[:alive?] = false
-    end
+    attributes :line, :change, :operator
   end
 end

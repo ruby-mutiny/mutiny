@@ -1,5 +1,5 @@
 require "attributable"
-require_relative "domain/mutants"
+require_relative "domain/analysis"
 
 module Mutiny
   class MutationTestRunner
@@ -7,29 +7,32 @@ module Mutiny
     attributes :units, :test_suite_runner, options: {}
     
     def run(mutants)
+      @analysis = Analysis.new
+      
       units.each do |unit|
         relevant_mutants = mutants.select { |mutant| mutant.path == unit.path }
         run_unit(unit, relevant_mutants)
       end
       
-      mutants
+      @analysis
     end
 
   private  
     def run_unit(unit, mutants)
-      unit.results = test_suite_runner.run(unit)
-      mutants.each { |mutant| run_suite(unit, mutant) }
+      expected_results = test_suite_runner.run(unit)
+      mutants.each { |mutant| run_suite(expected_results, mutant) }
     end
   
-    def run_suite(unit, mutant)
-      mutant.results = test_suite_runner.run(mutant)
+    def run_suite(expected_results, mutant)
+      actual_results = test_suite_runner.run(mutant)
     
-      unless mutant.results.map(&:status) == unit.results.map(&:status)
-        mutant.kill
+      if actual_results.map(&:status) == expected_results.map(&:status)
+        @analysis.record_alive(mutant, actual_results)
+        report_survival(mutant) if options[:noisy]
+      else
+        @analysis.record_dead(mutant, actual_results)
         report_killing(mutant) if options[:noisy]
       end
-  
-      report_survival(mutant) if options[:noisy]
     end
     
     def report_killing(mutant)

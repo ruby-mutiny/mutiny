@@ -36,6 +36,7 @@ Feature: Mutiny
       | lib/max.rb | 4    | !=     | killed |
       | lib/max.rb | 4    | >=     | alive  |
     # Note that mutating > to >= produces an equivalent mutant
+    And I should receive a mutation score of 0.8
 
 
   Scenario: Multiple units
@@ -104,3 +105,4 @@ Feature: Mutiny
       | lib/min.rb | 4    | !=     | killed |
       | lib/min.rb | 4    | >      | killed |
       | lib/min.rb | 4    | >=     | killed |
+    And I should receive a mutation score of 0.8

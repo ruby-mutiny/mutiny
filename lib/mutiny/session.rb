@@ -6,18 +6,15 @@ require_relative "store/typed_identity_map"
 
 module Mutiny
   class Session < Struct.new(:path)
-    def persist(mutants)
+    def persist(analysis)
       @map = Mutiny::Store::TypedIdentityMap.new
-      
-      results = mutants.collect(&:results).flatten
-      examples = results.collect(&:example).uniq { |example| [example.spec_path, example.line] }
       
       File.open(path, 'w') do |file|
         yaml_store = Mutiny::Store::YamlStore.new(file, :write_only)
         
-        save_all(yaml_store, :mutants, mutants, serialise(mutants, Mutiny::Store::MutantMapper.new))
-        save_all(yaml_store, :examples, examples, serialise(examples, Mutiny::Store::ExampleMapper.new))
-        save_all(yaml_store, :results, results, serialise(results, Mutiny::Store::ResultMapper.new(@map)))
+        save_all(yaml_store, :mutants, analysis.mutants, serialise(analysis.mutants, Mutiny::Store::MutantMapper.new))
+        save_all(yaml_store, :examples, analysis.examples, serialise(analysis.examples, Mutiny::Store::ExampleMapper.new))
+        save_all(yaml_store, :results, analysis.results, serialise(analysis.results, Mutiny::Store::ResultMapper.new(@map)))
         
         yaml_store.finalise(file)
       end

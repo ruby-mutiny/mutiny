@@ -1,9 +1,10 @@
 require "mutiny/store/mutant_mapper"
+require "mutiny/domain/dead_mutant"
 
 module Mutiny::Store
   describe MutantMapper do
     before(:each) do
-      @mutant = Mutiny::Mutant.new(path: "foo.rb", line: 4, change: :<, operator: MyOperator, alive?: false)
+      @mutant = Mutiny::Mutant.new(path: "foo.rb", line: 4, change: :<, operator: MyOperator).extend(Mutiny::DeadMutant)
       @memento = { path: "foo.rb", line: 4, change: :<, operator: "Mutiny::Store::MyOperator", alive?: false }
     end
     

@@ -56,7 +56,7 @@ Feature: Incrementality
       end
       """
     When I configure mutiny with the option "results_file" set to the path "results.yaml"
-    And I run mutiny on "spec/max_spec.rb"
+    And I run mutiny on "spec"
     And I have the following spec at "spec/min_spec.rb":
       """
       require_relative '../lib/min'
@@ -74,8 +74,8 @@ Feature: Incrementality
       end
       """    
     And I configure mutiny with the option "existing_results_file" set to the path "results.yaml"
-    And I run mutiny on "spec/max_spec.rb"
-    Then I should receive 6 results for the file "lib/min.rb"
+    And I run mutiny on "spec"
+    Then I should receive 5 results for the file "lib/min.rb"
     Then I should receive 0 results for the file "lib/max.rb"
 
     # Note that mutating > to >= produces an equivalent mutant

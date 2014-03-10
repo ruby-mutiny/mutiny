@@ -11,6 +11,8 @@ A tiny mutation testing framework.
 * Consume a "diff", compute new results for impacted files, and merge into previous round of results
 
     * Get incrementality.feature passing:
+      * Current idea: Can the change detector be a separate component? The results of which can then be used to configure mutiny so that it only analyses those units which have changed. Given a folder "spec" this new component would return the list of specs that need to be analysed. (Eventually, this component would be given a set of units and possibly a set of existing mutants and would return a new set of mutants that need to be analysed. The new set of mutants is likely to be a subset of the existing mutants, but might also contain some new mutants).
+    
       * Next step to passing feature is to determine impacted files:
 
             g = Git.open(dir)

@@ -10,7 +10,7 @@ module Mutiny
     specialises Unit
     attributes :line, :change, :operator, alive?: true
 
-    attr_accessor :id, :results
+    attr_accessor :results
     
     def killed?
       !alive?

@@ -8,6 +8,6 @@ module Mutiny
     extend Attributable
     attributes :path
     
-    attr_accessor :id, :results
+    attr_accessor :results
   end
 end

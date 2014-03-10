@@ -12,7 +12,6 @@ A tiny mutation testing framework.
 
     * Get incrementality.feature passing:
       * Make unit and mutant immutable?
-        * Remove need for id attr on unit and mutant
         * Remove need for results attr on unit and mutant
         * Remove need for kill method on mutant
         

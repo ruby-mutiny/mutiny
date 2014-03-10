@@ -6,7 +6,5 @@ module Mutiny
   class Result
     extend Attributable
     attributes :mutant, :example, :status
-    
-    attr_accessor :id
   end
 end

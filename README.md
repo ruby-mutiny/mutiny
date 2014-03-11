@@ -37,10 +37,6 @@ A tiny mutation testing framework.
 
     * Consider refactoring mutant.rb so that it does not contain a code attribute (perhaps instead it should compute code by passing the file and line number to its operator?)
     
-    * Should Mutant be immutable? (Currently, mutable due to the kill method and due to the results and id methods).
-    
-    * Should IDs be handled differently? Currently calculated by the store and then the session updates the in-memory objects. However, ids seems to only be necessary for persisting to disk...
-    
     * Tests for Session.
     
 * Extend framework to explore Program Analyser and more sophisticated Test Case Provider components (see OmniGraffle diagram)

@@ -1,9 +1,9 @@
-Given(/^I have the following unit at "(.*?)":$/) do |path, unit|
-  write(path, unit)
+Given(/^I have the following (unit|spec) at "(.*?)":$/) do |type, path, contents|
+  write(path, contents)
 end
 
-Given(/^I have the following spec at "(.*?)":$/) do |path, spec|
-  write(path, spec)
+Given(/^I change to the following (unit|spec) at "(.*?)":$/) do |type, path, contents|
+  write(path, contents)
 end
 
 Then(/^the file at "(.*?)" should contain the following mutants:$/) do |path, expected_results|

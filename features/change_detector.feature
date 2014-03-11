@@ -1,12 +1,11 @@
-@wip
 Feature: Change detection
 
-  @focus
   Scenario: Detects changes to a test case
-    Given I have the following spec at "spec/min_spec.rb":
+    Given I have a new Git repository
+    And I have the following spec at "spec/min_spec.rb":
       """
-      require_relative '../lib/min'
-    
+      class Min; end
+      
       describe Min do
         it "test1" do
           expect(Min.new.run(4, 4)).to eq(4)
@@ -22,8 +21,8 @@ Feature: Change detection
       """
     And I have the following spec at "spec/max_spec.rb":
       """
-      require_relative '../lib/max'
-  
+      class Max; end
+      
       describe Max do
         it "test1" do
           expect(Max.new.run(4, 4)).to eq(4)
@@ -36,11 +35,13 @@ Feature: Change detection
         end
       end
       """
-    And I run the change detector
+    And I stage my changes to "spec/min_spec.rb"
+    And I stage my changes to "spec/max_spec.rb"
+    And I commit my changes
     And I change to the following spec at "spec/min_spec.rb":
       """
-      require_relative '../lib/min'
-    
+      class Min; end
+      
       describe Min do
         it "test1" do
           expect(Min.new.run(4, 4)).to eq(4)
@@ -52,11 +53,14 @@ Feature: Change detection
           expect(Min.new.run(4, 3)).to eq(3)
         end
       end
-      """    
-    When I run the change detector
+      """
+    And I stage my changes to "spec/min_spec.rb"
+    And I commit my changes
+    When I run the change detector between "HEAD~1" and "HEAD"
     Then 1 spec is impacted
     And the spec at "spec/min_spec.rb" is impacted
     
+    @wip @focus
     Scenario: Detects changes to a unit
       Given I have the following unit at "lib/max.rb":
         """

@@ -1,11 +1,18 @@
 module Mutiny
   module RSpec
     class SuiteInspector < Struct.new(:test_suite_path)
-      def paths_of_described_classes
-        configuration.files_or_directories_to_run = [test_suite_path]
-        configuration.load_spec_files
+      def paths_of_specs
+        ensure_specs_are_loaded
         
-        ::RSpec.world.example_groups.map do |group|
+        world.example_groups.map do |group|
+          group.metadata[:example_group_block].source_location.first
+        end
+      end
+      
+      def paths_of_described_classes
+        ensure_specs_are_loaded
+        
+        world.example_groups.map do |group|
           path_of_class_described_by(group)
         end
       end
@@ -18,10 +25,23 @@ module Mutiny
         path
       end
       
+      def ensure_specs_are_loaded
+        if world.example_count.zero?
+          configuration.files_or_directories_to_run = [test_suite_path]
+          configuration.load_spec_files
+        end
+      end
+      
       def configuration
         # Reuse the built-in RSpec configuration, as it seems to be
         # preconfigured with useful options (e.g., expectation framework)
         @configuration ||= ::RSpec.configuration
+      end
+      
+      def world
+        # Reuse the built-in RSpec world, as fresh instances don't 
+        # seem to be populated with example_groups for some reason
+        @world ||= ::RSpec.world
       end
     end
   end

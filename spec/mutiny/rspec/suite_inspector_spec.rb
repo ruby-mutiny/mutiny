@@ -6,60 +6,32 @@ module Mutiny::RSpec
       clean_tmp_dir
     end
     
-    describe "paths_of_described_classes" do
-      it "should return a single location when path is for a single spec file" do
-        write("lib/calc.rb", calc_class)
-        write("spec/calc_spec.rb", calc_spec)
-      
-        paths = SuiteInspector.new(path("spec/calc_spec.rb")).paths_of_described_classes
-      
-        expect(paths).to eq([path("lib/calc.rb")])
-      end
+    it "should return a single spec when path is for a single spec file" do
+      write("lib/calc.rb", calc_class)
+      write("spec/calc_spec.rb", calc_spec)
     
-      it "should return all locations when path is for a spec directory" do
-        write("lib/calc.rb", calc_class)
-        write("spec/calc_spec.rb", calc_spec)
-        write("lib/nested/trig.rb", trig_class)
-        write("spec/nested/trig_spec.rb", trig_spec)
-      
-        paths = SuiteInspector.new(path("spec")).paths_of_described_classes
-      
-        expect(paths).to eq([path("lib/calc.rb"), path("lib/nested/trig.rb")])
-      end
-    
-      it "should return empty when path is for an empty spec directory" do
-        paths = SuiteInspector.new(path("spec")).paths_of_described_classes
-      
-        expect(paths).to eq([])
-      end
+      specs = SuiteInspector.new(path("spec/calc_spec.rb")).specs
+
+      expect(specs.map(&:path)).to eq([path("spec/calc_spec.rb")])
+      expect(specs.map(&:path_of_described_class)).to eq([path("lib/calc.rb")])    
     end
+  
+    it "should return all specs when path is for a spec directory" do
+      write("lib/calc.rb", calc_class)
+      write("spec/calc_spec.rb", calc_spec)
+      write("lib/nested/trig.rb", trig_class)
+      write("spec/nested/trig_spec.rb", trig_spec)
     
-    describe "paths_of_specs" do
-      it "should return a single location when path is for a single spec file" do
-        write("lib/calc.rb", calc_class)
-        write("spec/calc_spec.rb", calc_spec)
-      
-        paths = SuiteInspector.new(path("spec/calc_spec.rb")).paths_of_specs
-      
-        expect(paths).to eq([path("spec/calc_spec.rb")])
-      end
-      
-      it "should return all locations when path is for a spec directory" do
-        write("lib/calc.rb", calc_class)
-        write("spec/calc_spec.rb", calc_spec)
-        write("lib/nested/trig.rb", trig_class)
-        write("spec/nested/trig_spec.rb", trig_spec)
-      
-        paths = SuiteInspector.new(path("spec")).paths_of_specs
-      
-        expect(paths).to eq([path("spec/calc_spec.rb"), path("spec/nested/trig_spec.rb")])
-      end
+      specs = SuiteInspector.new(path("spec")).specs
+
+      expect(specs.map(&:path)).to eq([path("spec/calc_spec.rb"), path("spec/nested/trig_spec.rb")])
+      expect(specs.map(&:path_of_described_class)).to eq([path("lib/calc.rb"), path("lib/nested/trig.rb")])
+    end
+  
+    it "should return no specs when path is for an empty spec directory" do
+      specs = SuiteInspector.new(path("spec")).specs
     
-      it "should return empty when path is for an empty spec directory" do
-        paths = SuiteInspector.new(path("spec")).paths_of_specs
-      
-        expect(paths).to eq([])
-      end
+      expect(specs).to eq([])
     end
 
     def calc_spec

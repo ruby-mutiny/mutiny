@@ -40,7 +40,7 @@ module Mutiny
     end
     
     def unit_paths
-      @unit_paths ||= suite_inspector.paths_of_described_classes
+      @unit_paths ||= suite_inspector.specs.map(&:path_of_described_class)
     end
   
     def harness

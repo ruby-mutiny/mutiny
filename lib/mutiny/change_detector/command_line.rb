@@ -10,7 +10,12 @@ module Mutiny
       def run
         changed_paths = differencer.changed_paths
         
-        impacted_paths = Set.new(suite_inspector.paths_of_specs & changed_paths) + (suite_inspector.paths_of_specs_dependent_on(changed_paths))
+        impacted_specs = suite_inspector.specs.select do |spec|
+          changed_paths.include?(spec.path) ||
+          changed_paths.include?(spec.path_of_described_class)
+        end
+        
+        impacted_paths = impacted_specs.map(&:path)
       end
     
     private

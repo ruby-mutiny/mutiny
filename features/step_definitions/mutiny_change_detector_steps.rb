@@ -9,5 +9,5 @@ Then(/^(\d+) spec is impacted$/) do |expected_number|
 end
 
 Then(/^the spec at "(.*?)" is impacted$/) do |expected_spec|
-  expect(@result).to include(expected_spec)
+  expect(@result).to include(path(expected_spec))
 end

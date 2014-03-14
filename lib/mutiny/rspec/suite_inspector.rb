@@ -5,7 +5,23 @@ module Mutiny
         ensure_specs_are_loaded
         
         world.example_groups.map do |group|
-          group.metadata[:example_group_block].source_location.first
+          path, line = group.metadata[:example_group_block].source_location
+          path
+        end
+      end
+      
+      def paths_of_specs_dependent_on(dependencies)
+        ensure_specs_are_loaded
+        
+        dependent_groups = world.example_groups.select do |group|
+          dependencies.any? do |dependency|
+            path_of_class_described_by(group).end_with? dependency
+          end
+        end
+        
+        dependent_groups.map do |group|
+          path, line = group.metadata[:example_group_block].source_location
+          path
         end
       end
       

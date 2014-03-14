@@ -7,8 +7,10 @@ module Mutiny
       extend Attributable
       attributes :path, :start_label, :finish_label
   
-      def run        
-        differencer.changed_paths
+      def run
+        changed_paths = differencer.changed_paths
+        
+        impacted_paths = Set.new(suite_inspector.paths_of_specs & changed_paths) + (suite_inspector.paths_of_specs_dependent_on(changed_paths))
       end
     
     private

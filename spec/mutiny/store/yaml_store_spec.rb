@@ -99,7 +99,7 @@ module Mutiny::Store
     
     def path_to_new_tmp_file(touch = nil)
       # Creates a new (unused) filename in the temporary directory
-      Dir::Tmpname.make_tmpname(Dir.tmpdir, nil).tap do |path|
+      File.join(Dir.tmpdir, Dir::Tmpname.make_tmpname(self.class.name, nil)).tap do |path|
         File.open(path, "w") {} if touch
       end
     end

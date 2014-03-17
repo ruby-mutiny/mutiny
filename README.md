@@ -19,6 +19,8 @@ A tiny mutation testing framework.
           * LOI -- Insert unary logic ops (~)
           * LOD -- Delete unary logic ops (~)
       * Investigate whether it makes sense to separate mutation creating component from mutation analysis component
+          * Refactor mutation operators to extract common logic
+          * Consider refactoring AST match and pattern classes, and extracting as a separate gem
           * Additional mutator.feature that tests a sensible error is reported when an unknown mutation operator is configured
           * Additional mutator.feature that tests that >1 mutant can be seeded on a single line
   

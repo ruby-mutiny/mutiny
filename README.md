@@ -23,6 +23,7 @@ A tiny mutation testing framework.
           * Consider refactoring AST match and pattern classes, and extracting as a separate gem
           * Additional mutator.feature that tests a sensible error is reported when an unknown mutation operator is configured
           * Additional mutator.feature that tests that >1 mutant can be seeded on a single line
+          * Additional mutator.feature that tests that allows several mutation operators to be used at once (e.g., a composite operator for all existing method-level mutation operators)
   
   * Identify candidate projects
       * Must use RSpec

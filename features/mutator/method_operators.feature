@@ -1,7 +1,7 @@
 @focus
 Feature: Method-level mutation operators
 
-  Scenario: Binary arithmetic operator replacement (+ - * / %)
+  Scenario: Binary arithmetic operator replacement
     Given I have the following unit at "lib/add.rb":
       """
       class Add
@@ -18,3 +18,26 @@ Feature: Method-level mutation operators
       | lib/add.rb | 3    | *      |
       | lib/add.rb | 3    | /      |
       | lib/add.rb | 3    | %      |
+
+
+  Scenario: Relational operator replacement
+    Given I have the following unit at "lib/max.rb":
+      """
+      class Max
+        def run(left, right)
+          max = left
+          max = right if right > left
+          max
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "ROR"
+    And I run the mutator on "lib/max.rb"
+    Then I should receive the following mutants:
+      | Path       | Line | Change |
+      | lib/max.rb | 4    | <      |
+      | lib/max.rb | 4    | <=     |
+      | lib/max.rb | 4    | ==     |
+      | lib/max.rb | 4    | !=     |
+      | lib/max.rb | 4    | >=     |
+      

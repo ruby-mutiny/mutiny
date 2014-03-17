@@ -52,10 +52,10 @@ Feature: Persistent results
       | 14 | 5         | 2          | passed |
       | 15 | 5         | 3          | passed |
     And the file at "results.yaml" should contain the following mutants:
-      | ID | Path       | Line | Change | Alive? | Operator                                           |
-      | 1  | lib/max.rb | 4    | <      | false  | Mutiny::Mutator::MutationOperators::BinaryOperator |
-      | 2  | lib/max.rb | 4    | <=     | false  | Mutiny::Mutator::MutationOperators::BinaryOperator |
-      | 3  | lib/max.rb | 4    | ==     | false  | Mutiny::Mutator::MutationOperators::BinaryOperator |
-      | 4  | lib/max.rb | 4    | !=     | false  | Mutiny::Mutator::MutationOperators::BinaryOperator |
-      | 5  | lib/max.rb | 4    | >=     | true   | Mutiny::Mutator::MutationOperators::BinaryOperator |
+      | ID | Path       | Line | Change | Alive? | Operator                                                          |
+      | 1  | lib/max.rb | 4    | <      | false  | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
+      | 2  | lib/max.rb | 4    | <=     | false  | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
+      | 3  | lib/max.rb | 4    | ==     | false  | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
+      | 4  | lib/max.rb | 4    | !=     | false  | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
+      | 5  | lib/max.rb | 4    | >=     | true   | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
     # Note that mutating > to >= produces an equivalent mutant

@@ -1,7 +1,7 @@
-require "mutiny/mutator/mutation_operators/binary_operator"
+require "mutiny/mutator/mutation_operators/relational_operator_replacement"
 
 module Mutiny::Mutator::MutationOperators
-  describe BinaryOperator, "mutate" do
+  describe RelationalOperatorReplacement, "mutate" do
     it "changes the operator to other operators" do
       mutants = mutate("a < b")
   
@@ -37,7 +37,7 @@ eos
     end
   
     def mutate(unit)
-      BinaryOperator.new.mutate(Parser::CurrentRuby.parse(unit), "foo.rb")
+      RelationalOperatorReplacement.new.mutate(Parser::CurrentRuby.parse(unit), "foo.rb")
     end
   end
 end

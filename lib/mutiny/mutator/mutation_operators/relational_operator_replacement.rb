@@ -6,7 +6,7 @@ require_relative "../ast/pattern"
 module Mutiny
   module Mutator
     module MutationOperators
-      class BinaryOperator
+      class RelationalOperatorReplacement
         def mutate(ast, original_path)
           pattern.match(ast).flat_map do |mutation_point|
             mutate_with_other_operators(mutation_point, original_path)
@@ -33,7 +33,7 @@ module Mutiny
             code: Unparser.unparse(mutated.ast),
             line: mutation_point.line,
             change: new_operator,
-            operator: BinaryOperator
+            operator: RelationalOperatorReplacement
           )
         end
   

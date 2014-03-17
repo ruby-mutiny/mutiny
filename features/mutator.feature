@@ -1,4 +1,3 @@
-@focus
 Feature: Mutator
 
   Scenario: Generates mutants for a single unit

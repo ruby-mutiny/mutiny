@@ -27,12 +27,26 @@ module Mutiny
       actual_results = test_suite_runner.run(mutant)
     
       if actual_results.map(&:status) == expected_results.map(&:status)
-        @analysis.record_alive(mutant, actual_results)
-        report_survival(mutant) if options[:noisy]
+        record_survival(mutant, actual_results)
       else
-        @analysis.record_dead(mutant, actual_results)
-        report_killing(mutant) if options[:noisy]
+        record_killing(mutant, actual_results)
       end
+    end
+    
+    def record_survival(mutant, actual_results)
+      @analysis.record_alive(mutant, actual_results)
+      report_survival(mutant) if options[:noisy]
+    end
+    
+    def report_survival(mutant)
+      puts ""
+      puts "Didn't kill:"
+      puts mutant.readable
+    end
+    
+    def record_killing(mutant, actual_results)
+      @analysis.record_dead(mutant, actual_results)
+      report_killing(mutant) if options[:noisy]
     end
     
     def report_killing(mutant)
@@ -40,12 +54,6 @@ module Mutiny
       puts "Killed:"
       puts mutant.readable
       puts "with: #{discriminating_examples(mutant_results, original_results)}"
-    end
-    
-    def report_survival(mutant)
-      puts ""
-      puts "Didn't kill:"
-      puts mutant.readable
     end
     
     def discriminating_examples(mutant_results, original_results)

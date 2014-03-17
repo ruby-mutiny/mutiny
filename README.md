@@ -25,6 +25,8 @@ A tiny mutation testing framework.
           * LOI -- Insert unary logic ops (~)
           * LOD -- Delete unary logic ops (~)
       * Investigate whether it makes sense to separate mutation creating component from mutation analysis component
+          * Additional mutator.feature that tests a sensible error is reported when an unknown mutation operator is configured
+          * Additional mutator.feature that tests that >1 mutant can be seeded on a single line
   
   * Identify candidate projects
       * Must use RSpec

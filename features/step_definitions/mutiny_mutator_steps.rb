@@ -13,7 +13,7 @@ Then(/^I should receive the following mutants:$/) do |expected_results|
   expected_results.map_column!("Change") { |v| v.to_sym }
 
   expected_results.hashes.each do |row|
-    found = @results.mutants.any? {|m| m.path == row[:path] && m.line == row[:line] && m.change == row[:change]}
+    found = @results.any? {|m| m.path == row[:path] && m.line == row[:line] && m.change == row[:change]}
     message = "expected to find a mutant of #{row[:path]} on line #{row[:line]} with change #{row[:change]}, but there was none"
     
     expect(found).to be_true, message

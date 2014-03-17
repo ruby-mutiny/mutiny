@@ -1,4 +1,5 @@
 require "attributable"
+require "mutiny/domain/unit"
 
 module Mutiny
   module Mutator
@@ -7,10 +8,27 @@ module Mutiny
       attributes :path
   
       def run
-        []
+        harness.generate_mutants(units)
       end
     
     private
+      def harness
+        @harness ||= Mutiny::Mutator::MutationHarness.new
+      end
+    
+      def units
+        paths.map do |path|
+          Mutiny::Unit.new(path: path, code: File.read(path))
+        end
+      end
+      
+      def paths      
+        if File.directory?(path)
+          Dir["#{path}/*.rb"]
+        else
+          [path]
+        end
+      end
     end
   end
 end

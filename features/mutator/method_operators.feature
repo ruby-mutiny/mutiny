@@ -5,7 +5,7 @@ Feature: Method-level mutation operators
     Given I have the following unit at "lib/add.rb":
       """
       class Add
-        def add(left, right)
+        def run(left, right)
           left + right
         end
       end
@@ -40,4 +40,22 @@ Feature: Method-level mutation operators
       | lib/max.rb | 4    | ==     |
       | lib/max.rb | 4    | !=     |
       | lib/max.rb | 4    | >=     |
-      
+  
+  
+ Scenario: Conditional operator replacement (&&, || , ^, and, or)
+    Given I have the following unit at "lib/xor.rb":
+      """
+      class Xor
+        def run(left, right)
+          left ^ right
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "COR"
+    And I run the mutator on "lib/xor.rb"
+    Then I should receive the following mutants:
+      | Path       | Line | Change |
+      | lib/xor.rb | 3    | &&     |
+      | lib/xor.rb | 3    | \|\|   |
+      | lib/xor.rb | 3    | and    |
+      | lib/xor.rb | 3    | or     |

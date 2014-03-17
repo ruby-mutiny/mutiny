@@ -1,6 +1,7 @@
 require "attributable"
 require "parser/current"
 require_relative "mutation_operators/relational_operator_replacement"
+require_relative "mutation_operators/relational_expression_replacement"
 require_relative "mutation_operators/binary_arithmetic_operator_replacement"
 require_relative "mutation_operators/conditional_operator_replacement"
 require_relative "mutation_operators/shortcut_assignment_operator_replacement"
@@ -25,6 +26,7 @@ module Mutiny
       def operators_by_name
         @operators_by_name ||= {
           ROR: MutationOperators::RelationalOperatorReplacement.new,
+          RER: MutationOperators::RelationalExpressionReplacement.new,
           BAOR: MutationOperators::BinaryArithmeticOperatorReplacement.new,
           COR: MutationOperators::ConditionalOperatorReplacement.new,
           SAOR: MutationOperators::ShortcutAssignmentOperatorReplacement.new,

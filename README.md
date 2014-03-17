@@ -15,7 +15,6 @@ A tiny mutation testing framework.
           * UAOD -- delete unary arithmetic operator (-)
           * UAOI -- insert unary arithmetic operator (-)
           * UAOR -- replace unary arithmetic operator (+ -)
-          * RER -- replace relational expression (a > b, a >= b, a < b, a <= b, a == b, a != b) mutate to (true false)
           * COD -- Delete unary conditional ops (!)
           * COI -- Insert unary conditional ops (!)
           * LOI -- Insert unary logic ops (~)

@@ -83,3 +83,19 @@ Feature: Method-level mutation operators
       | lib/accumulate.rb | 3    | >>=    |
       | lib/accumulate.rb | 3    | &&=    |
       | lib/accumulate.rb | 3    | \|\|=  |
+      
+  Scenario: Logical operator replacement (&, |, ^)
+    Given I have the following unit at "lib/mask.rb":
+      """
+      class Mask
+        def run(left, right)
+          left | right
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "LOR"
+    And I run the mutator on "lib/mask.rb"
+    Then I should receive the following mutants:
+      | Path        | Line | Change |
+      | lib/mask.rb | 3    | &     |
+      | lib/mask.rb | 3    | ^     |

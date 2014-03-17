@@ -18,7 +18,6 @@ A tiny mutation testing framework.
           * RER -- replace relational expression (a > b, a >= b, a < b, a <= b, a == b, a != b) mutate to (true false)
           * COD -- Delete unary conditional ops (!)
           * COI -- Insert unary conditional ops (!)
-          * LOR -- Replace unary logic ops (&, |, ^)
           * LOI -- Insert unary logic ops (~)
           * LOD -- Delete unary logic ops (~)
       * Investigate whether it makes sense to separate mutation creating component from mutation analysis component

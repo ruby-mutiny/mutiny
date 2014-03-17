@@ -4,7 +4,7 @@ require_relative "mutation_operators/relational_operator_replacement"
 require_relative "mutation_operators/binary_arithmetic_operator_replacement"
 require_relative "mutation_operators/conditional_operator_replacement"
 require_relative "mutation_operators/shortcut_assignment_operator_replacement"
-
+require_relative "mutation_operators/logical_operator_replacement"
 
 module Mutiny
   module Mutator
@@ -27,7 +27,8 @@ module Mutiny
           ROR: MutationOperators::RelationalOperatorReplacement.new,
           BAOR: MutationOperators::BinaryArithmeticOperatorReplacement.new,
           COR: MutationOperators::ConditionalOperatorReplacement.new,
-          SAOR: MutationOperators::ShortcutAssignmentOperatorReplacement.new
+          SAOR: MutationOperators::ShortcutAssignmentOperatorReplacement.new,
+          LOR: MutationOperators::LogicalOperatorReplacement.new
         }
       end
     end

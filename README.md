@@ -14,7 +14,6 @@ A tiny mutation testing framework.
       * [Method level mutations](http://cs.gmu.edu/~offutt/mujava/mutopsMethod.pdf)
           * UAOD -- delete unary arithmetic operator (-)
           * UAOI -- insert unary arithmetic operator (-)
-          * UAOR -- replace unary arithmetic operator (+ -)
           * COD -- Delete unary conditional ops (!)
           * COI -- Insert unary conditional ops (!)
           * LOI -- Insert unary logic ops (~)

@@ -1,7 +1,12 @@
 require "mutiny/mutator/command_line"
 
+When(/^I configure the mutator with the option "(.*?)" set to "(.*?)"$/) do |option, value|
+  options[option.to_sym] = value
+end
+
 When(/^I run the mutator on "(.*?)"$/) do |relative_path_to_unit|
-  @results = Mutiny::Mutator::CommandLine.new(path: path(relative_path_to_unit)).run
+  options[:path] = path(relative_path_to_unit)
+  @results = Mutiny::Mutator::CommandLine.new(options).run
 end
 
 Then(/^I should receive the following mutants:$/) do |expected_results|
@@ -18,4 +23,8 @@ Then(/^I should receive the following mutants:$/) do |expected_results|
     
     expect(found).to be_true, message
   end
+end
+
+def options
+  @options ||= { noisy: false }
 end

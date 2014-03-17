@@ -5,7 +5,7 @@ module Mutiny
   module Mutator
     class CommandLine
       extend Attributable
-      attributes :path
+      attributes :path, :operator
   
       def run
         harness.generate_mutants(units)
@@ -13,7 +13,7 @@ module Mutiny
     
     private
       def harness
-        @harness ||= Mutiny::Mutator::MutationHarness.new
+        @harness ||= Mutiny::Mutator::MutationHarness.new(operator: operator)
       end
     
       def units

@@ -12,7 +12,8 @@ Feature: Mutator
         end
       end
       """
-    When I run the mutator on "lib/max.rb"
+    When I configure the mutator with the option "operator" set to "ROR"
+    And I run the mutator on "lib/max.rb"
     Then I should receive the following mutants:
       | Path       | Line | Change |
       | lib/max.rb | 4    | <      |
@@ -33,7 +34,7 @@ Feature: Mutator
         end
       end
       """
-    Given I have the following unit at "lib/min.rb":
+    And I have the following unit at "lib/min.rb":
       """
       class Max
         def run(left, right)
@@ -43,7 +44,8 @@ Feature: Mutator
         end
       end
       """
-    When I run the mutator on "lib"
+    When I configure the mutator with the option "operator" set to "ROR"
+    And I run the mutator on "lib"
     Then I should receive the following mutants:
       | Path       | Line | Change |
       | lib/max.rb | 4    | <      |

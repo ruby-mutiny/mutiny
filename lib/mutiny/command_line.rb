@@ -1,4 +1,4 @@
-require_relative "mutation_harness"
+require_relative "mutator/mutation_harness"
 require_relative "equivalence_detector"
 require_relative "mutation_test_runner"
 require_relative "session"
@@ -44,7 +44,7 @@ module Mutiny
     end
   
     def harness
-      @harness ||= Mutiny::MutationHarness.new
+      @harness ||= Mutiny::Mutator::MutationHarness.new
     end
   
     def equivalence_detector

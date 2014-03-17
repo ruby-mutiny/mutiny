@@ -1,6 +1,6 @@
-require "mutiny/mutation_operators/binary_operator"
+require "mutiny/mutator/mutation_operators/binary_operator"
 
-module Mutiny::MutationOperators
+module Mutiny::Mutator::MutationOperators
   describe BinaryOperator, "mutate" do
     it "changes the operator to other operators" do
       mutants = mutate("a < b")

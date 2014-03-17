@@ -1,6 +1,6 @@
-require "mutiny/ast/match"
+require "mutiny/mutator/ast/match"
 
-module Mutiny::Ast
+module Mutiny::Mutator::Ast
   describe Match do
     describe "matched" do
       it "should return the entire AST when the location is empty" do

@@ -1,6 +1,6 @@
 require "attributable"
 require "parser/current"
-require_relative "../ast/match"
+require "mutiny/mutator/ast/match"
 
 module Mutiny
   module Executable
@@ -9,7 +9,7 @@ module Mutiny
     attributes :code
     
     def class_name
-      Mutiny::Ast::Match.new(ast, [0, 1]).matched.to_s
+      Mutiny::Mutator::Ast::Match.new(ast, [0, 1]).matched.to_s
     end
   
   private

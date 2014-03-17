@@ -1,6 +1,6 @@
-require "mutiny/ast/pattern"
+require "mutiny/mutator/ast/pattern"
 
-module Mutiny::Ast
+module Mutiny::Mutator::Ast
   describe Pattern, "match" do
     before(:each) do
       @pattern = Pattern.new do |node|

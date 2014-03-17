@@ -12,11 +12,11 @@ A tiny mutation testing framework.
 * Prepare for first round of experiments
   * Implement some more mutation operators
       * [Method level mutations](http://cs.gmu.edu/~offutt/mujava/mutopsMethod.pdf)
-          * BAOR -- replace binary arithmetic operator (+ - * / %)
           * UAOD -- delete unary arithmetic operator (-)
           * UAOI -- insert unary arithmetic operator (-)
           * UAOR -- replace unary arithmetic operator (+ -)
-          * ROR -- replace relational operator (> >= < <= == !=) mutate to (> >= < <= == != true false)
+          * ROR -- replace relational operator (> >= < <= == !=)
+          * RER -- replace relational expression (a > b, a >= b, a < b, a <= b, a == b, a != b) mutate to (true false)
           * COR -- Replace conditional ops (&&, ||, &, |, ^)
           * COD -- Delete unary conditional ops (!)
           * COI -- Insert unary conditional ops (!)

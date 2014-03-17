@@ -13,7 +13,7 @@ module Mutiny
     
     private
       def harness
-        @harness ||= Mutiny::Mutator::MutationHarness.new(operator: operator)
+        @harness ||= Mutiny::Mutator::MutationHarness.new(operator_name: operator)
       end
     
       def units

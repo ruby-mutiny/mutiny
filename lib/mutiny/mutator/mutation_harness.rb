@@ -5,7 +5,7 @@ module Mutiny
   module Mutator
     class MutationHarness
       extend Attributable
-      attributes :operator
+      attributes :operator_name
       
       def generate_mutants(units)
         units
@@ -15,7 +15,7 @@ module Mutiny
     
     private
       def mutator
-        @mutator ||= Mutator.new(operator: operator)
+        @mutator ||= Mutator.new(operator_name: operator_name)
       end
     end
   end

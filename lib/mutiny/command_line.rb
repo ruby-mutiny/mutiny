@@ -44,7 +44,7 @@ module Mutiny
     end
   
     def harness
-      @harness ||= Mutiny::Mutator::MutationHarness.new(operator: "ROR")
+      @harness ||= Mutiny::Mutator::MutationHarness.new(operator_name: "ROR")
     end
   
     def equivalence_detector

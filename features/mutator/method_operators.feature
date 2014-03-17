@@ -19,7 +19,6 @@ Feature: Method-level mutation operators
       | lib/add.rb | 3    | /      |
       | lib/add.rb | 3    | %      |
 
-
   Scenario: Relational operator replacement
     Given I have the following unit at "lib/max.rb":
       """
@@ -41,8 +40,7 @@ Feature: Method-level mutation operators
       | lib/max.rb | 4    | !=     |
       | lib/max.rb | 4    | >=     |
   
-  
- Scenario: Conditional operator replacement (&&, || , ^, and, or)
+  Scenario: Conditional operator replacement
     Given I have the following unit at "lib/xor.rb":
       """
       class Xor
@@ -59,3 +57,29 @@ Feature: Method-level mutation operators
       | lib/xor.rb | 3    | \|\|   |
       | lib/xor.rb | 3    | and    |
       | lib/xor.rb | 3    | or     |
+
+  Scenario: Shortcut assignment operator replacement
+    Given I have the following unit at "lib/accumulate.rb":
+      """
+      class Accumulate
+        def run(left, right)
+          left += right
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "SAOR"
+    And I run the mutator on "lib/accumulate.rb"
+    Then I should receive the following mutants:
+      | Path              | Line | Change |
+      | lib/accumulate.rb | 3    | -=     |
+      | lib/accumulate.rb | 3    | *=     |
+      | lib/accumulate.rb | 3    | /=     |
+      | lib/accumulate.rb | 3    | %=     |
+      | lib/accumulate.rb | 3    | **=    |
+      | lib/accumulate.rb | 3    | &=     |
+      | lib/accumulate.rb | 3    | \|=    |
+      | lib/accumulate.rb | 3    | ^=     |
+      | lib/accumulate.rb | 3    | <<=    |
+      | lib/accumulate.rb | 3    | >>=    |
+      | lib/accumulate.rb | 3    | &&=    |
+      | lib/accumulate.rb | 3    | \|\|=  |

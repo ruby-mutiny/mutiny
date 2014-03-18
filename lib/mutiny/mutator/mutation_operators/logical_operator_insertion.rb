@@ -1,17 +1,13 @@
 require_relative "../ast/pattern"
-require_relative "mutation_operator"
+require_relative "single_replacement_mutation_operator"
 
 module Mutiny
   module Mutator
     module MutationOperators
       class LogicalOperatorInsertion
         def mutate(ast, original_path)
-          MutationOperator.new(ast, original_path, self.class).mutate(pattern) do |mutation_point|
-            replacement = mutation_point.replace do |helper|
-              helper.replace(:send, [mutation_point.matched, :~])
-            end
-            
-            [[replacement, nil]]
+          SingleReplacementMutationOperator.new(ast, original_path, self.class).mutate(pattern) do |mutation_point, helper|
+            helper.replace(:send, [mutation_point.matched, :~])
           end
         end
 

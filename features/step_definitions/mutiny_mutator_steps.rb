@@ -25,6 +25,11 @@ Then(/^I should receive the following mutants:$/) do |expected_results|
   end
 end
 
+Then(/^I should receive the following mutated code:$/) do |expected_code|
+  expect(@results.map(&:code).join("\n")).to eq(expected_code)
+end
+
+
 def options
   @options ||= { noisy: false }
 end

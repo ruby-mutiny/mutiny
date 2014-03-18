@@ -24,13 +24,14 @@ module Mutiny
             code: Unparser.unparse(mutated.ast),
             line: mutation_point.line,
             change: nil,
-            operator: UnaryArithmeticOperatorDeletion
+            operator: ConditionalOperatorInsertion
           )
         end
 
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
-            ast.type == :lvar
+            (ast.type == :lvar) ||
+            (ast.type == :send && ast.children[0].nil?)
           end
         end
       end

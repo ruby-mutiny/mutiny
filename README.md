@@ -14,6 +14,7 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
 * Prepare for first round of experiments
   * Investigate whether it makes sense to separate mutation creating component from mutation analysis component
       * Change acceptance tests to compare code
+      * Fix mutation operators that operate on literals to work with variables too
       * Refactor mutation operators to extract common logic
       * Consider refactoring AST match and pattern classes, and extracting as a separate gem
       * Additional mutator.feature that tests a sensible error is reported when an unknown mutation operator is configured

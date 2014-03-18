@@ -1,36 +1,33 @@
 Feature: Method-level mutation operators
 
   Scenario: Unary arithmetic operator deletion
-    Given I have the following unit at "lib/life.rb":
+    Given I have the following program:
       """
       -42
       """
-    When I configure the mutator with the option "operator" set to "UAOD"
-    And I run the mutator on "lib/life.rb"
+    When I apply the mutation operator "UAOD"
     Then I should receive the following mutated code:
       """
       42
       """
 
   Scenario: Unary arithmetic operator insertion
-    Given I have the following unit at "lib/life.rb":
+    Given I have the following program:
       """
       42
       """
-    When I configure the mutator with the option "operator" set to "UAOI"
-    And I run the mutator on "lib/life.rb"
+    When I apply the mutation operator "UAOI"
     Then I should receive the following mutated code:
       """
       -42
       """
   
   Scenario: Unary arithmetic operator replacement
-    Given I have the following unit at "lib/life.rb":
+    Given I have the following program:
       """
       42 + -42
       """
-    When I configure the mutator with the option "operator" set to "UAOR"
-    And I run the mutator on "lib/life.rb"
+    When I apply the mutation operator "UAOR"
     Then I should receive the following mutated code:
       """
       (-42) + (-42)
@@ -38,12 +35,11 @@ Feature: Method-level mutation operators
       """
   
   Scenario: Binary arithmetic operator replacement
-    Given I have the following unit at "lib/add.rb":
+    Given I have the following program:
       """
       a + 10
       """
-    When I configure the mutator with the option "operator" set to "BAOR"
-    And I run the mutator on "lib/add.rb"
+    When I apply the mutation operator "BAOR"
     Then I should receive the following mutated code:
       """
       a - 10
@@ -53,12 +49,11 @@ Feature: Method-level mutation operators
       """
   
   Scenario: Relational operator replacement
-    Given I have the following unit at "lib/max.rb":
+    Given I have the following program:
       """
       a > 10
       """
-    When I configure the mutator with the option "operator" set to "ROR"
-    And I run the mutator on "lib/max.rb"
+    When I apply the mutation operator "ROR"
     Then I should receive the following mutated code:
       """
       a < 10
@@ -69,12 +64,11 @@ Feature: Method-level mutation operators
       """
   
   Scenario: Relational expression replacement
-    Given I have the following unit at "lib/max.rb":
+    Given I have the following program:
       """
       a > 10
       """
-    When I configure the mutator with the option "operator" set to "RER"
-    And I run the mutator on "lib/max.rb"
+    When I apply the mutation operator "RER"
     Then I should receive the following mutated code:
       """
       true
@@ -82,12 +76,11 @@ Feature: Method-level mutation operators
       """
 
   Scenario: Conditional operator replacement
-    Given I have the following unit at "lib/xor.rb":
+    Given I have the following program:
       """
       a ^ b
       """
-    When I configure the mutator with the option "operator" set to "COR"
-    And I run the mutator on "lib/xor.rb"
+    When I apply the mutation operator "COR"
     Then I should receive the following mutated code:
       """
       a && b
@@ -97,12 +90,11 @@ Feature: Method-level mutation operators
   # blocked behind https://github.com/mbj/unparser/issues/26
   @wip
   Scenario: Conditional operator replacement in full
-    Given I have the following unit at "lib/xor.rb":
+    Given I have the following program:
       """
       a ^ b and c
       """
-    When I configure the mutator with the option "operator" set to "COR"
-    And I run the mutator on "lib/xor.rb"
+    When I apply the mutation operator "COR"
     Then I should receive the following mutated code:
       """
       a && b and c
@@ -116,36 +108,33 @@ Feature: Method-level mutation operators
       """
 
   Scenario: Conditional operator deletion
-    Given I have the following unit at "lib/inverter.rb":
+    Given I have the following program:
       """
       !a
       """
-    When I configure the mutator with the option "operator" set to "COD"
-    And I run the mutator on "lib/inverter.rb"
+    When I apply the mutation operator "COD"
     Then I should receive the following mutated code:
       """
       a
       """
   
   Scenario: Conditional operator insertion
-    Given I have the following unit at "lib/identity.rb":
+    Given I have the following program:
       """
       a
       """
-    When I configure the mutator with the option "operator" set to "COI"
-    And I run the mutator on "lib/identity.rb"
+    When I apply the mutation operator "COI"
     Then I should receive the following mutated code:
       """
       !a
       """
   
   Scenario: Shortcut assignment operator replacement
-    Given I have the following unit at "lib/accumulate.rb":
+    Given I have the following program:
       """
       a += b
       """
-    When I configure the mutator with the option "operator" set to "SAOR"
-    And I run the mutator on "lib/accumulate.rb"
+    When I apply the mutation operator "SAOR"
     Then I should receive the following mutated code:
       """
       a -= b
@@ -163,12 +152,11 @@ Feature: Method-level mutation operators
       """
   
   Scenario: Logical operator replacement
-    Given I have the following unit at "lib/mask.rb":
+    Given I have the following program:
       """
       a | b
       """
-    When I configure the mutator with the option "operator" set to "LOR"
-    And I run the mutator on "lib/mask.rb"
+    When I apply the mutation operator "LOR"
     Then I should receive the following mutated code:
       """
       a & b
@@ -176,24 +164,22 @@ Feature: Method-level mutation operators
       """
 
   Scenario: Logical operator deletion
-    Given I have the following unit at "lib/bitwise_not.rb":
+    Given I have the following program:
       """
       ~a
       """
-    When I configure the mutator with the option "operator" set to "LOD"
-    And I run the mutator on "lib/bitwise_not.rb"
+    When I apply the mutation operator "LOD"
     Then I should receive the following mutated code:
       """
       a
       """
 
   Scenario: Logical operator insertion
-    Given I have the following unit at "lib/identity.rb":
+    Given I have the following program:
       """
       a
       """
-    When I configure the mutator with the option "operator" set to "LOI"
-    And I run the mutator on "lib/identity.rb"
+    When I apply the mutation operator "LOI"
     Then I should receive the following mutated code:
       """
       ~a

@@ -1,17 +1,21 @@
 require "mutiny/mutator/command_line"
 
-When(/^I configure the mutator with the option "(.*?)" set to "(.*?)"$/) do |option, value|
-  options[option.to_sym] = value
+Given(/^I have the following program:$/) do |content|
+  step("I have the following unit at \"#{filename}\":", content)
 end
 
-When(/^I run the mutator on "(.*?)"$/) do |relative_path_to_unit|
-  options[:path] = path(relative_path_to_unit)
+When(/^I apply the mutation operator "([^"]*?)"$/) do |operator|
+  step("I apply the mutation operator \"#{operator}\" to \"#{filename}\"")
+end
+
+When(/^I apply the mutation operator "([^"]*?)" to "([^"]*?)"$/) do |operator, relative_path_to_unit|
+  options = { path: path(relative_path_to_unit), operator: operator }
   @results = Mutiny::Mutator::CommandLine.new(options).run
 end
 
 Then(/^I should receive the following mutants:$/) do |expected_results|
   @results.length.should eq(expected_results.hashes.length)
-
+  
   expected_results.map_headers! { |header| header.downcase.to_sym }
   expected_results.map_column!("Path") { |v| path(v) }
   expected_results.map_column!("Line") { |v| v.to_i }
@@ -29,7 +33,6 @@ Then(/^I should receive the following mutated code:$/) do |expected_code|
   expect(@results.map(&:code).join("\n")).to eq(expected_code)
 end
 
-
-def options
-  @options ||= { noisy: false }
+def filename
+  "original.rb"
 end

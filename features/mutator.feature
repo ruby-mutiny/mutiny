@@ -11,8 +11,7 @@ Feature: Mutator
         end
       end
       """
-    When I configure the mutator with the option "operator" set to "ROR"
-    And I run the mutator on "lib/max.rb"
+    When I apply the mutation operator "ROR" to "lib/max.rb"
     Then I should receive the following mutants:
       | Path       | Line | Change |
       | lib/max.rb | 4    | <      |
@@ -43,8 +42,7 @@ Feature: Mutator
         end
       end
       """
-    When I configure the mutator with the option "operator" set to "ROR"
-    And I run the mutator on "lib"
+    When I apply the mutation operator "ROR" to "lib"
     Then I should receive the following mutants:
       | Path       | Line | Change |
       | lib/max.rb | 4    | <      |

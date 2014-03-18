@@ -35,8 +35,8 @@ module Mutiny
       end
   
       class ReplacementHelper < Struct.new(:ast)
-        def replace(replacement)
-          Parser::AST::Node.new(replacement)
+        def replace(replacement, children = [])
+          Parser::AST::Node.new(replacement, children)
         end
         
         def replace_child(index, child)

@@ -120,6 +120,36 @@ Feature: Method-level mutation operators
       | lib/xor.rb | 3    | and    |
       | lib/xor.rb | 3    | or     |
 
+  Scenario: Conditional operator deletion
+    Given I have the following unit at "lib/inverter.rb":
+      """
+      class Inverter
+        def run(arg)
+          !arg
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "COD"
+    And I run the mutator on "lib/inverter.rb"
+    Then I should receive the following mutants:
+      | Path            | Line | Change |
+      | lib/inverter.rb | 3    |        |
+
+  Scenario: Conditional operator insertion
+    Given I have the following unit at "lib/identity.rb":
+      """
+      class Identity
+        def run(arg)
+          arg
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "COI"
+    And I run the mutator on "lib/identity.rb"
+    Then I should receive the following mutants:
+      | Path            | Line | Change |
+      | lib/identity.rb | 3    |        |
+
   Scenario: Shortcut assignment operator replacement
     Given I have the following unit at "lib/accumulate.rb":
       """

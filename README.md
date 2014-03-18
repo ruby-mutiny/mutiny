@@ -12,8 +12,6 @@ A tiny mutation testing framework.
 * Prepare for first round of experiments
   * Implement some more mutation operators
       * [Method level mutations](http://cs.gmu.edu/~offutt/mujava/mutopsMethod.pdf)
-          * COD -- Delete unary conditional ops (!)
-          * COI -- Insert unary conditional ops (!)
           * LOI -- Insert unary logic ops (~)
           * LOD -- Delete unary logic ops (~)
       * Investigate whether it makes sense to separate mutation creating component from mutation analysis component

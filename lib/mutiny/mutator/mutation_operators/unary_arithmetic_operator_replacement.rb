@@ -1,35 +1,23 @@
-require "unparser"
-
-require "mutiny/domain/mutant"
 require_relative "../ast/pattern"
+require_relative "mutation_operator"
 
 module Mutiny
   module Mutator
     module MutationOperators
       class UnaryArithmeticOperatorReplacement
         def mutate(ast, original_path)
-          pattern.match(ast).flat_map do |mutation_point|
-            mutate_to_opposite_sign(mutation_point, original_path)
+          MutationOperator.new(ast, original_path, self.class).mutate(pattern) do |mutation_point|
+            original = mutation_point.matched.children[0]
+
+            replacement = mutation_point.replace do |helper|
+              helper.replace_child(0, -original)
+            end
+            
+            [[replacement, if original > 0 then :- else :+ end]]
           end
         end
-  
-      private    
-        def mutate_to_opposite_sign(mutation_point, original_path)
-          original = mutation_point.matched.children[0]
-          
-          mutated = mutation_point.replace do |helper|
-            helper.replace_child(0, -original)
-          end
-    
-          Mutiny::Mutant.new(
-            path: original_path,
-            code: Unparser.unparse(mutated.ast),
-            line: mutation_point.line,
-            change: if original > 0 then :- else :+ end,
-            operator: UnaryArithmeticOperatorReplacement
-          )
-        end
-  
+        
+      private
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
             ast.type == :int && !ast.children[0].zero?

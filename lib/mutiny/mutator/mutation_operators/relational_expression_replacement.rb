@@ -1,39 +1,27 @@
-require "unparser"
-
-require "mutiny/domain/mutant"
 require_relative "../ast/pattern"
+require_relative "mutation_operator"
 
 module Mutiny
   module Mutator
     module MutationOperators
       class RelationalExpressionReplacement
         def mutate(ast, original_path)
-          pattern.match(ast).flat_map do |mutation_point|
-            mutate_to_expressions(mutation_point, original_path)
-          end
-        end
-  
-      private
-        def mutate_to_expressions(mutation_point, original_path)
-          existing_operator = mutation_point.matched.children[1]
+          MutationOperator.new(ast, original_path, self.class).mutate(pattern) do |mutation_point|
+            existing_operator = mutation_point.matched.children[1]
+            new_operators = operators_without(existing_operator)
       
-          replacements.map do |new_expression|
-            mutate_to_expression(mutation_point, new_expression, original_path)
+            replacements.map do |replacement|
+              [mutate_to_expression(mutation_point, replacement), replacement]
+            end
           end
         end
+        
+      private
     
-        def mutate_to_expression(mutation_point, new_operator, original_path)
+        def mutate_to_expression(mutation_point, expression)
           mutated = mutation_point.replace do |helper|
-            helper.replace(new_operator)
+            helper.replace(expression)
           end
-    
-          Mutiny::Mutant.new(
-            path: original_path,
-            code: Unparser.unparse(mutated.ast),
-            line: mutation_point.line,
-            change: new_operator,
-            operator: RelationalExpressionReplacement
-          )
         end
   
         def pattern

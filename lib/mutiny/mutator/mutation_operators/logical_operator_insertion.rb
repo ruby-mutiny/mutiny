@@ -1,33 +1,21 @@
-require "unparser"
-
-require "mutiny/domain/mutant"
 require_relative "../ast/pattern"
+require_relative "mutation_operator"
 
 module Mutiny
   module Mutator
     module MutationOperators
       class LogicalOperatorInsertion
         def mutate(ast, original_path)
-          pattern.match(ast).flat_map do |mutation_point|
-            mutate_to_opposite_sign(mutation_point, original_path)
+          MutationOperator.new(ast, original_path, self.class).mutate(pattern) do |mutation_point|
+            replacement = mutation_point.replace do |helper|
+              helper.replace(:send, [mutation_point.matched, :~])
+            end
+            
+            [[replacement, nil]]
           end
         end
 
       private    
-        def mutate_to_opposite_sign(mutation_point, original_path)
-          mutated = mutation_point.replace do |helper|
-            helper.replace(:send, [mutation_point.matched, :~])
-          end
-          
-          Mutiny::Mutant.new(
-            path: original_path,
-            code: Unparser.unparse(mutated.ast),
-            line: mutation_point.line,
-            change: nil,
-            operator: ConditionalOperatorDeletion
-          )
-        end
-
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
             (ast.type == :lvar) ||

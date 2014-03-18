@@ -6,7 +6,7 @@ require_relative "../ast/pattern"
 module Mutiny
   module Mutator
     module MutationOperators
-      class UnaryArithmeticOperatorReplacement
+      class UnaryArithmeticOperatorInsertion
         def mutate(ast, original_path)
           pattern.match(ast).flat_map do |mutation_point|
             mutate_to_opposite_sign(mutation_point, original_path)
@@ -25,14 +25,14 @@ module Mutiny
             path: original_path,
             code: Unparser.unparse(mutated.ast),
             line: mutation_point.line,
-            change: if original > 0 then :- else :+ end,
-            operator: UnaryArithmeticOperatorReplacement
+            change: nil,
+            operator: UnaryArithmeticOperatorInsertion
           )
         end
   
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
-            ast.type == :int && !ast.children[0].zero?
+            ast.type == :int && ast.children[0] > 0
           end
         end
       end

@@ -15,7 +15,7 @@ Then(/^I should receive the following mutants:$/) do |expected_results|
   expected_results.map_headers! { |header| header.downcase.to_sym }
   expected_results.map_column!("Path") { |v| path(v) }
   expected_results.map_column!("Line") { |v| v.to_i }
-  expected_results.map_column!("Change") { |v| v.to_sym }
+  expected_results.map_column!("Change") { |v| if v.empty? then nil else v.to_sym end }
 
   expected_results.hashes.each do |row|
     found = @results.any? {|m| m.path == row[:path] && m.line == row[:line] && m.change == row[:change]}

@@ -15,6 +15,36 @@ Feature: Method-level mutation operators
       | Path        | Line | Change |
       | lib/life.rb | 3    | -      |
 
+  Scenario: Unary arithmetic operator deletion
+    Given I have the following unit at "lib/life.rb":
+      """
+      class Life
+        def run
+          -42
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "UAOD"
+    And I run the mutator on "lib/life.rb"
+    Then I should receive the following mutants:
+      | Path        | Line | Change |
+      | lib/life.rb | 3    |        |
+
+  Scenario: Unary arithmetic operator insertion
+    Given I have the following unit at "lib/life.rb":
+      """
+      class Life
+        def run
+          42
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "UAOI"
+    And I run the mutator on "lib/life.rb"
+    Then I should receive the following mutants:
+      | Path        | Line | Change |
+      | lib/life.rb | 3    |        |
+
   Scenario: Binary arithmetic operator replacement
     Given I have the following unit at "lib/add.rb":
       """

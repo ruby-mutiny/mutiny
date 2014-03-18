@@ -7,19 +7,18 @@ A tiny mutation testing framework.
 * `bundle install`
 * `./bin/mutiny ./examples/max.rb ./examples/max_tests.rb` Note that we currently assume that tests.rb is a line-separated set of predicates (expressions that evaluate to either true or false).
 
+NB: Currently supports Ruby versions of these [method level mutation operators](http://cs.gmu.edu/~offutt/mujava/mutopsMethod.pdf).
+
 #### To do list
 
 * Prepare for first round of experiments
-  * Implement some more mutation operators
-      * [Method level mutations](http://cs.gmu.edu/~offutt/mujava/mutopsMethod.pdf)
-          * LOI -- Insert unary logic ops (~)
-          * LOD -- Delete unary logic ops (~)
-      * Investigate whether it makes sense to separate mutation creating component from mutation analysis component
-          * Refactor mutation operators to extract common logic
-          * Consider refactoring AST match and pattern classes, and extracting as a separate gem
-          * Additional mutator.feature that tests a sensible error is reported when an unknown mutation operator is configured
-          * Additional mutator.feature that tests that >1 mutant can be seeded on a single line
-          * Additional mutator.feature that tests that allows several mutation operators to be used at once (e.g., a composite operator for all existing method-level mutation operators)
+  * Investigate whether it makes sense to separate mutation creating component from mutation analysis component
+      * Change acceptance tests to compare code
+      * Refactor mutation operators to extract common logic
+      * Consider refactoring AST match and pattern classes, and extracting as a separate gem
+      * Additional mutator.feature that tests a sensible error is reported when an unknown mutation operator is configured
+      * Additional mutator.feature that tests that >1 mutant can be seeded on a single line
+      * Additional mutator.feature that tests that allows several mutation operators to be used at once (e.g., a composite operator for all existing method-level mutation operators)
   
   * Identify candidate projects
       * Must use RSpec

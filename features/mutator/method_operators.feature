@@ -176,7 +176,7 @@ Feature: Method-level mutation operators
       | lib/accumulate.rb | 3    | &&=    |
       | lib/accumulate.rb | 3    | \|\|=  |
       
-  Scenario: Logical operator replacement (&, |, ^)
+  Scenario: Logical operator replacement
     Given I have the following unit at "lib/mask.rb":
       """
       class Mask
@@ -191,3 +191,33 @@ Feature: Method-level mutation operators
       | Path        | Line | Change |
       | lib/mask.rb | 3    | &     |
       | lib/mask.rb | 3    | ^     |
+
+  Scenario: Logical operator deletion
+    Given I have the following unit at "lib/bitwise_not.rb":
+      """
+      class BitwiseNot
+        def run(arg)
+          ~arg
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "LOD"
+    And I run the mutator on "lib/bitwise_not.rb"
+    Then I should receive the following mutants:
+      | Path               | Line | Change |
+      | lib/bitwise_not.rb | 3    |        |
+
+  Scenario: Logical operator insertion
+    Given I have the following unit at "lib/identity.rb":
+      """
+      class Identity
+        def run(arg)
+          arg
+        end
+      end
+      """
+    When I configure the mutator with the option "operator" set to "LOI"
+    And I run the mutator on "lib/identity.rb"
+    Then I should receive the following mutants:
+      | Path            | Line | Change |
+      | lib/identity.rb | 3    |        |

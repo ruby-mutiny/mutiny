@@ -9,6 +9,8 @@ require_relative "mutation_operators/conditional_operator_deletion"
 require_relative "mutation_operators/conditional_operator_insertion"
 require_relative "mutation_operators/shortcut_assignment_operator_replacement"
 require_relative "mutation_operators/logical_operator_replacement"
+require_relative "mutation_operators/logical_operator_deletion"
+require_relative "mutation_operators/logical_operator_insertion"
 
 module Mutiny
   module Mutator
@@ -30,7 +32,9 @@ module Mutiny
           COD: MutationOperators::ConditionalOperatorDeletion.new,
           COI: MutationOperators::ConditionalOperatorInsertion.new,
           SAOR: MutationOperators::ShortcutAssignmentOperatorReplacement.new,
-          LOR: MutationOperators::LogicalOperatorReplacement.new
+          LOR: MutationOperators::LogicalOperatorReplacement.new,
+          LOD: MutationOperators::LogicalOperatorDeletion.new,
+          LOI: MutationOperators::LogicalOperatorInsertion.new
         }
       end
     end

@@ -6,13 +6,15 @@ module Mutiny
     module MutationOperators
       class SingleReplacementMutationOperator < Struct.new(:ast, :original_path, :operator)
         def mutate(pattern, &replacer)
-          MutationOperator.new(ast, original_path, operator).mutate(pattern) do |mutation_point|
+          adjusted_replacer = -> (mutation_point) do
             replacement = mutation_point.replace do |helper|
               replacer.call(mutation_point, helper)
             end
             
             [[replacement, nil]]
           end
+          
+          MutationOperator.new(pattern, adjusted_replacer, operator).mutate(ast, original_path)
         end
       end
     end

@@ -3,12 +3,7 @@ require_relative "replacement_mutation_operator"
 module Mutiny
   module Mutator
     module MutationOperators
-      class BinaryArithmeticOperatorReplacement
-        def mutate(ast, original_path)
-          ReplacementMutationOperator.new(ast, original_path, self.class, operators).mutate
-        end
-        
-      private
+      class BinaryArithmeticOperatorReplacement < ReplacementMutationOperator
         def operators
           [:+, :-, :*, :/, :%]
         end

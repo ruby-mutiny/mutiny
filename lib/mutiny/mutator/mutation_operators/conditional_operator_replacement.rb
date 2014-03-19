@@ -6,17 +6,22 @@ module Mutiny
     module MutationOperators
       class ConditionalOperatorReplacement        
         def mutate(ast, original_path)
-          MutationOperator.new(ast, original_path, self.class).mutate(pattern) do |mutation_point|
-            existing_operator = mutation_point.matched.children[1]
-            new_operators = operators_without(existing_operator)
-      
-            new_operators.map do |alternative_operator|
-              [mutate_with_operator(mutation_point, alternative_operator), alternative_operator]
-            end
-          end
+          operator.mutate(ast, original_path)
         end
         
       private
+        def operator
+          @operator ||= MutationOperator.new(pattern, method(:replacer), self.class)
+        end
+      
+        def replacer(mutation_point)
+          existing_operator = mutation_point.matched.children[1]
+          new_operators = operators_without(existing_operator)
+
+          new_operators.map do |alternative_operator|
+           [mutate_with_operator(mutation_point, alternative_operator), alternative_operator]
+          end
+        end
     
         def mutate_with_operator(mutation_point, new_operator)
           mutated = mutation_point.replace do |helper|

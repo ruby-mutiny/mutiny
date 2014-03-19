@@ -6,17 +6,23 @@ module Mutiny
     module MutationOperators
       class RelationalExpressionReplacement
         def mutate(ast, original_path)
-          MutationOperator.new(ast, original_path, self.class).mutate(pattern) do |mutation_point|
-            existing_operator = mutation_point.matched.children[1]
-            new_operators = operators_without(existing_operator)
-      
-            replacements.map do |replacement|
-              [mutate_to_expression(mutation_point, replacement), replacement]
-            end
-          end
+          operator.mutate(ast, original_path)
         end
         
       private
+      
+        def operator
+          @operator ||= MutationOperator.new(pattern, method(:replacer), self.class)
+        end
+      
+        def replacer(mutation_point)
+          existing_operator = mutation_point.matched.children[1]
+          new_operators = operators_without(existing_operator)
+
+          replacements.map do |replacement|
+           [mutate_to_expression(mutation_point, replacement), replacement]
+          end
+        end
     
         def mutate_to_expression(mutation_point, expression)
           mutated = mutation_point.replace do |helper|

@@ -15,9 +15,9 @@ module Mutiny
           end
         end
         
-        def mutate_with_operator(mutation_point, new_operator)
+        def mutate_to_replacement(mutation_point, replacement)
           mutated = mutation_point.replace do |helper|
-            helper.replace_child(1, new_operator)
+            helper.replace_child(1, replacement)
           end
         end
         
@@ -27,12 +27,14 @@ module Mutiny
         end
         
         def replacer(mutation_point)
-          existing_operator = mutation_point.matched.children[1]
-          new_operators = operators_without(existing_operator)
-
-          new_operators.map do |alternative_operator|
-           [mutate_with_operator(mutation_point, alternative_operator), alternative_operator]
+          replacements(mutation_point).map do |alternative_operator|
+            [mutate_to_replacement(mutation_point, alternative_operator), alternative_operator]
           end
+        end
+        
+        def replacements(mutation_point)
+          existing_operator = mutation_point.matched.children[1]
+          operators_without(existing_operator)
         end
   
         def operators_without(operator)

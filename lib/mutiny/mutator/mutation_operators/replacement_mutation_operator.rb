@@ -9,21 +9,21 @@ module Mutiny
           operator.mutate(ast, original_path)
         end
         
-      private
-        def operator
-          MutationOperator.new(pattern, method(:replacer), self.class.name)
+        def pattern
+          Mutiny::Mutator::Ast::Pattern.new do |ast|
+            ast.type == :send && operators.include?(ast.children[1])
+          end
         end
-    
+        
         def mutate_with_operator(mutation_point, new_operator)
           mutated = mutation_point.replace do |helper|
             helper.replace_child(1, new_operator)
           end
         end
-  
-        def pattern
-          Mutiny::Mutator::Ast::Pattern.new do |ast|
-            ast.type == :send && operators.include?(ast.children[1])
-          end
+        
+      private
+        def operator
+          MutationOperator.new(pattern, method(:replacer), self.class.name)
         end
         
         def replacer(mutation_point)

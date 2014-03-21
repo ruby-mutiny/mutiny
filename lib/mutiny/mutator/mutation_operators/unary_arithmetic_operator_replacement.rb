@@ -1,19 +1,13 @@
 require_relative "../ast/pattern"
 require_relative "mutation_operator"
 
+# int(x) -> int(-x) 
+#  where x != 0
+
 module Mutiny
   module Mutator
     module MutationOperators
-      class UnaryArithmeticOperatorReplacement
-        def mutate(ast, original_path)
-          operator.mutate(ast, original_path)
-        end
-        
-      private
-        def operator
-          MutationOperator.new(pattern, method(:replacer), self.class)
-        end
-      
+      class UnaryArithmeticOperatorReplacement < MutationOperator
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
             ast.type == :int && !ast.children[0].zero?

@@ -1,6 +1,9 @@
 require_relative "../ast/pattern"
 require_relative "single_replacement_mutation_operator"
 
+# int(x) -> int(-x) 
+#  where x > 0
+
 module Mutiny
   module Mutator
     module MutationOperators

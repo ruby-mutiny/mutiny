@@ -1,6 +1,8 @@
 require_relative "../ast/pattern"
 require_relative "single_replacement_mutation_operator"
 
+# send(x, :!) -> x
+
 module Mutiny
   module Mutator
     module MutationOperators

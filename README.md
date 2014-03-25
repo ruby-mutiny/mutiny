@@ -13,9 +13,10 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
 
 * Prepare for first round of experiments
   * Investigate whether it makes sense to separate mutation creating component from mutation analysis component
+      * Try new approach to specificying mutaiton operators
+          * Add a Rewrite class to Ast module which can build and apply rewritings based on syntax in comments
+          * Add notions of MutationOperator that are specified with single rewrite, and with several rewrites.
       * Fix mutation operators that operate on literals to work with variables too
-      * Refactor mutation operators to extract common logic
-      * Consider refactoring AST match and pattern classes, and extracting as a separate gem
       * Additional mutator.feature that tests a sensible error is reported when an unknown mutation operator is configured
       * Additional mutator.feature that tests that >1 mutant can be seeded on a single line
       * Additional mutator.feature that tests that allows several mutation operators to be used at once (e.g., a composite operator for all existing method-level mutation operators)

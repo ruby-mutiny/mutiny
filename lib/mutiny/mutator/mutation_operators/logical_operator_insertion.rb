@@ -3,6 +3,7 @@ require_relative "single_replacement_mutation_operator"
 
 # send(nil, _) -> send(MATCH, :~)
 # lvar -> send(MATCH, :~)
+# int -> send(MATCH, :~)
 
 module Mutiny
   module Mutator
@@ -11,6 +12,7 @@ module Mutiny
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
             (ast.type == :lvar) ||
+            (ast.type == :int) ||
             (ast.type == :send && ast.children[0].nil?)
           end
         end

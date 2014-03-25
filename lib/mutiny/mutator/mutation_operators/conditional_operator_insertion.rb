@@ -15,7 +15,7 @@ module Mutiny
           end
         end
         
-        def replacer(mutation_point, helper)
+        def single_replacer(mutation_point, helper)
           helper.replace(:send, [mutation_point.matched, :'!'])
         end
       end

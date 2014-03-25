@@ -4,31 +4,23 @@ require_relative "mutation_operator"
 module Mutiny
   module Mutator
     module MutationOperators
-      class ReplacementMutationOperator
-        def mutate(ast, original_path)
-          operator.mutate(ast, original_path)
-        end
-        
+      class ReplacementMutationOperator < MutationOperator
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
             ast.type == :send && operators.include?(ast.children[1])
           end
         end
         
-        def mutate_to_replacement(mutation_point, replacement)
-          mutated = mutation_point.replace do |helper|
-            helper.replace_child(1, replacement)
+        def replacer(mutation_point)
+          replacements(mutation_point).map do |alternative_operator|
+            [mutate_to_replacement(mutation_point, alternative_operator), alternative_operator]
           end
         end
         
       private
-        def operator
-          MutationOperator.new(pattern, method(:replacer), self.class.name)
-        end
-        
-        def replacer(mutation_point)
-          replacements(mutation_point).map do |alternative_operator|
-            [mutate_to_replacement(mutation_point, alternative_operator), alternative_operator]
+        def mutate_to_replacement(mutation_point, replacement)
+          mutated = mutation_point.replace do |helper|
+            helper.replace_child(1, replacement)
           end
         end
         

@@ -14,7 +14,7 @@ module Mutiny
           end
         end
         
-        def replacer(mutation_point, helper)
+        def single_replacer(mutation_point, helper)
           original = mutation_point.matched.children[0]
           helper.replace_child(0, -original)
         end

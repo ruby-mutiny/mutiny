@@ -19,7 +19,29 @@ Feature: Mutator
       | lib/max.rb | 4    | ==     |
       | lib/max.rb | 4    | !=     |
       | lib/max.rb | 4    | >=     |
-      
+  
+  Scenario: Can generate more than one mutant per line
+    Given I have the following unit at "lib/dummy.rb":
+      """
+      class Dummy
+        def run(first, second, third)
+          first if first > second && first > third
+        end
+      end
+      """
+    When I apply the mutation operator "ROR" to "lib/dummy.rb"
+    Then I should receive the following mutants:
+      | Path         | Position | Change |
+      | lib/dummy.rb | 3:13     | <      |
+      | lib/dummy.rb | 3:13     | <=     |
+      | lib/dummy.rb | 3:13     | ==     |
+      | lib/dummy.rb | 3:13     | !=     |
+      | lib/dummy.rb | 3:13     | >=     |
+      | lib/dummy.rb | 3:31     | <      |
+      | lib/dummy.rb | 3:31     | <=     |
+      | lib/dummy.rb | 3:31     | ==     |
+      | lib/dummy.rb | 3:31     | !=     |
+      | lib/dummy.rb | 3:31     | >=     |
       
   Scenario: Generates mutants for all units in a directory
     Given I have the following unit at "lib/max.rb":

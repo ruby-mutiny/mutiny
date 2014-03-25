@@ -8,6 +8,10 @@ module Mutiny
     
     extend Attributable
     specialises Unit
-    attributes :line, :change, :operator
+    attributes :line, :column, :change, :operator
+    
+    def position
+      "#{line}:#{column}"
+    end
   end
 end

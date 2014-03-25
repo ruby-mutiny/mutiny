@@ -12,18 +12,19 @@ module Mutiny
             replacements = replacer(mutation_point)
             
             replacements.map do |replacement|
-              create_mutant_from(original_path, replacement.first.ast, replacement.last, mutation_point.line)
+              create_mutant_from(original_path, replacement, mutation_point)
             end
           end
         end
         
       private
-        def create_mutant_from(path, ast, change, line)
+        def create_mutant_from(path, replacement, mutation_point)
           Mutiny::Mutant.new(
             path: path,
-            code: Unparser.unparse(ast),
-            line: line,
-            change: change,
+            code: Unparser.unparse(replacement.first.ast),
+            change: replacement.last,
+            line: mutation_point.line,
+            column: mutation_point.column,
             operator: self.class.name
           )
         end

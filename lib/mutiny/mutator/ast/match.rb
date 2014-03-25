@@ -12,6 +12,10 @@ module Mutiny
           matched.loc.line
         end
 
+        def column
+          matched.loc.column
+        end
+
         def replace(&replacer)
           if location.empty?
             replaced = replacer.call(replacement_helper)

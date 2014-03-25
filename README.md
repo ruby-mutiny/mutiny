@@ -12,16 +12,24 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
 #### To do list
 
 * Prepare for first round of experiments
-  * Investigate whether it makes sense to separate mutation creating component from mutation analysis component
-      * Additional mutator.feature that tests that allows several mutation operators to be used at once (e.g., a composite operator for all existing method-level mutation operators)
-  
-  * Identify candidate projects
-      * Must use RSpec
-      * Must not have any external dependencies?
+  * Write scripting
+      * Non-incremental: Should generate all mutants for a given project and a given commit (eventually a set of commits)
+      * Incremental: Should generate mutant delta (new / deleted mutants) for a range of commits and should be able to determine which of a set of existing mutants need to be reevaluated
+      * Experimental harness: should run non-incremental mode for each commit, and compare to results of incremental mode. Store data for paper and print a summary that shows the number of mutants evaluated by incremental and non-incremental mode.      
+
+  * Candidate projects
+      * Thor: https://github.com/erikhuda/thor
+      * Rake (ruled out as it uses Test::Unit rather than RSpec)
+      * Rack (ruled out as it uses Bacon rather than RSpec)
+      * ActiveSupport and other Rails subgems (ruled out as it uses minitest rather than RSpec)
     
   * Investigate the time savings of using incremental mode over the course of the project's history
-      * As well as comparing time taken, need to compare the results of incremental and non-incremental modes to ensure that incremental mode is producing accurate results.
-      * Might need to enhance the change detector to be able to identify dependencies of units. For example, if `max_spec` tests `max` and `max` uses `calculator`, `max_spec` is dependent on calculator. If `calculator` changes, `max_spec` should be detected as impacted.
+      * Measurements
+          * Could compare time taken for mutation testing each commit.
+          * Alternatively, could compare the number of mutants that need to be re-evaluated. This would allow experimentation to proceed without actually executing any tests; just creating mutants and marking those which need to be re-evaluated. The incremental mode should count any new mutants, mark any mutants from the previous round that need to be re-evaluated, (and mark any mutants from the previous round that need to be deleted?).
+      * Validity of results:
+          * Whatever is measured, I need to compare the _results_ of incremental and non-incremental modes to ensure that incremental mode is correct.
+          * Might need to enhance the change detector to be able to identify dependencies of units. For example, if `max_spec` tests `max` and `max` uses `calculator`, `max_spec` is dependent on calculator. If `calculator` changes, `max_spec` should be detected as impacted.
 
 * Try new approach to specifying mutation operators, particularly if this makes incremental mutation testing easier.
     * Add a Rewrite class to Ast module which can build and apply rewritings based on syntax in comments

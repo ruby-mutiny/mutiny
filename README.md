@@ -13,9 +13,6 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
 
 * Prepare for first round of experiments
   * Investigate whether it makes sense to separate mutation creating component from mutation analysis component
-      * Try new approach to specifying mutaiton operators
-          * Add a Rewrite class to Ast module which can build and apply rewritings based on syntax in comments
-          * Add notions of MutationOperator that are specified with single rewrite, and with several rewrites.
       * Fix mutation operators that operate on literals to work with variables too
       * Additional mutator.feature that tests a sensible error is reported when an unknown mutation operator is configured
       * Additional mutator.feature that tests that >1 mutant can be seeded on a single line
@@ -28,6 +25,10 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
   * Investigate the time savings of using incremental mode over the course of the project's history
       * As well as comparing time taken, need to compare the results of incremental and non-incremental modes to ensure that incremental mode is producing accurate results.
       * Might need to enhance the change detector to be able to identify dependencies of units. For example, if `max_spec` tests `max` and `max` uses `calculator`, `max_spec` is dependent on calculator. If `calculator` changes, `max_spec` should be detected as impacted.
+
+* Try new approach to specifying mutation operators, particularly if this makes incremental mutation testing easier.
+    * Add a Rewrite class to Ast module which can build and apply rewritings based on syntax in comments
+    * Add notions of MutationOperator that are specified with single rewrite, and with several rewrites.
 
 * More fine-grained change detection. Some ideas:
   * When an example is removed from a spec, we should be able to quickly recompute the mutation score. To allow this, we would need to store the results of each example for each mutant. We then remove the results for the deleted example, and recalculate the mutation score without running any tests.

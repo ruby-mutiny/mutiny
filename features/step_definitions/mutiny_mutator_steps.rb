@@ -10,7 +10,11 @@ end
 
 When(/^I apply the mutation operator "([^"]*?)" to "([^"]*?)"$/) do |operator, relative_path_to_unit|
   options = { path: path(relative_path_to_unit), operator: operator }
-  @results = Mutiny::Mutator::CommandLine.new(options).run
+  begin
+    @results = Mutiny::Mutator::CommandLine.new(options).run
+  rescue Exception => exception
+    @exception = exception
+  end
 end
 
 Then(/^I should receive the following mutants:$/) do |expected_results|
@@ -31,6 +35,10 @@ end
 
 Then(/^I should receive the following mutated code:$/) do |expected_code|
   expect(@results.map(&:code).join("\n")).to eq(expected_code)
+end
+
+Then(/^I should receive an? "(.*?)" error message\.$/) do |expected_message|
+  expect(@exception.message).to eq(expected_message)
 end
 
 def filename

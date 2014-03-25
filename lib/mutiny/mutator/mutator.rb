@@ -9,6 +9,7 @@ module Mutiny
       attributes :operator_name
       
       def mutate(unit)
+        raise "#{operator_name} -- unknown mutation operator" if operators.first.nil?
         ast = Parser::CurrentRuby.parse(unit.code)
         operators.flat_map { |operator| operator.mutate(ast, unit.path) }
       end

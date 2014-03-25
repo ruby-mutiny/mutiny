@@ -1,5 +1,10 @@
+require 'simplecov'
 require 'coveralls'
-Coveralls.wear!
+Coveralls.wear_merged!
+
+SimpleCov.start do
+  add_filter '.tmp'
+end
 
 require_relative 'helpers/file_system'
 require_relative 'sandboxing'

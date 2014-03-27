@@ -1,6 +1,6 @@
-require "mutiny/domain/analysis"
+require "mutiny/analyser/analysis"
 
-module Mutiny
+module Mutiny::Analyser
   describe Analysis do
     before(:each) do
       @m1, @m2, @m3 = Object.new, Object.new, Object.new

@@ -1,17 +1,17 @@
-require "mutiny/mutation_test_runner"
+require "mutiny/analyser/mutation_test_runner"
 require "mutiny/domain/result"
 
-module Mutiny
+module Mutiny::Analyser
   describe MutationTestRunner do
     before (:each) do
-      unit, @non_equivalent_mutant, @equivalent_mutant = Mutant.new, Mutant.new, Mutant.new
+      unit, @non_equivalent_mutant, @equivalent_mutant = Mutiny::Mutant.new, Mutiny::Mutant.new, Mutiny::Mutant.new
     
       test_suite_runner = double()
       allow(test_suite_runner).to receive(:run) do |p|
         status = :passed if p.equal?(unit) || p.equal?(@equivalent_mutant)
         status = :failed if p.equal?(@non_equivalent_mutant)
         
-        [Result.new(status: status)]
+        [Mutiny::Result.new(status: status)]
       end
     
       mutation_test_runner = MutationTestRunner.new(units: [unit], test_suite_runner: test_suite_runner)

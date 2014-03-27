@@ -1,5 +1,5 @@
 require_relative "mutator/mutation_harness"
-require_relative "mutation_test_runner"
+require_relative "analyser/mutation_test_runner"
 require_relative "session"
 require_relative "domain/unit"
 require_relative "rspec/suite_inspector"
@@ -43,7 +43,7 @@ module Mutiny
     end
   
     def runner
-      @runner ||= MutationTestRunner.new(units: units, test_suite_runner: Mutiny::RSpec::Runner.new(path: test_suite_path), options: options)
+      @runner ||= Mutiny::Analyser::MutationTestRunner.new(units: units, test_suite_runner: Mutiny::RSpec::Runner.new(path: test_suite_path), options: options)
     end
     
     def suite_inspector

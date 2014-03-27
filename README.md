@@ -19,7 +19,7 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
 
   * Candidate projects
       * Thor: https://github.com/erikhuda/thor
-      * Rake (ruled out as it uses Test::Unit rather than RSpec)
+      * Rake (ruled out as it uses minitest rather than RSpec)
       * Rack (ruled out as it uses Bacon rather than RSpec)
       * ActiveSupport and other Rails subgems (ruled out as it uses minitest rather than RSpec)
     

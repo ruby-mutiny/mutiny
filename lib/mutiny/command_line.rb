@@ -1,5 +1,4 @@
 require_relative "mutator/mutation_harness"
-require_relative "equivalence_detector"
 require_relative "mutation_test_runner"
 require_relative "session"
 require_relative "domain/unit"
@@ -28,11 +27,7 @@ module Mutiny
   
   private
     def calculate_results
-      runner.run(non_equivalent_mutants)
-    end
-
-    def non_equivalent_mutants
-      @non_equivalent_mutants ||= Mutiny::Mutants.new(equivalence_detector.remove_equivalents(mutants))
+      runner.run(mutants)
     end
 
     def mutants
@@ -45,10 +40,6 @@ module Mutiny
   
     def harness
       @harness ||= Mutiny::Mutator::MutationHarness.new(operator_name: "ROR")
-    end
-  
-    def equivalence_detector
-      @equivalence_detector ||= Mutiny::EquivalenceDetector.new
     end
   
     def runner

@@ -77,7 +77,27 @@ Feature: Mutator
       | lib/min.rb | 4    | !=     |
       | lib/min.rb | 4    | >=     |
       | lib/min.rb | 4    | >      |
-      
+  
+  Scenario: Generates mutants for units in nested directories
+    Given I have the following unit at "lib/calculator/functions/max.rb":
+      """
+      class Max
+        def run(left, right)
+          max = left
+          max = right if right > left
+          max
+        end
+      end
+      """
+    When I apply the mutation operator "ROR" to "lib"
+    Then I should receive the following mutants:
+      | Path                            | Line | Change |
+      | lib/calculator/functions/max.rb | 4    | <      |
+      | lib/calculator/functions/max.rb | 4    | <=     |
+      | lib/calculator/functions/max.rb | 4    | ==     |
+      | lib/calculator/functions/max.rb | 4    | !=     |
+      | lib/calculator/functions/max.rb | 4    | >=     |
+  
   Scenario: Reports an error when an unknown mutation operator is applied
     Given I have the following unit at "lib/max.rb":
       """

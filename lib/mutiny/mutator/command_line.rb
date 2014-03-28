@@ -25,7 +25,7 @@ module Mutiny
 
       def paths
         if File.directory?(path)
-          Dir["#{path}/*.rb"]
+          Dir["#{path}/**/*.rb"]
         else
           [path]
         end

@@ -26,7 +26,7 @@ module Mutiny
             change: replacement.last,
             line: mutation_point.line,
             column: mutation_point.column,
-            operator: self.class.name
+            operator: self.class.name.split("::").last
           )
         end
       end

@@ -53,9 +53,9 @@ Feature: Persistent results
       | 15 | 5         | 3          | passed |
     And the file at "results.yaml" should contain the following mutants:
       | ID | Path       | Line | Change | Alive? | Operator                                                          |
-      | 1  | lib/max.rb | 4    | <      | false  | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
-      | 2  | lib/max.rb | 4    | <=     | false  | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
-      | 3  | lib/max.rb | 4    | ==     | false  | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
-      | 4  | lib/max.rb | 4    | !=     | false  | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
-      | 5  | lib/max.rb | 4    | >=     | true   | Mutiny::Mutator::MutationOperators::RelationalOperatorReplacement |
+      | 1  | lib/max.rb | 4    | <      | false  | RelationalOperatorReplacement |
+      | 2  | lib/max.rb | 4    | <=     | false  | RelationalOperatorReplacement |
+      | 3  | lib/max.rb | 4    | ==     | false  | RelationalOperatorReplacement |
+      | 4  | lib/max.rb | 4    | !=     | false  | RelationalOperatorReplacement |
+      | 5  | lib/max.rb | 4    | >=     | true   | RelationalOperatorReplacement |
     # Note that mutating > to >= produces an equivalent mutant

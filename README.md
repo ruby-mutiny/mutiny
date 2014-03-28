@@ -11,10 +11,10 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
 
 #### To do list
 
-* Prepare for first round of experiments
+* Experimentation to validate approach
   * Write scripting
-      * Non-incremental: Should generate all mutants for a given project and a given commit (eventually a set of commits)
-      * Incremental: Should generate mutant delta (new / deleted mutants) for a range of commits and should be able to determine which of a set of existing mutants need to be reevaluated
+      * Incremental prep: Alter change detector to have a mode that returns more fine-grained impacted regions (either regions of a file, or methods). Alter mutator so that it can be run on these regions (e.g., mutate max.rb@14..18,22..40 or mutate max.rb@Max#run,Max#clear)
+      * Incremental: Should generate mutant delta (new / deleted mutants) between two git commits
       * Experimental harness: should run non-incremental mode for each commit, and compare to results of incremental mode. Store data for paper and print a summary that shows the number of mutants evaluated by incremental and non-incremental mode.      
 
   * Candidate projects
@@ -23,7 +23,11 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
       * Rack (ruled out as it uses Bacon rather than RSpec)
       * ActiveSupport and other Rails subgems (ruled out as it uses minitest rather than RSpec)
     
-  * Investigate the time savings of using incremental mode over the course of the project's history
+  * Experiments
+      * Compare incremental and non-incremental mutator (seeding of faults) to determine typical magnitude of change over a project. What kind of granularity do we need to make a significant difference (file < method < ast nodes)?
+      * Compare incremental and non-incremental analyser to determine typical impact of change on mutation testing. Analyser will first need to be enhanced with an incremental model that determines which of a set of existing mutants need to be reevaluated.
+    
+  * Overall aim: investigate the time savings of using incremental mode over the course of the project's history
       * Measurements
           * Could compare time taken for mutation testing each commit.
           * Alternatively, could compare the number of mutants that need to be re-evaluated. This would allow experimentation to proceed without actually executing any tests; just creating mutants and marking those which need to be re-evaluated. The incremental mode should count any new mutants, mark any mutants from the previous round that need to be re-evaluated, (and mark any mutants from the previous round that need to be deleted?).

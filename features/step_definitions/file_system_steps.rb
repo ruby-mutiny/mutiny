@@ -8,10 +8,10 @@ end
 
 Then(/^the file at "(.*?)" should contain the following mutants:$/) do |path, expected_results|
   deserialised = Psych.load(read(path))
-  
+
   deserialised[:mutants].length.should eq(expected_results.hashes.length)
 
-  expected_results.map_headers!{ |header| header.downcase.gsub(" ", "_").to_sym }
+  expected_results.map_headers! { |header| header.downcase.gsub(" ", "_").to_sym }
   expected_results.map_column!("ID") { |v| v.to_i }
   expected_results.map_column!("Path") { |v| path(v) }
   expected_results.map_column!("Line") { |v| v.to_i }
@@ -23,10 +23,10 @@ end
 
 Then(/^the file at "(.*?)" should contain the following examples:$/) do |path, expected_results|
   deserialised = Psych.load(read(path))
-  
+
   deserialised[:examples].length.should eq(expected_results.hashes.length)
 
-  expected_results.map_headers!{ |header| header.downcase.gsub(" ", "_").to_sym }
+  expected_results.map_headers! { |header| header.downcase.gsub(" ", "_").to_sym }
   expected_results.map_column!("ID") { |v| v.to_i }
   expected_results.map_column!("Line") { |v| v.to_i }
   expected_results.map_column!("Spec Path") { |v| path(v) }
@@ -36,10 +36,10 @@ end
 
 Then(/^the file at "(.*?)" should contain the following results:$/) do |path, expected_results|
   deserialised = Psych.load(read(path))
-  
+
   deserialised[:results].length.should eq(expected_results.hashes.length)
 
-  expected_results.map_headers!{ |header| header.downcase.gsub(" ", "_").to_sym }
+  expected_results.map_headers! { |header| header.downcase.gsub(" ", "_").to_sym }
   expected_results.map_column!("ID") { |v| v.to_i }
   expected_results.map_column!("Mutant ID") { |v| v.to_i }
   expected_results.map_column!("Example ID") { |v| v.to_i }

@@ -10,14 +10,15 @@ module Mutiny
         def mutate(ast, original_path)
           pattern.match(ast).flat_map do |mutation_point|
             replacements = replacer(mutation_point)
-            
+
             replacements.map do |replacement|
               create_mutant_from(original_path, replacement, mutation_point)
             end
           end
         end
-        
-      private
+
+        private
+
         def create_mutant_from(path, replacement, mutation_point)
           Mutiny::Mutant.new(
             path: path,

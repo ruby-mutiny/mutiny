@@ -8,13 +8,13 @@ module Mutiny
       # parent process (via a JSON serialisation).
       def run(&block)
         reader, writer = IO.pipe
-    
-        child = fork do
+
+        fork do
           reader.close
           result = block.call
           writer.puts(result.to_json)
         end
-    
+
         writer.close
         JSON.parse(reader.gets)
       end

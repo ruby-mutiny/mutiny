@@ -8,32 +8,32 @@ module Mutiny
         results.concat(new_results)
         mutants << mutant.extend(LiveMutant)
       end
-    
+
       def record_dead(mutant, new_results)
         results.concat(new_results)
         mutants << mutant.extend(DeadMutant)
       end
-    
+
       def results
         @results ||= []
       end
-    
+
       def mutants
         @mutants ||= []
       end
-    
+
       def examples
-        results.collect(&:example).uniq { |example| [example.spec_path, example.line] }
+        results.map(&:example).uniq { |example| [example.spec_path, example.line] }
       end
-    
+
       def length
         mutants.length
       end
-  
+
       def kill_count
         mutants.count { |m| m.killed? }
       end
-  
+
       def score
         kill_count.to_f / length.to_f
       end

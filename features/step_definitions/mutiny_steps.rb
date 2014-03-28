@@ -1,6 +1,6 @@
 require_relative "../../lib/mutiny/command_line"
 
-When(/^I configure mutiny with the option "(.*?)" set to the path "(.*?)"$/) do |option, relative_path|
+When(/^I configure mutiny with "(.*?)" set to the path "(.*?)"$/) do |option, relative_path|
   options[option.to_sym] = path(relative_path)
 end
 
@@ -19,11 +19,19 @@ Then(/^I should receive the following results:$/) do |expected_results|
   expected_results.map_column!("Result") { |v| v.to_sym }
 
   expected_results.hashes.each do |row|
-    mutant = @results.mutants.find {|m| m.path == row[:path] && m.line == row[:line] && m.change == row[:change]}
+    mutant = @results.mutants.find do |m|
+      m.path == row[:path] &&
+      m.line == row[:line] &&
+      m.change == row[:change]
+    end
+
     actual = mutant.killed? ? :killed : :alive
     expected = row[:result]
-    message = "expected the mutant on line #{row[:line]} with change #{row[:change]} to be #{expected}, but it was #{actual}"
-    
+
+    message = "expected the mutant on line #{row[:line]} " \
+              "with change #{row[:change]} " \
+              "to be #{expected}, but it was #{actual}"
+
     expect(actual).to eq(expected), message
   end
 end
@@ -33,7 +41,7 @@ Then(/^I should receive a mutation score of (\d+\.?\d*)$/) do |expected_score|
 end
 
 Then(/^I should receive (\d+) results for the file "(.*?)"$/) do |expected_number_of_results, path|
-  mutants = @results.mutants.select {|m| m.path == path(path) }
+  mutants = @results.mutants.select { |m| m.path == path(path) }
   expect(mutants.size).to eq(expected_number_of_results.to_i)
 end
 

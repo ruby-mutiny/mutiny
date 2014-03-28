@@ -8,9 +8,10 @@ module Mutiny
         @path_of_described_class = source_file_for_class(group.described_class)
       end
 
-    private
+      private
+
       def source_file_for_method(method)
-        path, line = method.source_location
+        path, _ = method.source_location
         path
       end
 

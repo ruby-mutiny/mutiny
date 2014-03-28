@@ -27,7 +27,7 @@ Feature: Persistent results
         end
       end
       """
-    When I configure mutiny with the option "results_file" set to the path "results.yaml"
+    When I configure mutiny with "results_file" set to the path "results.yaml"
     And I run mutiny on "spec/max_spec.rb"
     Then the file at "results.yaml" should contain the following examples:
       | ID | Line | Spec Path        | Name  |

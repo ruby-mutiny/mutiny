@@ -16,7 +16,7 @@ module Mutiny
             (ast.type == :send && ast.children[0].nil?)
           end
         end
-        
+
         def single_replacer(mutation_point, helper)
           helper.replace(:send, [mutation_point.matched, :~])
         end

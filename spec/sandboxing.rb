@@ -2,11 +2,12 @@
 
 # Allows us to run our RSpecs in a sandbox in which
 # they are free to modify the RSpec world / configuration.
-# This is necessary as some of Mutiny's classes run specs, 
+# This is necessary as some of Mutiny's classes run specs,
 # and hence pollute the RSpec.world and RSpec.configuration
 # variables.
 
 module Sandboxing
+# rubocop:disable MethodLength
   def self.sandboxed(&block)
     @orig_config = RSpec.configuration
     @orig_world  = RSpec.world
@@ -19,7 +20,7 @@ module Sandboxing
 
     (class << RSpec::Core::ExampleGroup; self; end).class_eval do
       alias_method :orig_run, :run
-      def run(reporter=nil)
+      def run(reporter = nil)
         orig_run(reporter || NullObject.new)
       end
     end
@@ -35,4 +36,5 @@ module Sandboxing
     RSpec.configuration = @orig_config
     RSpec.world = @orig_world
   end
+# rubocop:enable MethodLength
 end

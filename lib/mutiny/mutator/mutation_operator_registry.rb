@@ -17,20 +17,31 @@ module Mutiny
       def operator_for(name)
         operators_by_name[name.to_sym]
       end
-  
-    private
+
+      private
+
       def operators_by_name
-        @operators_by_name ||= {
+        @operators_by_name ||=
+          replacement_operators_by_name.merge(insertion_and_deletion_operators_by_name)
+      end
+
+      def replacement_operators_by_name
+        @replacement_operators_by_name ||= {
           ROR: MutationOperators::RelationalOperatorReplacement.new,
           RER: MutationOperators::RelationalExpressionReplacement.new,
-          UAOD: MutationOperators::UnaryArithmeticOperatorDeletion.new,
-          UAOI: MutationOperators::UnaryArithmeticOperatorInsertion.new,
           BAOR: MutationOperators::BinaryArithmeticOperatorReplacement.new,
           COR: MutationOperators::ConditionalOperatorReplacement.new,
+          SAOR: MutationOperators::ShortcutAssignmentOperatorReplacement.new,
+          LOR: MutationOperators::LogicalOperatorReplacement.new
+        }
+      end
+
+      def insertion_and_deletion_operators_by_name
+        @insertion_and_deletion_operators_by_name ||= {
+          UAOD: MutationOperators::UnaryArithmeticOperatorDeletion.new,
+          UAOI: MutationOperators::UnaryArithmeticOperatorInsertion.new,
           COD: MutationOperators::ConditionalOperatorDeletion.new,
           COI: MutationOperators::ConditionalOperatorInsertion.new,
-          SAOR: MutationOperators::ShortcutAssignmentOperatorReplacement.new,
-          LOR: MutationOperators::LogicalOperatorReplacement.new,
           LOD: MutationOperators::LogicalOperatorDeletion.new,
           LOI: MutationOperators::LogicalOperatorInsertion.new
         }

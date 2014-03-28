@@ -12,7 +12,7 @@ module Mutiny
             ast.type == :send && ast.children[1] == :'!'
           end
         end
-        
+
         def single_replacer(mutation_point, helper)
           mutation_point.matched.children[0]
         end

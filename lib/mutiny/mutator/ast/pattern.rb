@@ -5,11 +5,11 @@ module Mutiny
     module Ast
       class Pattern
         attr_reader :matcher
-  
+
         def initialize(&matcher)
           @matcher = matcher
         end
-  
+
         def match(ast, location = [])
           @root ||= ast
           matches = []
@@ -17,12 +17,15 @@ module Mutiny
           matches << match_children(ast, location)
           matches.flatten
         end
-  
-      private
+
+        private
+
         def match_children(ast, location)
           ast.children
             .each_with_index
-            .map { |child, index| match(child, location.dup << index) if child.is_a? Parser::AST::Node }
+            .map do |child, index|
+              match(child, location.dup << index) if child.is_a? Parser::AST::Node
+            end
             .compact
         end
       end

@@ -10,7 +10,7 @@ module Mutiny
           line: example.line
         }
       end
-      
+
       def deserialise(memento)
         Example.new(memento)
       end

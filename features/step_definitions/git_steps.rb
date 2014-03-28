@@ -9,5 +9,5 @@ Given(/^I stage my changes to "(.*?)"$/) do |relative_path|
 end
 
 Given(/^I commit my changes$/) do
-  @repository.commit('No message')
+  @repository.commit("No message")
 end

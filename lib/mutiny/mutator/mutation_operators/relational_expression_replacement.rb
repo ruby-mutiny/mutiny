@@ -11,13 +11,13 @@ module Mutiny
         def operators
           [:<, :<=, :==, :'!=', :>, :>=]
         end
-        
+
         def replacements(mutation_point)
           [:true, :false]
         end
-        
+
         def mutate_to_replacement(mutation_point, replacement)
-          mutated = mutation_point.replace do |helper|
+          mutation_point.replace do |helper|
             helper.replace(replacement)
           end
         end

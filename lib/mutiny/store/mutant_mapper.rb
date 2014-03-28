@@ -12,16 +12,19 @@ module Mutiny
           alive?: mutant.alive?
         }
       end
-      
+
       def deserialise(memento)
         memento = memento.dup
         memento[:operator] = resolve(memento[:operator])
         Mutant.new(memento)
       end
-    
-    private
+
+      private
+
       def resolve(class_name)
-        class_name.split("::").inject (Object) { |type,name| type.const_get(name) }
+        class_name.split("::").reduce(Object) do |type, name|
+          type.const_get(name)
+        end
       end
     end
   end

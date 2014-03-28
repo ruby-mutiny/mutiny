@@ -11,10 +11,10 @@ module Mutiny
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
             (ast.type == :int && ast.children[0] > 0) ||
-            (ast.type == :send && ast.children[0] == nil)
+            (ast.type == :send && ast.children[0].nil?)
           end
         end
-        
+
         def single_replacer(mutation_point, helper)
           if mutation_point.matched.type == :int
             original = mutation_point.matched.children[0]

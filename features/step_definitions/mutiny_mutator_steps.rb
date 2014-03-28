@@ -37,14 +37,13 @@ end
 
 def precise_match(row)
   found = @results.any? do |m|
-    m.path == row[:path] &&
-    m.position == row[:position] &&
-    m.change == row[:change]
+    m.path == row[:path] && m.position == row[:position] &&
+    m.change == row[:change] && m.operator == row[:operator]
   end
 
   message = "expected to find a mutant of #{row[:path]} " \
             "at position #{row[:position]} " \
-            "with change #{row[:change]}, " \
+            "with change #{row[:operator]}(#{row[:change]}), " \
             "but there was none in: \n" + @results.map(&:inspect).join("\n")
 
   expect(found).to be_true, message
@@ -52,8 +51,7 @@ end
 
 def imprecise_match(row)
   found = @results.any? do |m|
-    m.path == row[:path] &&
-    m.line == row[:line] &&
+    m.path == row[:path] && m.line == row[:line] &&
     m.change == row[:change]
   end
 

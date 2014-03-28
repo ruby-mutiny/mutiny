@@ -24,7 +24,11 @@ module Mutiny
       end
 
       def operators
-        [registry.operator_for(operator_name)]
+        if operator_name == "*"
+          registry.all
+        else
+          [registry.operator_for(operator_name)]
+        end
       end
 
       def registry

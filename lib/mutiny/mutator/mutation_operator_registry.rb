@@ -14,6 +14,10 @@ require_relative "mutation_operators/logical_operator_insertion"
 module Mutiny
   module Mutator
     class MutationOperatorRegistry
+      def all
+        operators_by_name.values
+      end
+
       def operator_for(name)
         operators_by_name[name.to_sym]
       end

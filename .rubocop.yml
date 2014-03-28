@@ -2,6 +2,8 @@ AllCops:
   Includes:
     - Gemfile
     - Rakefile
+  Excludes:
+    - vendor/*
 
 StringLiterals:
   EnforcedStyle: double_quotes

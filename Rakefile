@@ -7,7 +7,7 @@ require 'rspec/core/rake_task'
 require 'coveralls/rake/task'
 Coveralls::RakeTask.new
 
-task default: ["test:acceptance", "test:unit", "coveralls:push"]
+task default: ["test:acceptance", "test:unit", "coveralls:push", "style:check"]
 
 namespace :test do
   Cucumber::Rake::Task.new(:acceptance) do |t|
@@ -19,4 +19,14 @@ namespace :test do
   end
   
   RSpec::Core::RakeTask.new(:unit)
+end
+
+
+namespace :style do
+  require 'rubocop/rake_task'
+
+  desc 'Run RuboCop on the lib directory'
+  Rubocop::RakeTask.new(:check) do |task|
+    task.options = ["--auto-correct"]
+  end
 end

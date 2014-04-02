@@ -6,7 +6,7 @@ gem "attributable", "~> 0.0.1"
 gem "parser", "~> 2.1.4"
 gem "unparser", "~> 0.1.9"
 
-gem "git", "~> 1.2.6"
+gem "rugged", "~> 0.19.0"
 
 group :test do
   gem "rspec", "~> 2.14.1"

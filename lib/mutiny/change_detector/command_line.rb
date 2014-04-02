@@ -1,4 +1,6 @@
 require "attributable"
+require "mutiny/domain/unit"
+require_relative "result"
 require_relative "differencer/git"
 
 module Mutiny
@@ -8,21 +10,28 @@ module Mutiny
       attributes :path, :start_label, :finish_label
 
       def run
-        changed_paths = differencer.changed_paths
-
-        impacted_specs = suite_inspector.specs.select do |spec|
-          changed_paths.include?(spec.path) ||
-          changed_paths.include?(spec.path_of_described_class)
-        end
-
-        impacted_specs.map(&:path)
+        Result.new(
+          impacted_units: impacted_units,
+          impacted_specs: impacted_specs.map(&:path)
+        )
       end
 
       private
 
+      def impacted_units
+        @impacted_units ||= differencer.changed_units
+      end
+
+      def impacted_specs
+        suite_inspector.specs.select do |spec|
+          impacted_units.map(&:path).include?(spec.path) ||
+          impacted_units.map(&:path).include?(spec.path_of_described_class)
+        end
+      end
+
       def differencer
         @differencer ||= Mutiny::ChangeDetector::Differencer::Git.new(
-          path: path,
+          repository_path: path,
           start_label: start_label,
           finish_label: finish_label
         )

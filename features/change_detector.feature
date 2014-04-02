@@ -107,3 +107,52 @@ Feature: Change detection
     When I run the change detector between "HEAD~1" and "HEAD"
     Then 1 spec is impacted
     And the spec at "spec/max_spec.rb" is impacted     
+
+  Scenario: Detects changes to regions of unit
+    Given I have the following unit at "lib/calculator.rb":
+      """
+      class Calculator
+        def add(left, right)
+          result = 0
+          result += left
+          result += right
+          result
+        end
+        
+        def subtract(left, right)
+          result = left
+          result -= right
+          result
+        end
+      end
+      """
+    And I stage my changes to "lib/calculator.rb"
+    And I commit my changes
+    And I change to the following unit at "lib/calculator.rb":
+      """
+      class Calculator
+        def add(left, right)
+          result = left
+          result += right
+          result
+        end
+        
+        def subtract(left, right)
+          result = left
+          result -= right
+          result
+        end
+        
+        def multiply(left, right)
+          result = left
+          result *= right
+          result
+        end
+      end
+      """
+    And I stage my changes to "lib/calculator.rb"
+    And I commit my changes
+    When I run the change detector between "HEAD" and "HEAD~1"
+    Then 2 units are impacted
+    And the unit at "lib/calculator.rb" is impacted at lines 3..3
+    And the unit at "lib/calculator.rb" is impacted at lines 13..18

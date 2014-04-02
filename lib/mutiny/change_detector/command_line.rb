@@ -21,7 +21,7 @@ module Mutiny
       def impacted_units
         @impacted_units ||= differencer.changed_units
       end
-      
+
       def impacted_unit_paths
         @impacted_unit_paths ||= impacted_units.map(&:path)
       end

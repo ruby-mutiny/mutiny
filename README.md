@@ -13,8 +13,7 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
 
 * Experimentation to validate approach
   * Write scripting
-      * Incremental prep: Alter change detector to have a mode that returns more fine-grained impacted regions (either regions of a file, or methods). Alter mutator so that it can be run on these regions (e.g., mutate max.rb@14..18,22..40 or mutate max.rb@Max#run,Max#clear)
-      * Incremental: Should generate mutant delta (new / deleted mutants) between two git commits
+      * Incremental: Should generate mutant delta (new / deleted mutants) between two git commits. Creating new mutants should be possible from existing change detector. Deleting obsoleted mutants will likely require enhancements to the change detector.
       * Experimental harness: should run non-incremental mode for each commit, and compare to results of incremental mode. Store data for paper and print a summary that shows the number of mutants evaluated by incremental and non-incremental mode.      
 
   * Candidate projects
@@ -49,6 +48,8 @@ NB: Currently supports Ruby versions of these [method level mutation operators](
 * Housekeeping
 
   * Consider refactoring mutant.rb so that it does not contain a code attribute (perhaps instead it should compute code by passing the file and line number to its operator?)
+  
+  * Should the change detector be a separate component, or should it be part of the core?
 
   * Tests for Session.
     

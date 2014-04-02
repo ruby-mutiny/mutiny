@@ -1,4 +1,5 @@
 require_relative "match"
+require "mutiny/domain/region"
 
 module Mutiny
   module Mutator
@@ -10,23 +11,27 @@ module Mutiny
           @matcher = matcher
         end
 
-        def match(ast, location = [])
+        def match(ast, scope = DefaultScope.new, location = [])
           @root ||= ast
           matches = []
-          matches << Match.new(@root, location) if matcher.call(ast)
-          matches << match_children(ast, location)
+          matches << Match.new(@root, location) if scope.include?(ast) && matcher.call(ast)
+          matches << match_children(ast, scope, location)
           matches.flatten
         end
 
-        private
-
-        def match_children(ast, location)
+        def match_children(ast, scope, location)
           ast.children
             .each_with_index
             .map do |child, index|
-              match(child, location.dup << index) if child.is_a? Parser::AST::Node
+              match(child, scope, location.dup << index) if child.is_a? Parser::AST::Node
             end
             .compact
+        end
+      end
+
+      class DefaultScope
+        def include?(ast)
+          true
         end
       end
     end

@@ -12,8 +12,6 @@ module Mutiny
       Mutiny::Mutator::Ast::Match.new(ast, [0, 1]).matched.to_s
     end
 
-    private
-
     def ast
       @ast ||= Parser::CurrentRuby.parse(code)
     end

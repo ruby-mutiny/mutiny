@@ -10,12 +10,7 @@ When(/^I apply the mutation operator "([^"]*?)"$/) do |operator|
 end
 
 When(/^I apply the mutation operator "([^"]*?)" to "([^"]*?)"$/) do |operator, relative_path|
-  options = { path: path(relative_path), operator: operator }
-  begin
-    @results = Mutiny::Mutator::CommandLine.new(options).run
-  rescue UnknownMutationOperatorError => exception
-    @exception = exception
-  end
+  run_mutator(path: path(relative_path), operator: operator)
 end
 
 Then(/^I should receive the following mutants:$/) do |expected_results|
@@ -73,4 +68,10 @@ end
 
 def filename
   "original.rb"
+end
+
+def run_mutator(options)
+  @results = Mutiny::Mutator::CommandLine.new(options).run
+rescue UnknownMutationOperatorError => exception
+  @exception = exception
 end

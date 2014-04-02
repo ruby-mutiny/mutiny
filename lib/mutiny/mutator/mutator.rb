@@ -1,5 +1,4 @@
 require "attributable"
-require "parser/current"
 require_relative "mutation_operator_registry"
 require_relative "unknown_mutation_operator_error"
 
@@ -11,8 +10,7 @@ module Mutiny
 
       def mutate(unit)
         ensure_operator_exists!
-        ast = Parser::CurrentRuby.parse(unit.code)
-        operators.flat_map { |operator| operator.mutate(ast, unit.path) }
+        operators.flat_map { |operator| operator.mutate(unit) }
       end
 
       private

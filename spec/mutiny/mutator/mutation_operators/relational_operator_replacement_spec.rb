@@ -1,4 +1,5 @@
 require "mutiny/mutator/mutation_operators/relational_operator_replacement"
+require "mutiny/domain/unit"
 
 module Mutiny
   module Mutator
@@ -38,8 +39,8 @@ eos
           expect(first_mutant.code).to eq(mutant.strip)
         end
 
-        def mutate(unit)
-          RelationalOperatorReplacement.new.mutate(Parser::CurrentRuby.parse(unit), "foo.rb")
+        def mutate(code)
+          RelationalOperatorReplacement.new.mutate(Mutiny::Unit.new(code: code, path: "foo.rb"))
         end
       end
     end

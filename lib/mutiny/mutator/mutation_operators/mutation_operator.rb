@@ -7,17 +7,21 @@ module Mutiny
   module Mutator
     module MutationOperators
       class MutationOperator
-        def mutate(ast, original_path)
-          pattern.match(ast).flat_map do |mutation_point|
+        def mutate(unit)
+          mutation_points_for(unit).flat_map do |mutation_point|
             replacements = replacer(mutation_point)
 
             replacements.map do |replacement|
-              create_mutant_from(original_path, replacement, mutation_point)
+              create_mutant_from(unit.path, replacement, mutation_point)
             end
           end
         end
 
         private
+
+        def mutation_points_for(unit)
+          pattern.match(unit.ast, unit.region)
+        end
 
         def create_mutant_from(path, replacement, mutation_point)
           Mutiny::Mutant.new(

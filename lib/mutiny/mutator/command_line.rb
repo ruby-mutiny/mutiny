@@ -1,5 +1,6 @@
 require "attributable"
 require "mutiny/domain/unit"
+require "mutiny/domain/region"
 
 module Mutiny
   module Mutator
@@ -18,16 +19,46 @@ module Mutiny
       end
 
       def units
-        paths.map do |path|
-          Mutiny::Unit.new(path: path, code: File.read(path))
+        path_specs.map do |path_spec|
+          path, region_spec = path_spec.split(":")
+          region = RegionParser.new(region_spec).parse
+          Mutiny::Unit.new(path: path, code: File.read(path), region: region)
         end
       end
 
-      def paths
+      def path_specs
         if File.directory?(path)
           Dir["#{path}/**/*.rb"]
         else
           [path]
+        end
+      end
+
+      class RegionParser < Struct.new(:specification)
+        def parse
+          if specification.nil?
+            Region::Everything.new
+          else
+            Region.new(start_line: lines.first, end_line: lines.last)
+          end
+        end
+
+        private
+
+        def lines
+          if specification.include? ".."
+            specified_lines
+          else
+            specified_line
+          end
+        end
+
+        def specified_lines
+          specification.split("..").map(&:to_i)
+        end
+
+        def specified_line
+          [specification.to_i, specification.to_i]
         end
       end
     end

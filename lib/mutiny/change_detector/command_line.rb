@@ -21,11 +21,15 @@ module Mutiny
       def impacted_units
         @impacted_units ||= differencer.changed_units
       end
+      
+      def impacted_unit_paths
+        @impacted_unit_paths ||= impacted_units.map(&:path)
+      end
 
       def impacted_specs
         suite_inspector.specs.select do |spec|
-          impacted_units.map(&:path).include?(spec.path) ||
-          impacted_units.map(&:path).include?(spec.path_of_described_class)
+          impacted_unit_paths.include?(spec.path) ||
+          impacted_unit_paths.include?(spec.path_of_described_class)
         end
       end
 

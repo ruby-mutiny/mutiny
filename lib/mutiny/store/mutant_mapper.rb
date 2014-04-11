@@ -16,6 +16,7 @@ module Mutiny
       def deserialise(memento)
         memento = memento.dup
         memento[:operator] = resolve(memento[:operator])
+        memento.delete(:alive?)
         Mutant.new(memento)
       end
 

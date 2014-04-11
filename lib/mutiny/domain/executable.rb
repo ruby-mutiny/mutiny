@@ -3,9 +3,8 @@ require "parser/current"
 require "mutiny/mutator/ast/match"
 
 module Mutiny
-  module Executable
+  class Executable
     extend Attributable
-
     attributes :code
 
     def class_name

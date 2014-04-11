@@ -1,13 +1,9 @@
-require "attributable"
 require "parser/current"
 require_relative "executable"
 require_relative "region"
 
 module Mutiny
-  class Unit
-    include Executable
-
-    extend Attributable
+  class Unit < Executable
     attributes :path, region: Region::Everything.new
   end
 end

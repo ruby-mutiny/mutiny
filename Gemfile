@@ -1,7 +1,7 @@
 ruby "2.1.1"
 source "https://rubygems.org"
 
-gem "attributable", "~> 0.0.1"
+gem "attributable", "~> 0.1.0"
 
 gem "parser", "~> 2.1.4"
 gem "unparser", "~> 0.1.9"

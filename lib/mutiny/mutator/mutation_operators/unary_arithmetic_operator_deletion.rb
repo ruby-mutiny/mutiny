@@ -11,7 +11,7 @@ module Mutiny
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
             (ast.type == :int && ast.children[0] < 0) ||
-            (ast.type == :send && ast.children[1] == :-@)
+              (ast.type == :send && ast.children[1] == :-@)
           end
         end
 

@@ -5,7 +5,7 @@ require_relative "store/result_mapper"
 require_relative "store/typed_identity_map"
 
 module Mutiny
-  class Session < Struct.new(:path)
+  Session = Struct.new(:path) do
     def persist(analysis)
       @map = Mutiny::Store::TypedIdentityMap.new
 

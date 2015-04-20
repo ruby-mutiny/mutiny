@@ -6,7 +6,7 @@ module Mutiny
     attributes :start_line, :end_line
 
     class Everything
-      def include?(ast)
+      def include?(_ast)
         true
       end
     end

@@ -12,7 +12,7 @@ module Mutiny
           [:<, :<=, :==, :'!=', :>, :>=]
         end
 
-        def replacements(mutation_point)
+        def replacements(_mutation_point)
           [:true, :false]
         end
 

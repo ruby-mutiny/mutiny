@@ -1,12 +1,12 @@
-ruby "2.1.1"
+ruby "2.2.2"
 source "https://rubygems.org"
 
 gem "attributable", "~> 0.1.0"
 
-gem "parser", "~> 2.1.4"
-gem "unparser", "~> 0.1.9"
+gem "parser", "~> 2.2.0"
+gem "unparser", "~> 0.2.2"
 
-gem "rugged", "~> 0.19.0"
+gem "rugged", "~> 0.21.0"
 
 group :test do
   gem "rspec", "~> 2.14.1"
@@ -15,6 +15,6 @@ group :test do
 end
 
 group :development do
-  gem "rake", "~> 10.1.1"
-  gem "rubocop", "~> 0.19.1"
+  gem "rake", "~> 10.4.0"
+  gem "rubocop", "~> 0.30.0"
 end

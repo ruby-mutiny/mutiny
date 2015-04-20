@@ -1,7 +1,7 @@
 module Mutiny
   module Mutator
     module Ast
-      class Match < Struct.new(:ast, :location)
+      Match = Struct.new(:ast, :location) do
         def matched
           location.reduce(ast) do |current_node, child_index|
             current_node.children.fetch(child_index)
@@ -28,10 +28,10 @@ module Mutiny
         end
 
         def child
-          unless location.empty?
-            first, *rest = *location
-            Match.new(ast.children[first], rest)
-          end
+          return if location.empty?
+
+          first, *rest = *location
+          Match.new(ast.children[first], rest)
         end
 
         private
@@ -41,7 +41,7 @@ module Mutiny
         end
       end
 
-      class ReplacementHelper < Struct.new(:ast)
+      ReplacementHelper = Struct.new(:ast) do
         def replace(replacement, children = [])
           Parser::AST::Node.new(replacement, children)
         end

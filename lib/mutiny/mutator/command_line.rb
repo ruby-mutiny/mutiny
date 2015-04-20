@@ -34,7 +34,7 @@ module Mutiny
         end
       end
 
-      class RegionParser < Struct.new(:specification)
+      RegionParser = Struct.new(:specification) do
         def parse
           if specification.nil?
             Region::Everything.new

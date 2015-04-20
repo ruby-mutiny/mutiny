@@ -7,7 +7,8 @@
 # variables.
 
 module Sandboxing
-# rubocop:disable MethodLength
+  # rubocop:disable MethodLength
+  # rubocop:disable AbcSize
   def self.sandboxed(&block)
     @orig_config = RSpec.configuration
     @orig_world  = RSpec.world
@@ -36,5 +37,6 @@ module Sandboxing
     RSpec.configuration = @orig_config
     RSpec.world = @orig_world
   end
-# rubocop:enable MethodLength
+  # rubocop:enable MethodLength
+  # rubocop:enable AbcSize
 end

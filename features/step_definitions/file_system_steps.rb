@@ -1,8 +1,8 @@
-Given(/^I have the following (unit|spec) at "(.*?)":$/) do |type, path, contents|
+Given(/^I have the following (unit|spec) at "(.*?)":$/) do |_type, path, contents|
   write(path, contents)
 end
 
-Given(/^I change to the following (unit|spec) at "(.*?)":$/) do |type, path, contents|
+Given(/^I change to the following (unit|spec) at "(.*?)":$/) do |_type, path, contents|
   write(path, contents)
 end
 

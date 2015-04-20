@@ -29,7 +29,7 @@ module Mutiny
       def impacted_specs
         suite_inspector.specs.select do |spec|
           impacted_unit_paths.include?(spec.path) ||
-          impacted_unit_paths.include?(spec.path_of_described_class)
+            impacted_unit_paths.include?(spec.path_of_described_class)
         end
       end
 

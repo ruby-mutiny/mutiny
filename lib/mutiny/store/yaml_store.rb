@@ -67,7 +67,7 @@ module Mutiny
         end
       end
 
-      class YamlTypeStore < Struct.new(:type, :data)
+      YamlTypeStore = Struct.new(:type, :data) do
         def all
           data.values
         end

@@ -21,7 +21,7 @@ module Mutiny
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
             (ast.type == :send && operators.include?(ast.children[1])) ||
-            (operators.include?(ast.type))
+              (operators.include?(ast.type))
           end
         end
 

@@ -4,7 +4,7 @@ require "mutiny/domain/example"
 
 module Mutiny
   module Store
-    class ResultMapper < Struct.new(:finder)
+    ResultMapper = Struct.new(:finder) do
       def serialise(result)
         {
           mutant_id: finder.identify(:mutant, result.mutant),

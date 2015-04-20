@@ -35,7 +35,7 @@ module Mutiny
         def changed_lines_in(hunk)
           hunk.lines.select do |line|
             line.new_lineno > 0 &&
-            (line.addition? || line.deletion?)
+              (line.addition? || line.deletion?)
           end
         end
 

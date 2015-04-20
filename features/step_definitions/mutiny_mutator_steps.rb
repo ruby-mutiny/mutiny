@@ -32,34 +32,38 @@ end
 
 def precise_match(row)
   found = @results.any? do |m|
-    m.path == row[:path] && m.position == row[:position] &&
-    m.change == row[:change] && m.operator == row[:operator]
+    [m.path, m.position, m.change, m.operator] ==
+    row.values_at(*%i(path position change operator))
   end
 
-  message = "expected to find a mutant of #{row[:path]} " \
-            "at position #{row[:position]} " \
-            "with change #{row[:operator]}(#{row[:change]}), " \
-            "but there was none in: \n" + @results.map(&:inspect).join("\n")
+  expect(found).to be_true, precise_match_message(row)
+end
 
-  expect(found).to be_true, message
+def precise_match_message(row)
+  "expected to find a mutant of #{row[:path]} " \
+  "at position #{row[:position]} " \
+  "with change #{row[:operator]}(#{row[:change]}), " \
+  "but there was none in: \n" + @results.map(&:inspect).join("\n")
 end
 
 def imprecise_match(row)
   found = @results.any? do |m|
-    m.path == row[:path] && m.line == row[:line] &&
-    m.change == row[:change]
+    [m.path, m.line, m.change] == row.values_at(*%i(path line change))
   end
 
-  message = "expected to find a mutant of #{row[:path]} " \
-            "on line #{row[:line]} " \
-            "with change #{row[:change]}, " \
-            "but there was none in: \n" + @results.map(&:inspect).join("\n")
+  expect(found).to be_true, imprecise_match_message(row)
+end
 
-  expect(found).to be_true, message
+def imprecise_match_message(row)
+  "expected to find a mutant of #{row[:path]} " \
+  "on line #{row[:line]} " \
+  "with change #{row[:change]}, " \
+  "but there was none in: \n" + @results.map(&:inspect).join("\n")
 end
 
 Then(/^I should receive the following mutated code:$/) do |expected_code|
-  expect(@results.map(&:code).join("\n")).to eq(expected_code)
+  actual_code = @results.map(&:code)
+  expect(actual_code.join("\n").gsub(/\(|\)/, "")).to eq(expected_code)
 end
 
 Then(/^I should receive an? "(.*?)" error message\.$/) do |expected_message|

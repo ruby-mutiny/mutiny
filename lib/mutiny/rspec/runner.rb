@@ -4,7 +4,7 @@ require_relative "suite"
 
 module Mutiny
   module RSpec
-    class Runner < Struct.new(:path)
+    Runner = Struct.new(:path) do
       def run(unit)
         rspec_results = environment.run { rspec_suite.results_for(unit) }
         convert_to_mutiny_results(rspec_results, unit)

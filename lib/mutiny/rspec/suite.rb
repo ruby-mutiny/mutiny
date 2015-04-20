@@ -3,7 +3,7 @@ require "rspec/core/formatters/json_formatter"
 
 module Mutiny
   module RSpec
-    class Suite < Struct.new(:path)
+    Suite = Struct.new(:path) do
       def results_for(unit)
         load_specs if world.example_count.zero?
         add_to_environment(unit.code)
@@ -36,13 +36,16 @@ module Mutiny
 
       def run_specs_for(unit)
         reporter.report(world.example_count) do |reporter|
-          world.example_groups
-            .ordered
-            .select { |g| unit.class_name == g.described_class.name }
-            .map { |g| g.run(reporter) }
+          specs_for(unit).map { |g| g.run(reporter) }
         end
 
         json_formatter.output_hash[:examples]
+      end
+
+      def specs_for(unit)
+        world.example_groups
+        .ordered
+        .select { |g| unit.class_name == g.described_class.name }
       end
 
       def json_formatter

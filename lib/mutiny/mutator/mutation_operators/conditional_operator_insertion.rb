@@ -13,9 +13,9 @@ module Mutiny
         def pattern
           Mutiny::Mutator::Ast::Pattern.new do |ast|
             (ast.type == :lvar) ||
-            (ast.type == :true) ||
-            (ast.type == :false) ||
-            (ast.type == :send && ast.children[0].nil?)
+              (ast.type == :true) ||
+              (ast.type == :false) ||
+              (ast.type == :send && ast.children[0].nil?)
           end
         end
 

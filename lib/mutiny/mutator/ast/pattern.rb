@@ -30,7 +30,7 @@ module Mutiny
       end
 
       class DefaultScope
-        def include?(ast)
+        def include?(_ast)
           true
         end
       end

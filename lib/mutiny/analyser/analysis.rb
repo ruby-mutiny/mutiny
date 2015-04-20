@@ -31,7 +31,7 @@ module Mutiny
       end
 
       def kill_count
-        mutants.count { |m| m.killed? }
+        mutants.count(&:killed?)
       end
 
       def score

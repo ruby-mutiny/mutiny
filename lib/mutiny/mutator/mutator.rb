@@ -16,9 +16,11 @@ module Mutiny
       private
 
       def ensure_operator_exists!
-        if operators.first.nil?
-          fail UnknownMutationOperatorError, "#{operator_name} -- unknown mutation operator"
-        end
+        fail UnknownMutationOperatorError, unknown_operator_message if operators.first.nil?
+      end
+
+      def unknown_operator_message
+        "#{operator_name} -- unknown mutation operator"
       end
 
       def operators

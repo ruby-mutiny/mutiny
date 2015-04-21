@@ -1,7 +1,8 @@
 describe "Using Mutiny to check tests can be run" do
   it "should run tests" do
-    output = `cd examples/calculator; ../../bin/mutiny check lib calculator Calculator`
+    cd 'calculator'
+    run 'bundle exec mutiny -p Calculator check'
 
-    expect(output).to end_with("3 examples, 0 failures\n")
+    expect(all_output).to end_with("3 examples, 0 failures\n")
   end
 end

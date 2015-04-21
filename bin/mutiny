@@ -1,4 +1,27 @@
 #!/usr/bin/env ruby
-require_relative "../lib/mutiny/cli"
+require "gli"
+require "mutiny"
 
-Mutiny::CLI.run(ARGV)
+include GLI::App
+
+program_desc "A tiny mutation testing framework"
+
+flag [:l, :loads], type: Array, default_value: ['lib']
+flag [:r, :requires], type: Array, default_value: [File.basename(Dir.pwd)]
+flag [:p, :patterns], type: Array, default_value: ['*']
+
+pre do |global_options|
+  @configuration = Mutiny::Configuration.new(global_options)
+  @environment = Mutiny::Environment.new(@configuration)
+end
+
+desc 'Check whether your project can be used with Mutiny'
+long_desc 'Checks that Mutiny can load the modules and classes you specify,
+and execute test cases for each module and class'
+command :check do |c|
+  c.action do
+    Mutiny::CLI::Check.run(@environment)
+  end
+end
+
+exit run(ARGV)

@@ -16,7 +16,7 @@ module Mutiny
     private
 
     def setup
-      configuration.load_paths.each { |l| $LOAD_PATH << l }
+      configuration.loads.each { |l| $LOAD_PATH << l }
       configuration.requires.each { |r| require r }
     end
   end

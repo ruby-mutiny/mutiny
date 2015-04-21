@@ -1,4 +1,4 @@
-require "mutiny/domain/result"
+require_relative "../domain/result"
 require_relative "sandbox"
 require_relative "suite"
 

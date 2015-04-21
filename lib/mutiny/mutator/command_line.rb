@@ -1,6 +1,6 @@
 require "attributable"
-require "mutiny/domain/unit"
-require "mutiny/domain/region"
+require_relative "../domain/unit"
+require_relative "../domain/region"
 
 module Mutiny
   module Mutator

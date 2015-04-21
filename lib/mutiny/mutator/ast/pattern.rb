@@ -1,5 +1,5 @@
 require_relative "match"
-require "mutiny/domain/region"
+require_relative "../../domain/region"
 
 module Mutiny
   module Mutator

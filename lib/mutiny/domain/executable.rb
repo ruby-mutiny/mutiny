@@ -1,6 +1,6 @@
 require "attributable"
 require "parser/current"
-require "mutiny/mutator/ast/match"
+require_relative "../mutator/ast/match"
 
 module Mutiny
   class Executable

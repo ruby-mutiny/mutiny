@@ -1,6 +1,6 @@
-require "mutiny/domain/result"
-require "mutiny/domain/mutant"
-require "mutiny/domain/example"
+require_relative "../domain/result"
+require_relative "../domain/mutant"
+require_relative "../domain/example"
 
 module Mutiny
   module Store

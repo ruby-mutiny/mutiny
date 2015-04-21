@@ -1,4 +1,4 @@
-require "mutiny/domain/example"
+require_relative "../domain/example"
 
 module Mutiny
   module Store

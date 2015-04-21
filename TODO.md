@@ -1,4 +1,21 @@
-### To do list
+### TODO
+
+### New implementation
+
+#### Check mode (runs tests for subject)
+* Add unit specs for existing classes
+* Slim down Integration::RSpec
+* Add acknowledgements to mutant project
+* Investigate a proper CLI argument parser, and supporting multiple load_paths, requires, and patterns
+
+#### Mutate mode
+* Should create mutants from subjects
+
+#### Analysis mode
+* Should calculate mutation score
+
+
+### Original implementation
 
 * Experimentation to validate approach
   * Write scripting

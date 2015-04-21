@@ -1,2 +1,4 @@
 #!/usr/bin/env ruby
-require_relative "../lib/mutiny/driver"
+require_relative "../lib/mutiny/cli"
+
+Mutiny::CLI.run(ARGV)

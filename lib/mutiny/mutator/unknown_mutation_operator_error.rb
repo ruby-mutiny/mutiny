@@ -1,2 +1,0 @@
-class UnknownMutationOperatorError < ArgumentError
-end

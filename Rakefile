@@ -1,24 +1,16 @@
-require "rubygems"
-require "cucumber"
-require "cucumber/rake/task"
-
+require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 
-require "coveralls/rake/task"
-Coveralls::RakeTask.new
-
-task default: ["test:acceptance", "test:unit", "coveralls:push", "style:check"]
+task default: ["test:unit", "test:integration", "style:check"]
 
 namespace :test do
-  Cucumber::Rake::Task.new(:acceptance) do |t|
-    t.cucumber_opts = "features --format pretty --tags ~@wip"
+  RSpec::Core::RakeTask.new(:unit) do |task|
+    task.pattern = "./spec/unit{,/*/**}/*_spec.rb"
   end
 
-  Cucumber::Rake::Task.new(:focus) do |t|
-    t.cucumber_opts = "features --format pretty --tags @focus"
+  RSpec::Core::RakeTask.new(:integration) do |task|
+    task.pattern = "./spec/integration{,/*/**}/*_spec.rb"
   end
-
-  RSpec::Core::RakeTask.new(:unit)
 end
 
 namespace :style do

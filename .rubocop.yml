@@ -6,10 +6,13 @@ AllCops:
     - vendor/*
 
 StringLiterals:
-  EnforcedStyle: double_quotes
+  Enabled: false
 
 LineLength:
   Max: 99
 
 Documentation:
   Enabled: false
+
+Style/TrivialAccessors:
+  ExactNameMatch: true

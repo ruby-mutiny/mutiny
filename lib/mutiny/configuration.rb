@@ -1,5 +1,12 @@
-require 'ostruct'
+require_relative 'pattern'
 
 module Mutiny
-  Configuration = OpenStruct
+  class Configuration
+    attr_reader :loads, :requires, :patterns
+
+    def initialize(loads:, requires:, patterns:)
+      @loads, @requires, @patterns = loads, requires, patterns
+      @patterns.map!(&Pattern.method(:new))
+    end
+  end
 end

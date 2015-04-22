@@ -9,7 +9,7 @@ module Mutiny
 
     def subjects
       ObjectSpace.each_object(Module).select do |mod|
-        !mod.name.nil? && configuration.patterns.any? { |pattern| mod.name.start_with?(pattern) }
+        !mod.name.nil? && configuration.patterns.any? { |pattern| pattern.match?(mod.name) }
       end
     end
 

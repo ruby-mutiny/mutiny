@@ -11,7 +11,8 @@ flag [:r, :requires], type: Array, default_value: [File.basename(Dir.pwd)]
 flag [:p, :patterns], type: Array, default_value: ['*']
 
 pre do |global_options|
-  @configuration = Mutiny::Configuration.new(global_options)
+  relevant_options = global_options.select { |k| %i(loads requires patterns).include?(k) }
+  @configuration = Mutiny::Configuration.new(relevant_options)
   @environment = Mutiny::Environment.new(@configuration)
 end
 

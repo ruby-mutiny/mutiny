@@ -10,5 +10,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     restore_env
+    set_env "GLI_DEBUG", "true"
   end
 end

@@ -6,6 +6,7 @@
 * Add unit specs for existing classes
 * Slim down Integration::RSpec
 * Add acknowledgements to mutant project
+* Reorganise lib, having in mind a "mutiny-core" which is seperate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
 
 #### Mutate mode
 * Should create mutants from subjects

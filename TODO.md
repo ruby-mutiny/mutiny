@@ -6,7 +6,6 @@
 * Add unit specs for existing classes
 * Slim down Integration::RSpec
 * Add acknowledgements to mutant project
-* Investigate a proper CLI argument parser, and supporting multiple load_paths, requires, and patterns
 
 #### Mutate mode
 * Should create mutants from subjects

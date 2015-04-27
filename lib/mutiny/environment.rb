@@ -8,9 +8,13 @@ module Mutiny
     end
 
     def subjects
-      ObjectSpace.each_object(Module).select do |mod|
-        !mod.name.nil? && configuration.patterns.any? { |pattern| pattern.match?(mod.name) }
-      end
+      self.class.modules
+        .reject { |m| m.name.nil? }
+        .select { |m| configuration.patterns.any? { |pattern| pattern.match?(m.name) } }
+    end
+
+    def self.modules
+      ObjectSpace.each_object(Module)
     end
 
     private
@@ -18,6 +22,7 @@ module Mutiny
     def setup
       configuration.loads.each { |l| $LOAD_PATH << l }
       configuration.requires.each { |r| require r }
+      self
     end
   end
 end

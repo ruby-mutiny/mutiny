@@ -13,7 +13,6 @@ flag [:p, :patterns], type: Array, default_value: ['*']
 pre do |global_options|
   relevant_options = global_options.select { |k| %i(loads requires patterns).include?(k) }
   @configuration = Mutiny::Configuration.new(relevant_options)
-  @environment = Mutiny::Environment.new(@configuration)
 end
 
 desc 'Check whether your project can be used with Mutiny'
@@ -21,7 +20,7 @@ long_desc 'Checks that Mutiny can load the modules and classes you specify,
 and execute test cases for each module and class'
 command :check do |c|
   c.action do
-    Mutiny::CLI::Check.run(@environment)
+    Mutiny::Command::Check.new(@configuration).run
   end
 end
 

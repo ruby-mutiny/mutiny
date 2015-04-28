@@ -4,10 +4,7 @@ require "cucumber/rake/task"
 
 require "rspec/core/rake_task"
 
-require "coveralls/rake/task"
-Coveralls::RakeTask.new
-
-task default: ["test:acceptance", "test:unit", "coveralls:push", "style:check"]
+task default: ["test:acceptance", "test:unit", "style:check"]
 
 namespace :test do
   Cucumber::Rake::Task.new(:acceptance) do |t|

@@ -1,4 +1,4 @@
-# Mutiny [![Build Status](https://travis-ci.org/mutiny/mutiny.svg?branch=master)](https://travis-ci.org/mutiny/mutiny) [![Code Climate](https://codeclimate.com/github/mutiny/mutiny/badges/gpa.svg)](https://codeclimate.com/github/mutiny/mutiny) [![Dependency Status](https://gemnasium.com/mutiny/mutiny.svg)](https://gemnasium.com/mutiny/mutiny) [![Coverage Status](https://coveralls.io/repos/mutiny/mutiny/badge.png?branch=master)](https://coveralls.io/r/mutiny/mutiny?branch=master)
+# Mutiny [![Build Status](https://travis-ci.org/mutiny/mutiny.svg?branch=master)](https://travis-ci.org/mutiny/mutiny) [![Code Climate](https://codeclimate.com/github/mutiny/mutiny/badges/gpa.svg)](https://codeclimate.com/github/mutiny/mutiny) [![Dependency Status](https://gemnasium.com/mutiny/mutiny.svg)](https://gemnasium.com/mutiny/mutiny) [![Test Coverage](https://codeclimate.com/github/mutiny/mutiny/badges/coverage.svg)](https://codeclimate.com/github/mutiny/mutiny)
 
 A tiny mutation testing framework.
 

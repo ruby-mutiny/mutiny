@@ -11,7 +11,7 @@ gem "rugged", "~> 0.21.0"
 group :test do
   gem "rspec", "~> 2.14.1"
   gem "cucumber", "~> 1.3.10"
-  gem "coveralls", require: false
+  gem "codeclimate-test-reporter", "~> 0.4.7", require: nil
 end
 
 group :development do

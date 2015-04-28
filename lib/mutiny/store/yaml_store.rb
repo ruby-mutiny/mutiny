@@ -1,3 +1,5 @@
+require "psych"
+
 module Mutiny
   module Store
     class YamlStore

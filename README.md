@@ -1,4 +1,4 @@
-# Mutiny [![Build Status](https://travis-ci.org/mutiny/mutiny.png?branch=master)](https://travis-ci.org/mutiny/mutiny) [![Code Climate](https://codeclimate.com/github/mutiny/mutiny.png)](https://codeclimate.com/github/mutiny/mutiny) [![Dependency Status](https://gemnasium.com/mutiny/mutiny.png)](https://gemnasium.com/mutiny/mutiny) [![Coverage Status](https://codeclimate.com/github/mutiny/mutiny/badges/coverage.svg)](https://codeclimate.com/github/mutiny/mutiny)
+# Mutiny [![Build Status](https://travis-ci.org/mutiny/mutiny.svg?branch=master)](https://travis-ci.org/mutiny/mutiny) [![Code Climate](https://codeclimate.com/github/mutiny/mutiny/badges/gpa.svg)](https://codeclimate.com/github/mutiny/mutiny) [![Dependency Status](https://gemnasium.com/mutiny/mutiny.svg)](https://gemnasium.com/mutiny/mutiny) [![Test Coverage](https://codeclimate.com/github/mutiny/mutiny/badges/coverage.svg)](https://codeclimate.com/github/mutiny/mutiny)
 
 A tiny mutation testing framework for Ruby. Used for exploring research ideas. For more stable and complete mutation testing in Ruby, use [mutant](https://github.com/mbj/mutant).
 

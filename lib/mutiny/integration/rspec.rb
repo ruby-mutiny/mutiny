@@ -12,11 +12,7 @@ module Mutiny
         @output = StringIO.new
         @runner = ::RSpec::Core::Runner.new(::RSpec::Core::ConfigurationOptions.new(CLI_OPTIONS))
         @world  = ::RSpec.world
-      end
-
-      def setup
         @runner.setup($stderr, @output)
-        self
       end
 
       def call(tests)

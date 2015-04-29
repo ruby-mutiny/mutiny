@@ -4,7 +4,7 @@ describe "Using Mutiny to check whether mutation testing can be carried out" do
     run "bundle exec mutiny check"
 
     expected_output = "Checking...\n" \
-                      "  At least one relevant test found (3 in total)\n" \
+                      "  At least one relevant test found (6 in total)\n" \
                       "  All relevant tests passed\n" \
                       "Looks good!\n"
 

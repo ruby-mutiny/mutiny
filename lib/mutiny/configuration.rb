@@ -11,7 +11,7 @@ module Mutiny
       @patterns.map!(&Pattern.method(:new))
 
       @reporter = Reporter::Stdout.new
-      @integration = Integration::RSpec.new.setup
+      @integration = Integration::RSpec.new
     end
   end
 end

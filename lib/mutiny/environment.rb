@@ -22,7 +22,6 @@ module Mutiny
     def setup
       configuration.loads.each { |l| $LOAD_PATH << l }
       configuration.requires.each { |r| require r }
-      self
     end
   end
 end

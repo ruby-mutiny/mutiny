@@ -18,14 +18,14 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "parser", "~> 2.2.0"
-  spec.add_runtime_dependency "unparser", "~> 0.2.2"
+  spec.add_runtime_dependency "parser", "~> 2.2.2"
+  spec.add_runtime_dependency "unparser", "~> 0.2.3"
   spec.add_runtime_dependency "gli", "~> 2.13.0"
-  
+
   spec.add_development_dependency "bundler", "~> 1.9.0"
   spec.add_development_dependency "rake", "~> 10.4.2"
   spec.add_development_dependency "rspec", "~> 3.2.0"
   spec.add_development_dependency "aruba", "~> 0.6.0"
   spec.add_development_dependency "codeclimate-test-reporter", "~> 0.4.6"
-  spec.add_development_dependency "rubocop", "~> 0.29.0"
+  spec.add_development_dependency "rubocop", "~> 0.30.1"
 end

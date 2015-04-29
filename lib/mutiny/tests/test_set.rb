@@ -6,12 +6,21 @@ module Mutiny
       extend Forwardable
       def_delegators :@tests, :size, :empty?
 
+      def self.empty
+        new([])
+      end
+
       def initialize(tests)
         @tests = tests
       end
 
       def locations
         @tests.map(&:location)
+      end
+
+      # FIXME : test me
+      def for(subject_set)
+        subset { |test| subject_set.names.include?(test.expression) }
       end
 
       def subset(&block)

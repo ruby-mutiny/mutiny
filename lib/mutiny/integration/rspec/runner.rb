@@ -7,8 +7,8 @@ module Mutiny
         extend Forwardable
         def_delegators :@context, :world, :runner, :configuration, :output
 
-        def initialize(context, test_set)
-          @context, @test_set = context, test_set
+        def initialize(test_set, context = Context.new)
+          @test_set, @context = test_set, context
         end
 
         def call

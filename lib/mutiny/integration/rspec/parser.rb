@@ -7,7 +7,7 @@ module Mutiny
       class Parser
         EXPRESSION_DELIMITER = " "
 
-        def initialize(context)
+        def initialize(context = Context.new)
           @world = context.world
         end
 

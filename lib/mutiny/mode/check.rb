@@ -45,7 +45,7 @@ module Mutiny
       end
 
       def test_run
-        @test_run ||= configuration.integration.call(test_set)
+        @test_run ||= configuration.integration.run(test_set)
       end
     end
   end

@@ -1,5 +1,5 @@
 module Mutiny
-  module Testing
+  module Tests
     class TestRun
       attr_reader :tests, :failed_tests, :output, :runtime
 

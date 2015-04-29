@@ -6,7 +6,7 @@ module Mutiny
 
     def initialize(configuration)
       @configuration = configuration
-      @environment = Environment.new(configuration)
+      @environment = Subjects::Environment.new(configuration)
     end
 
     private

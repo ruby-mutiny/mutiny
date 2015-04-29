@@ -4,8 +4,7 @@
 
 #### Check mode (runs tests for subject)
 * Add unit specs for existing classes
-* Slim down Integration::RSpec
-* Fix FIX ME comments
+* Split up unit specs for RSpec?
 * Add acknowledgements to mutant project
 * Reorganise lib, having in mind a "mutiny-core" which is seperate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
 

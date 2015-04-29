@@ -3,15 +3,17 @@
 ### New implementation
 
 #### Check mode (runs tests for subject)
-* Add unit specs for existing classes
-* Add acknowledgements to mutant project
-* Reorganise lib, having in mind a "mutiny-core" which is seperate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
+* Write pending specs
+* Add acknowledgements to mutant project. Ensure licenses are compatible
+* Reorganise lib, having in mind a "mutiny-core" which is separate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
 
 #### Mutate mode
 * Should create mutants from subjects
+* Reorganise lib, having in mind a "mutiny-core" which is separate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
 
 #### Analysis mode
 * Should calculate mutation score
+* Reorganise lib, having in mind a "mutiny-core" which is separate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
 
 
 ### Original implementation

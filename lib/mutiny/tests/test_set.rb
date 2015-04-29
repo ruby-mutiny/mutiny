@@ -18,7 +18,6 @@ module Mutiny
         @tests.map(&:location)
       end
 
-      # FIXME : test me
       def for(subject_set)
         subset { |test| subject_set.names.include?(test.expression) }
       end

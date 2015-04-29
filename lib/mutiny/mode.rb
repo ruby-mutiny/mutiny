@@ -1,7 +1,7 @@
-require_relative "command/check"
+require_relative "mode/check"
 
 module Mutiny
-  class Command
+  class Mode
     attr_reader :configuration, :environment
 
     def initialize(configuration)

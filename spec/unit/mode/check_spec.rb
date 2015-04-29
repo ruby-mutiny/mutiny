@@ -1,5 +1,5 @@
 module Mutiny
-  class Command
+  class Mode
     describe Check do
       it "should have some tests" do
         pending "tests needed"

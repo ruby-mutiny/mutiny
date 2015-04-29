@@ -20,7 +20,7 @@ long_desc 'Checks that Mutiny can load the modules and classes you specify,
 and execute test cases for each module and class'
 command :check do |c|
   c.action do
-    Mutiny::Command::Check.new(@configuration).run
+    Mutiny::Mode::Check.new(@configuration).run
   end
 end
 

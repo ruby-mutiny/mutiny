@@ -13,6 +13,7 @@ module Mutiny
           self.class.modules
             .reject { |m| m.name.nil? }
             .select { |m| configuration.patterns.any? { |pattern| pattern.match?(m.name) } }
+            .map { |m| Subject.new(name: m.name) }
         )
       end
 

@@ -1,5 +1,5 @@
 module Mutiny
-  module Subjects
+  module Tests
     describe TestSet do
       xit "tests for #for"
       xit "test for #take"

@@ -4,6 +4,8 @@ require_relative "test_set"
 module Mutiny
   class Integration
     class RSpec
+      # This code originally based on Markus Schirp's implementation of Mutant::Integration::Rspec
+      #  https://github.com/mbj/mutant/blob/master/lib/mutant/integration/rspec.rb
       class Parser
         EXPRESSION_DELIMITER = " "
 

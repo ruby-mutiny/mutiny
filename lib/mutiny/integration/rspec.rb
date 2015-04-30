@@ -4,6 +4,8 @@ require_relative "rspec/runner"
 
 module Mutiny
   class Integration
+    # This code originally based on Markus Schirp's implementation of Mutant::Integration::Rspec
+    #  https://github.com/mbj/mutant/blob/master/lib/mutant/integration/rspec.rb
     class RSpec
       def tests
         Parser.new(context).call

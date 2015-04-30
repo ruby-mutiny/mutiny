@@ -8,3 +8,9 @@ Currently supports Ruby versions of these [method level mutation operators](http
 * `git clone` this repo
 * `bundle install`
 * `./bin/mutiny ./examples/max.rb ./examples/max_tests.rb` Note that we currently assume that tests.rb is a line-separated set of predicates (expressions that evaluate to either true or false).
+
+## Acknowledgments
+
+Thank-you to the authors of other projects and resources that have inspired mutiny, including:
+
+* Markus Schirp's [mutant](https://github.com/mbj/mutant), which paved the way for modern mutation testing in Ruby. In particular, mutiny's RSpec integration is based on the Markus's stellar work on mutant.

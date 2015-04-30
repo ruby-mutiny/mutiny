@@ -3,9 +3,7 @@
 ### New implementation
 
 #### Check mode (runs tests for subject)
-* Write pending specs
-* Add acknowledgements to mutant project. Ensure licenses are compatible
-* Reorganise lib, having in mind a "mutiny-core" which is separate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
+* List failing tests
 
 #### Mutate mode
 * Should create mutants from subjects

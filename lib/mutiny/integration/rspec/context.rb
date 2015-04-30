@@ -4,6 +4,8 @@ require "stringio"
 module Mutiny
   class Integration
     class RSpec
+      # This code originally based on Markus Schirp's implementation of Mutant::Integration::Rspec
+      #  https://github.com/mbj/mutant/blob/master/lib/mutant/integration/rspec.rb
       class Context
         # NB: the --fail-fast option can be used in order to find only the first failing test
         # CLI_OPTIONS = %w(spec --fail-fast)

@@ -28,7 +28,10 @@ describe "Using Mutiny to check whether mutation testing can be carried out" do
 
     expected_output = "Checking...\n" \
                       "  At least one relevant test found (3 in total)\n" \
-                      "  Not all relevant tests passed\n" \
+                      "  Not all relevant tests passed. The failing tests are:\n" \
+                      "    ./spec/calculator/max_spec.rb:9\n" \
+                      "    ./spec/calculator/max_spec.rb:13\n" \
+                      "\n" \
                       "Looks ok, but note that mutiny is most effective when all tests pass.\n"
 
     expect(all_output).to eq(expected_output)

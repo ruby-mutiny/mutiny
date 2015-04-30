@@ -26,7 +26,13 @@ module Mutiny
 
       def report_warning
         report "  At least one relevant test found (#{test_set.size} in total)"
-        report "  Not all relevant tests passed\n"
+        report "  Not all relevant tests passed. The failing tests are:\n"
+
+        failed_test_locations.each do |location|
+          report "    #{location}"
+        end
+
+        report ""
         report "Looks ok, but note that mutiny is most effective when all tests pass."
       end
 
@@ -38,6 +44,10 @@ module Mutiny
 
       def pattern_string
         configuration.patterns.join(',')
+      end
+
+      def failed_test_locations
+        test_run.failed_tests.locations
       end
 
       def test_set

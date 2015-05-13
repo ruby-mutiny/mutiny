@@ -2,14 +2,18 @@
 
 ### New implementation
 
+* Reorganise lib, having in mind a "mutiny-core" which is separate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
+
 #### Mutate mode
 * Should create mutants from subjects
-* Reorganise lib, having in mind a "mutiny-core" which is separate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
+  * Implement all method-level operators from prior version of mutiny
+  * Refactor the operators to remove duplication
+* Decide what the output from this mode should be:
+  * Simplest for now is probably to generate a mutants directory and produce files like max_1.rb, max_2.rb, max_3.rb (can then use "max_1.rb" as the identifier for that mutant in other modes)
 
 #### Analysis mode
 * Should calculate mutation score
-* Reorganise lib, having in mind a "mutiny-core" which is separate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
-
+  * Need to figure out approach for running tests on a mutant
 
 ### Original implementation
 

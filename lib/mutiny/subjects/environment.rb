@@ -32,7 +32,7 @@ module Mutiny
       end
 
       def to_subject
-        Subject.new(name: name, relative_path: relative_path, path: absolute_path)
+        Subject.new(name: name, path: absolute_path, root: load_path)
       end
 
       private
@@ -65,16 +65,6 @@ module Mutiny
 
       def absolute_path
         source_locations.first
-      end
-
-      def relative_path
-        require 'pathname'
-
-        absolute      = Pathname.new(absolute_path)
-        project_root  = Pathname.new(load_path)
-        relative      = absolute.relative_path_from(project_root)
-
-        relative.to_s
       end
     end
   end

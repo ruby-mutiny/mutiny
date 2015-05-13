@@ -1,10 +1,19 @@
+require 'pathname'
+
 module Mutiny
   module Subjects
     class Subject
-      attr_reader :name, :path, :relative_path
+      attr_reader :name, :path, :root
 
-      def initialize(name:, path: nil, relative_path: nil)
-        @name, @path, @relative_path = name, path, relative_path
+      def initialize(name:, path: nil, root: nil)
+        @name, @path, @root = name, path, root
+      end
+
+      def relative_path
+        absolute_path = Pathname.new(path)
+        root_path = Pathname.new(root)
+
+        absolute_path.relative_path_from(root_path).to_s
       end
     end
   end

@@ -12,7 +12,7 @@ module Mutiny
             )
 
             expect { Environment.new(configuration) }
-              .to change { Environment.modules.map(&:name).reject(&:nil?).sort }
+              .to change { ObjectSpace.each_object(Module).map(&:name).reject(&:nil?).sort }
               .by(module_names)
           end
         end
@@ -24,7 +24,7 @@ module Mutiny
             )
 
             expect { Environment.new(configuration) }
-              .not_to change { Environment.modules.map(&:name) }
+              .not_to change { ObjectSpace.each_object(Module).map(&:name) }
           end
         end
 
@@ -41,6 +41,8 @@ module Mutiny
       end
 
       context "subjects" do
+        let(:mutatable_module_names) { %w(Calculator::Max Calculator::Min) }
+
         let(:configuration) do
           Configuration.new(
             loads: ["examples/calculator/lib"],
@@ -53,14 +55,14 @@ module Mutiny
 
         it "should return all subjects matching pattern" do
           in_sub_process do
-            expect(environment.subjects.names).to eq(module_names)
+            expect(environment.subjects.names).to eq(mutatable_module_names)
           end
         end
 
         it "should function in the presence of anonymous modules" do
           in_sub_process do
             Class.new   # create anonymous class
-            expect(environment.subjects.names).to eq(module_names)
+            expect(environment.subjects.names).to eq(mutatable_module_names)
           end
         end
       end

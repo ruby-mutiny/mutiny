@@ -67,7 +67,7 @@ module Mutiny
         end
 
         def test_set_for(*expressions)
-          TestSet.new(expressions.map { |e| Test.new(expression: e, location: nil) })
+          TestSet.new(expressions.map { |e| Test.new(expression: e) })
         end
       end
     end

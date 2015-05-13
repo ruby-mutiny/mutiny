@@ -24,4 +24,12 @@ command :check do |c|
   end
 end
 
+desc 'Generate a set of mutants for your project'
+long_desc 'Generates a set of mutants for your project and writes them to the .mutant directory'
+command :mutate do |c|
+  c.action do
+    Mutiny::Mode::Mutate.new(@configuration).run
+  end
+end
+
 exit run(ARGV)

@@ -1,4 +1,5 @@
 require_relative "mode/check"
+require_relative "mode/mutate"
 
 module Mutiny
   class Mode

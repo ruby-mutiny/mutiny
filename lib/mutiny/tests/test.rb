@@ -3,7 +3,7 @@ module Mutiny
     class Test
       attr_reader :location, :expression
 
-      def initialize(location:, expression:)
+      def initialize(location: nil, expression:)
         @location, @expression = location, expression
       end
     end

@@ -1,4 +1,3 @@
-
 module Mutiny
   class Pattern
     attr_reader :raw

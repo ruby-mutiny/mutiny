@@ -8,8 +8,11 @@
 * Should create mutants from subjects
   * Implement all method-level operators from prior version of mutiny
   * Refactor the operators to remove duplication
-* Decide what the output from this mode should be:
-  * Simplest for now is probably to generate a mutants directory and produce files like max_1.rb, max_2.rb, max_3.rb (can then use "max_1.rb" as the identifier for that mutant in other modes)
+* Write mutants to .mutants directory (incl. integration test)
+* Unit tests for
+  * classes in mutator subdir
+  * type (in environment.rb)
+  * Subject#relative_path
 
 #### Analysis mode
 * Should calculate mutation score

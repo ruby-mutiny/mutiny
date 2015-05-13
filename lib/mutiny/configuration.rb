@@ -15,5 +15,9 @@ module Mutiny
       @integration = Integration::RSpec.new
       @mutator = Mutator::Ruby.new
     end
+
+    def load_paths
+      loads.map(&File.method(:expand_path))
+    end
   end
 end

@@ -10,40 +10,57 @@ module Mutiny
       end
 
       def subjects
-        SubjectSet.new(
-          modules
-            .reject { |m| m.name.nil? }
-            .select { |m| matches_pattern(m) && m.loadable? }
-            .map { |m| Subject.new(name: m.name, relative_path: m.relative_path, path: m.absolute_path) }
-        )
+        SubjectSet.new(modules.select(&:relevant?).map(&:to_subject))
       end
 
       private
 
       def modules
-        ObjectSpace.each_object(Module).map { |mod| Type.new(mod, load_paths) }
-      end
-
-      def matches_pattern(mod)
-        configuration.patterns.any? { |pattern| pattern.match?(mod.name) }
-      end
-
-      def load_paths
-        @load_paths ||= configuration.loads.map(&File.method(:expand_path))
+        ObjectSpace.each_object(Module).map { |mod| Type.new(mod, configuration) }
       end
     end
 
     class Type
-      def initialize(mod, load_paths)
-        @mod, @load_paths = mod, load_paths
+      attr_reader :mod, :configuration
+
+      def initialize(mod, configuration)
+        @mod, @configuration = mod, configuration
       end
 
+      def relevant?
+        !name.nil? && in_scope? && loadable?
+      end
+
+      def to_subject
+        Subject.new(name: name, relative_path: relative_path, path: absolute_path)
+      end
+
+      private
+
       def name
-        @mod.name
+        mod.name
+      end
+
+      def in_scope?
+        configuration.patterns.any? { |pattern| pattern.match?(name) }
       end
 
       def loadable?
         !load_path.nil?
+      end
+
+      def load_path
+        configuration.load_paths.detect do |load_path|
+          source_locations.any? { |locs| locs.start_with?(load_path) }
+        end
+      end
+
+      def source_locations
+        mod.instance_methods(false)
+          .map { |method_name| mod.instance_method(method_name).source_location }
+          .reject(&:nil?)
+          .map(&:first)
+          .uniq
       end
 
       def absolute_path
@@ -58,22 +75,6 @@ module Mutiny
         relative      = absolute.relative_path_from(project_root)
 
         relative.to_s
-      end
-
-      private
-
-      def load_path
-        @load_paths.detect do |load_path|
-          source_locations.any? { |locs| locs.start_with?(load_path) }
-        end
-      end
-
-      def source_locations
-        @mod.instance_methods(false)
-          .map { |method_name| @mod.instance_method(method_name).source_location }
-          .reject(&:nil?)
-          .map(&:first)
-          .uniq
       end
     end
   end

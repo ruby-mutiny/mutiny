@@ -6,8 +6,7 @@ module Mutiny
   module Mutator
     class Ruby
       def mutants_for(subjects)
-        mutated_files = operators.mutate(subjects)
-        Hash[mutated_files.map { |k, v| [subjects.relative_path_for(k), v] }]
+        operators.mutate(subjects)
       end
 
       private

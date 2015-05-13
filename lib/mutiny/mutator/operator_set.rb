@@ -1,3 +1,5 @@
+require_relative "mutant_set"
+
 module Mutiny
   module Mutator
     class OperatorSet
@@ -5,10 +7,17 @@ module Mutiny
         @operators = operators
       end
 
+      # TODO : would performance improve by iterating over subjects than over operators?
+      # Probably could improve (more) if metamorpher also supported composite transformers so that
+      # several mutation operators could be matched simulatenously during a single AST traversal
       def mutate(subjects)
-        @operators
-          .map { |operator| operator.mutate_files(subjects.paths) }
-          .inject({}) { |a, e| a.merge(e) { |_, v1, v2| v1 + v2 } }
+        MutantSet.new.tap do |mutants|
+          @operators.each do |operator|
+            subjects.each do |subject|
+              mutants.add(subject, operator.mutate_file(subject.path))
+            end
+          end
+        end
       end
     end
   end

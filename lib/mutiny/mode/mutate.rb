@@ -3,10 +3,10 @@ module Mutiny
     class Mutate < self
       def run
         report "Mutating..."
-        report "Generated #{mutant_set.values.flatten.size} mutants:"
+        report "Generated #{mutant_set.size} mutants:"
 
-        mutant_set.each do |subject, mutants|
-          report "  * #{subject} - #{mutants.size} mutants"
+        mutant_set.each_by_subject do |subject, mutants|
+          report "  * #{subject.relative_path} - #{mutants.size} mutants"
         end
 
         report "Check the '.mutants' directory to browse the generated mutants."

@@ -8,7 +8,6 @@
 * Should create mutants from subjects
   * Implement all method-level operators from prior version of mutiny
   * Refactor the operators to remove duplication
-* Integration test for writing mutants to .mutants directory
 * Unit tests for
   * classes in mutator subdir
   * type (in environment.rb)

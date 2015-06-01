@@ -24,7 +24,8 @@ module Mutiny
       attr_reader :mod, :configuration
 
       def initialize(mod, configuration)
-        @mod, @configuration = mod, configuration
+        @mod = mod
+        @configuration = configuration
       end
 
       def relevant?

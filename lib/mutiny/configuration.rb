@@ -8,7 +8,9 @@ module Mutiny
     attr_reader :loads, :requires, :patterns, :reporter, :integration, :mutator
 
     def initialize(loads: [], requires: [], patterns: [])
-      @loads, @requires, @patterns = loads, requires, patterns
+      @loads = loads
+      @requires = requires
+      @patterns = patterns
       @patterns.map!(&Pattern.method(:new))
 
       @reporter = Reporter::Stdout.new

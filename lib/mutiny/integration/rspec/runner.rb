@@ -10,7 +10,8 @@ module Mutiny
         def_delegators :@context, :world, :runner, :configuration, :output
 
         def initialize(test_set, context = Context.new)
-          @test_set, @context = test_set, context
+          @test_set = test_set
+          @context = context
         end
 
         def call

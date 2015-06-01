@@ -6,7 +6,9 @@ module Mutiny
       attr_reader :name, :path, :root
 
       def initialize(name:, path: nil, root: nil)
-        @name, @path, @root = name, path, root
+        @name = name
+        @path = path
+        @root = root
       end
 
       def relative_path

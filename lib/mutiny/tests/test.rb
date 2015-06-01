@@ -4,7 +4,8 @@ module Mutiny
       attr_reader :location, :expression
 
       def initialize(location: nil, expression:)
-        @location, @expression = location, expression
+        @location = location
+        @expression = expression
       end
     end
   end

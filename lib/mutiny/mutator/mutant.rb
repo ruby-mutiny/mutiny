@@ -6,7 +6,8 @@ module Mutiny
       attr_reader :subject, :code
 
       def initialize(subject:, code:)
-        @subject, @code = subject, code
+        @subject = subject
+        @code = code
       end
 
       def store(directory, index)

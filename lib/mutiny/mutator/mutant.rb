@@ -17,6 +17,16 @@ module Mutiny
         FileUtils.mkdir_p(File.dirname(path))
         File.open(path, 'w') { |f| f.write(code) }
       end
+
+      def eql?(other)
+        other.is_a?(self.class) && other.subject == subject && other.code == code
+      end
+
+      alias_method "==", "eql?"
+
+      def hash
+        [subject, code].hash
+      end
     end
   end
 end

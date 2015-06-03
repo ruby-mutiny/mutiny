@@ -8,10 +8,6 @@
 * Should create mutants from subjects
   * Implement all method-level operators from prior version of mutiny
   * Refactor the operators to remove duplication
-* Unit tests for
-  * classes in mutator subdir
-  * type (in environment.rb)
-  * Subject#relative_path
 
 #### Analysis mode
 * Should calculate mutation score

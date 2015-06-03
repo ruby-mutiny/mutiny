@@ -17,6 +17,16 @@ module Mutiny
 
         absolute_path.relative_path_from(root_path).to_s
       end
+
+      def eql?(other)
+        other.is_a?(self.class) && other.name == name && other.path == path && other.root == root
+      end
+
+      alias_method "==", "eql?"
+
+      def hash
+        [name, path, root].hash
+      end
     end
   end
 end

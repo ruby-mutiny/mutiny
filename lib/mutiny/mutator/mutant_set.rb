@@ -16,12 +16,12 @@ module Mutiny
         mutants.size
       end
 
-      def each_by_subject(&block)
-        @mutants_by_subject.each(&block)
+      def group_by_subject
+        @mutants_by_subject.dup
       end
 
       def store(mutant_directory = ".mutants")
-        each_by_subject do |_, mutants|
+        group_by_subject.each do |_, mutants|
           mutants.each_with_index { |mutant, index| mutant.store(mutant_directory, index) }
         end
       end

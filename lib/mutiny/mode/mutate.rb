@@ -11,7 +11,7 @@ module Mutiny
 
       def report_mutant_summary
         report "Generated #{mutant_set.size} mutants:"
-        mutant_set.each_by_subject do |subject, mutants|
+        mutant_set.group_by_subject.sort_by { |s, _| s.relative_path }.each do |subject, mutants|
           report "  * #{subject.relative_path} - #{mutants.size} mutants"
         end
       end

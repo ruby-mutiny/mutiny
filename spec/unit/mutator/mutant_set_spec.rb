@@ -10,7 +10,7 @@ module Mutiny
       end
 
       it "groups mutants by subject" do
-        groups = mutant_set.each_by_subject.to_a
+        groups = mutant_set.group_by_subject.to_a
         first = groups.first
         second = groups.last
 
@@ -23,7 +23,7 @@ module Mutiny
       end
 
       it "stores by delegating to mutants" do
-        mutant_set.each_by_subject do |_, mutants|
+        mutant_set.group_by_subject do |_, mutants|
           mutants.each_with_index do |mutant, index|
             expect(mutant).to receive(:store).with(:mutant_dir, index)
           end

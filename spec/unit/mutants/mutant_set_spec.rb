@@ -1,5 +1,20 @@
 module Mutiny
-  module Mutator
+  module Mutants
+    class ObservableMutantSet < MutantSet
+      def create_mutant(subject, code)
+        MutantSpy.new(subject: subject, code: code)
+      end
+    end
+
+    class MutantSpy < Mutant
+      attr_reader :directory, :index
+
+      def store(directory, index)
+        @directory = directory
+        @index = index
+      end
+    end
+
     describe MutantSet do
       subject(:mutant_set) { MutantSet.new }
 

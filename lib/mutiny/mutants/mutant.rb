@@ -1,7 +1,7 @@
 require 'fileutils'
 
 module Mutiny
-  module Mutator
+  module Mutants
     class Mutant
       attr_reader :subject, :code
 

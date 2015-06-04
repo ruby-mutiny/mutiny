@@ -6,7 +6,6 @@
 
 #### Mutate mode
 * Should create mutants from subjects
-  * Implement all method-level operators from prior version of mutiny
   * Refactor the operators to remove duplication
 
 #### Analysis mode

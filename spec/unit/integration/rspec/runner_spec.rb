@@ -34,10 +34,12 @@ module Mutiny
         end
 
         it "should be able to run an empty test set" do
-          test_run = Runner.new(TestSet.empty).call
+          in_example_project("calculator") do
+            test_run = Runner.new(TestSet.empty).call
 
-          expect(test_run.passed?).to be_truthy
-          expect(test_run.failed_tests.empty?).to be_truthy
+            expect(test_run.passed?).to be_truthy
+            expect(test_run.failed_tests.empty?).to be_truthy
+          end
         end
       end
     end

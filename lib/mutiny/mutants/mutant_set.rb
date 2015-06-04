@@ -1,7 +1,7 @@
 require_relative "mutant"
 
 module Mutiny
-  module Mutator
+  module Mutants
     class MutantSet
       def initialize
         @mutants_by_subject = Hash.new([])

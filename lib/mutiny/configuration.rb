@@ -1,7 +1,7 @@
 require_relative 'pattern'
 require_relative 'reporter/stdout'
 require_relative 'integration/rspec'
-require_relative 'mutator/ruby'
+require_relative 'mutants/ruby'
 
 module Mutiny
   class Configuration
@@ -15,7 +15,7 @@ module Mutiny
 
       @reporter = Reporter::Stdout.new
       @integration = Integration::RSpec.new
-      @mutator = Mutator::Ruby.new
+      @mutator = Mutants::Ruby.new
     end
 
     def load_paths

@@ -8,7 +8,7 @@ module Mutiny
       end
 
       def add(subject, mutated_code)
-        mutants = mutated_code.map { |m| Mutant.new(subject: subject, code: m) }
+        mutants = mutated_code.map { |code| create_mutant(subject, code) }
         @mutants_by_subject[subject] = @mutants_by_subject[subject] + mutants
       end
 
@@ -24,6 +24,12 @@ module Mutiny
         group_by_subject.each do |_, mutants|
           mutants.each_with_index { |mutant, index| mutant.store(mutant_directory, index) }
         end
+      end
+
+      protected
+
+      def create_mutant(subject, code)
+        Mutant.new(subject: subject, code: code)
       end
 
       private

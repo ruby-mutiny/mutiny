@@ -31,7 +31,7 @@ module Mutiny
       end
 
       def eql?(other)
-        other.is_a?(self.class) && other.tests == tests
+        is_a?(other.class) && other.tests == tests
       end
 
       alias_method "==", "eql?"

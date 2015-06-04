@@ -19,7 +19,7 @@ module Mutiny
       end
 
       def eql?(other)
-        other.is_a?(self.class) && other.name == name && other.path == path && other.root == root
+        is_a?(other.class) && other.name == name && other.path == path && other.root == root
       end
 
       alias_method "==", "eql?"

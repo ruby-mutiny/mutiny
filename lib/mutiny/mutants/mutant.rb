@@ -19,7 +19,7 @@ module Mutiny
       end
 
       def eql?(other)
-        other.is_a?(self.class) && other.subject == subject && other.code == code
+        is_a?(other.class) && other.subject == subject && other.code == code
       end
 
       alias_method "==", "eql?"

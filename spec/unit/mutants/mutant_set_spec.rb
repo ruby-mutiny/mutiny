@@ -16,7 +16,7 @@ module Mutiny
     end
 
     describe MutantSet do
-      subject(:mutant_set) { MutantSet.new }
+      subject(:mutant_set) { ObservableMutantSet.new }
 
       before(:each) do
         mutant_set.add(:min, [:min_mutant_1, :min_mutant_2])
@@ -38,13 +38,14 @@ module Mutiny
       end
 
       it "stores by delegating to mutants" do
-        mutant_set.group_by_subject do |_, mutants|
+        mutant_set.store(:mutant_dir)
+
+        mutant_set.group_by_subject.each do |_, mutants|
           mutants.each_with_index do |mutant, index|
-            expect(mutant).to receive(:store).with(:mutant_dir, index)
+            expect(mutant.directory).to eq(:mutant_dir)
+            expect(mutant.index).to eq(index)
           end
         end
-
-        mutant_set.store(:mutant_dir)
       end
 
       def mutants_for(subject, *code)

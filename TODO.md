@@ -4,10 +4,6 @@
 
 * Reorganise lib, having in mind a "mutiny-core" which is separate to specific integrations (RSpec, etc), specific mutators (Metamorpher-based, etc), specific reporters (command-line, HTML, etc), etc
 
-#### Mutate mode
-* Should create mutants from subjects
-  * Refactor the operators to remove duplication
-
 #### Analysis mode
 * Should calculate mutation score
   * Need to figure out approach for running tests on a mutant

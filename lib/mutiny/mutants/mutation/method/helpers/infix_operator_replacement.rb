@@ -6,7 +6,7 @@ module Mutiny
       module Method
         module Helpers
           class InfixOperatorReplacement < OperatorReplacement
-            def operator_types
+            def operators
               operator_names.map { |name| InfixOperator.new(name) }
             end
           end

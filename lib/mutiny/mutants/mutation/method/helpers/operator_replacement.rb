@@ -8,33 +8,31 @@ module Mutiny
           class OperatorReplacement < Mutation
             def pattern
               builder.either!(
-                *operator_types.map { |ot| ot.pattern(builder) }
+                *operators.map { |ot| ot.build_pattern(builder) }
               )
             end
 
             def replacement
               builder.derivation! :left, :right, :& do |left, right, root|
-                builder.either!(*mutations_for(left, operator_for(root), right))
+                builder.either!(*mutations_for(left, operator_name_from(root), right))
               end
             end
 
             private
 
-            def operator_for(root)
+            def operator_name_from(root)
               # the operator is the root element when prefix (2 children)
               # and is the middle child when infix (3 children)
               root.children.size == 2 ? root : root.children[1]
             end
 
-            def mutations_for(left, operator, right)
-              operator_types_without(operator.name).map { |type| type.build(builder, left, right) }
+            def mutations_for(left, original_operator, right)
+              operators
+                .reject { |o| o.name == original_operator.name }
+                .map { |o| o.build_literal(builder, left, right) }
             end
 
-            def operator_types_without(type)
-              operator_types.reject { |t| t.name == type }
-            end
-
-            def operator_types
+            def operators
               infix_operator_names.map { |op| InfixOperator.new(op, infix_operator_root) } +
                 prefix_operator_names.map { |op| PrefixOperator.new(op) }
             end
@@ -50,11 +48,11 @@ module Mutiny
                 @name = name
               end
 
-              def pattern(builder)
+              def build_pattern(builder)
                 builder.literal!(name, builder.LEFT, builder.RIGHT)
               end
 
-              def build(builder, left, right)
+              def build_literal(builder, left, right)
                 builder.literal!(name, left, right)
               end
             end
@@ -67,11 +65,11 @@ module Mutiny
                 @root = root
               end
 
-              def pattern(builder)
+              def build_pattern(builder)
                 builder.literal!(root, builder.LEFT, name, builder.RIGHT)
               end
 
-              def build(builder, left, right)
+              def build_literal(builder, left, right)
                 builder.literal!(root, left, builder.literal!(name), right)
               end
             end

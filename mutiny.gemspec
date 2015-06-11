@@ -28,5 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.2.0"
   spec.add_development_dependency "aruba", "~> 0.6.0"
   spec.add_development_dependency "codeclimate-test-reporter", "~> 0.4.6"
-  spec.add_development_dependency "rubocop", "~> 0.31.0"
+  spec.add_development_dependency "rubocop", "~> 0.32.0"
 end

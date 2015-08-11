@@ -2,7 +2,7 @@ require_relative "../../tests"
 
 module Mutiny
   class Integration
-    class RSpec
+    class RSpec < self
       class Test < Tests::Test
         attr_reader :example
 

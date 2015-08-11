@@ -35,31 +35,31 @@ module Mutiny
 
       context "for" do
         it "should return only those tests (whose expression) matches a subject" do
-          subject_set = subject_set_for("Max", "Min")
+          subjects = subject_set_for("Max", "Min")
           test_set = test_set_for("Subtract", "Min", "Add")
 
-          expect(test_set.for(subject_set)).to eq(test_set.subset { |t| t.expression == "Min" })
+          expect(test_set.for_all(subjects)).to eq(test_set.subset { |t| t.expression == "Min" })
         end
 
         it "should return multiple tests for a single subject" do
-          subject_set = subject_set_for("Min")
+          subjects = subject_set_for("Min")
           test_set = test_set_for("Min", "Max", "Min", "Max", "Min")
 
-          expect(test_set.for(subject_set)).to eq(test_set.subset { |t| t.expression == "Min" })
+          expect(test_set.for_all(subjects)).to eq(test_set.subset { |t| t.expression == "Min" })
         end
 
         it "should return no tests when there are no tests" do
-          subject_set = subject_set_for("Max", "Min")
+          subjects = subject_set_for("Max", "Min")
           test_set = TestSet.empty
 
-          expect(test_set.for(subject_set)).to eq(TestSet.empty)
+          expect(test_set.for_all(subjects)).to eq(TestSet.empty)
         end
 
         it "should return no tests when there are no relevant subjects" do
-          subject_set = subject_set_for("Max", "Min")
+          subjects = subject_set_for("Max", "Min")
           test_set = test_set_for("Subtract", "Add")
 
-          expect(test_set.for(subject_set)).to eq(TestSet.empty)
+          expect(test_set.for_all(subjects)).to eq(TestSet.empty)
         end
 
         def subject_set_for(*names)

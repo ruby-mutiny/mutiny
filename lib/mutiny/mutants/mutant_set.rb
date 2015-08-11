@@ -4,16 +4,25 @@ module Mutiny
   module Mutants
     class MutantSet
       def initialize
-        @mutants_by_subject = Hash.new([])
+        @mutants_by_subject = Hash.new { |hash, key| hash[key] = [] }
       end
 
-      def add(subject, mutated_code)
-        mutants = mutated_code.map { |code| create_mutant(subject, code) }
-        @mutants_by_subject[subject] = @mutants_by_subject[subject] + mutants
+      def import(subject, mutated_code)
+        mutated_code
+          .map { |code| create_mutant(subject, code) }
+          .each { |mutant| self << mutant }
+      end
+
+      def <<(mutant)
+        @mutants_by_subject[mutant.subject] << mutant
       end
 
       def size
         mutants.size
+      end
+
+      def mutants
+        @mutants_by_subject.values.flatten
       end
 
       def group_by_subject
@@ -30,12 +39,6 @@ module Mutiny
 
       def create_mutant(subject, code)
         Mutant.new(subject: subject, code: code)
-      end
-
-      private
-
-      def mutants
-        @mutants_by_subject.values.flatten
       end
     end
   end

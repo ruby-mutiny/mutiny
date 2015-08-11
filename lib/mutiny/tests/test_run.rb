@@ -13,6 +13,10 @@ module Mutiny
       def passed?
         failed_tests.empty?
       end
+
+      def failed?
+        !passed?
+      end
     end
   end
 end

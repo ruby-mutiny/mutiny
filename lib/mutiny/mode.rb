@@ -1,5 +1,6 @@
 require_relative "mode/check"
 require_relative "mode/mutate"
+require_relative "mode/score"
 
 module Mutiny
   class Mode

@@ -2,7 +2,7 @@ require_relative "../../tests"
 
 module Mutiny
   class Integration
-    class RSpec
+    class RSpec < self
       class TestSet < Tests::TestSet
         def examples
           @tests.map(&:example)

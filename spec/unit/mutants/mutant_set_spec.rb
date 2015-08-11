@@ -19,9 +19,9 @@ module Mutiny
       subject(:mutant_set) { ObservableMutantSet.new }
 
       before(:each) do
-        mutant_set.add(:min, [:min_mutant_1, :min_mutant_2])
-        mutant_set.add(:max, [:max_mutant_1])
-        mutant_set.add(:min, [:min_mutant_3])
+        mutant_set.import(:min, [:min_mutant_1, :min_mutant_2])
+        mutant_set.import(:max, [:max_mutant_1])
+        mutant_set.import(:min, [:min_mutant_3])
       end
 
       it "groups mutants by subject" do

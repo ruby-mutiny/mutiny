@@ -32,4 +32,12 @@ command :mutate do |c|
   end
 end
 
+desc 'Calculates a mutation score for your project'
+long_desc 'Calculates a mutation score for your project and displays a list of surviving mutants'
+command :score do |c|
+  c.action do
+    Mutiny::Mode::Score.new(@configuration).run
+  end
+end
+
 exit run(ARGV)

@@ -1,9 +1,9 @@
 module Calculator
   class Min
     def run(left, right)
-      max = left
-      max = right if right < left
-      max
+      min = left
+      min = right if right < left
+      min
     end
   end
 end

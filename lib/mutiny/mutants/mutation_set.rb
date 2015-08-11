@@ -14,7 +14,7 @@ module Mutiny
         MutantSet.new.tap do |mutants|
           @mutations.each do |mutation|
             subjects.each do |subject|
-              mutants.add(subject, mutation.mutate_file(subject.path))
+              mutants.import(subject, mutation.mutate_file(subject.path))
             end
           end
         end

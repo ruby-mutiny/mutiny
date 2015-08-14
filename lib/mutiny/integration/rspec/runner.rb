@@ -36,8 +36,8 @@ module Mutiny
           runner.run_specs(world.ordered_example_groups)
           output.rewind
           Tests::TestRun.new(
-            tests: @test_set,
-            failed_tests: @test_set.subset_for_examples(@failed_examples),
+            tests: @test_set.generalise,
+            failed_tests: @test_set.subset_for_examples(@failed_examples).generalise,
             output: output.read,
             runtime: Time.now - start
           )

@@ -61,7 +61,7 @@ module Mutiny
 
         it "should function in the presence of anonymous modules" do
           in_sub_process do
-            Class.new   # create anonymous class
+            Class.new # create anonymous class
             expect(environment.subjects.names).to eq(mutatable_module_names)
           end
         end

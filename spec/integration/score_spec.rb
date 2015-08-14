@@ -5,7 +5,7 @@ describe "Using Mutiny to generate mutants" do
     run "bundle exec mutiny score"
 
     expected_output = "Scoring...\n" \
-                      "14 mutants, 14 killed\n"
+                      "14 mutants, 12 killed\n"
 
     expect(all_output).to end_with(expected_output)
   end

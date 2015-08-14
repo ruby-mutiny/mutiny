@@ -14,10 +14,17 @@ module Mutiny
         MutantSet.new.tap do |mutants|
           @mutations.each do |mutation|
             subjects.each do |subject|
-              mutants.import(subject, mutation.mutate_file(subject.path))
+              mutated_codes = mutation.mutate_file(subject.path)
+              mutants.concat(create_mutants(subject, mutated_codes))
             end
           end
         end
+      end
+
+      private
+
+      def create_mutants(subject, mutated_codes)
+        mutated_codes.map { |code| Mutant.new(subject: subject, code: code) }
       end
     end
   end

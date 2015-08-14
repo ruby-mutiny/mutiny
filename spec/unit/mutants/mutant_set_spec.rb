@@ -1,56 +1,18 @@
 module Mutiny
   module Mutants
-    class ObservableMutantSet < MutantSet
-      def create_mutant(subject, code)
-        MutantSpy.new(subject: subject, code: code)
-      end
-    end
-
-    class MutantSpy < Mutant
-      attr_reader :directory, :index
-
-      def store(directory, index)
-        @directory = directory
-        @index = index
-      end
-    end
-
     describe MutantSet do
-      subject(:mutant_set) { ObservableMutantSet.new }
+      subject(:mutant_set) { MutantSet.new }
+      let(:m1) { Mutant.new(subject: :min, code: :min_mutant_1) }
+      let(:m2) { Mutant.new(subject: :min, code: :min_mutant_2) }
+      let(:m3) { Mutant.new(subject: :max, code: :max_mutant_1) }
+      let(:m4) { Mutant.new(subject: :min, code: :min_mutant_3) }
 
       before(:each) do
-        mutant_set.import(:min, [:min_mutant_1, :min_mutant_2])
-        mutant_set.import(:max, [:max_mutant_1])
-        mutant_set.import(:min, [:min_mutant_3])
+        mutant_set << m1 << m2 << m3 << m4
       end
 
-      it "groups mutants by subject" do
-        groups = mutant_set.group_by_subject.to_a
-        first = groups.first
-        second = groups.last
-
-        expect(first).to eq(mutants_for(:min, :min_mutant_1, :min_mutant_2, :min_mutant_3))
-        expect(second).to eq(mutants_for(:max, :max_mutant_1))
-      end
-
-      it "counts mutants" do
-        expect(mutant_set.size).to eq(4)
-      end
-
-      it "stores by delegating to mutants" do
-        mutant_set.store(:mutant_dir)
-
-        mutant_set.group_by_subject.each do |_, mutants|
-          mutants.each_with_index do |mutant, index|
-            expect(mutant.directory).to eq(:mutant_dir)
-            expect(mutant.index).to eq(index)
-          end
-        end
-      end
-
-      def mutants_for(subject, *code)
-        mutants = code.map { |c| Mutant.new(subject: subject, code: c) }
-        [subject, mutants]
+      it "orders mutants by subject and index" do
+        expect(mutant_set.ordered).to eq([m1, m2, m4, m3])
       end
     end
   end

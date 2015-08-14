@@ -35,11 +35,16 @@ module Mutiny
           start = Time.now
           runner.run_specs(world.ordered_example_groups)
           output.rewind
+          runtime = Time.now - start
+          create_test_run(output.read, runtime)
+        end
+
+        def create_test_run(output, runtime)
           Tests::TestRun.new(
             tests: @test_set.generalise,
             failed_tests: @test_set.subset_for_examples(@failed_examples).generalise,
-            output: output.read,
-            runtime: Time.now - start
+            output: output,
+            runtime: runtime
           )
         end
 

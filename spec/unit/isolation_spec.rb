@@ -24,12 +24,6 @@ module Mutiny
         expect { subject.call { fail } }.to raise_error(Isolation::Error, 'marshal data too short')
       end
 
-      xit 'wraps exceptions caused by crashing ruby' do
-        expect do
-          subject.call { fail RbBug.call }
-        end.to raise_error(Isolation::Error)
-      end
-
       it 'redirects $stderr of children to /dev/null' do
         begin
           Tempfile.open('mutiny-test') do |file|

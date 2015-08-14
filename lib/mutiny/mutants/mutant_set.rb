@@ -25,6 +25,26 @@ module Mutiny
         @mutants_by_subject.values.flatten
       end
 
+      def ordered
+        mutants.group_by(&:subject).flat_map do |_, mutants|
+          mutants.map.with_index do |mutant, index|
+            OrderedMutant.new(mutant, index)
+          end
+        end
+      end
+
+      class OrderedMutant < SimpleDelegator
+        def initialize(mutant, number)
+          super(mutant)
+          @number = number
+        end
+
+        def identifier
+          subject.relative_path.sub(/\.rb$/, ".#{@number}.rb")
+        end
+      end
+
+      #  implement this with group_by ?
       def group_by_subject
         @mutants_by_subject.dup
       end

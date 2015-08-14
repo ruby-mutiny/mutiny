@@ -9,7 +9,7 @@ module Mutiny
         rows.each { |r| add_row(r) }
       end
 
-      def add_row(*cells)
+      def add_row(cells)
         @rows << cells
       end
 

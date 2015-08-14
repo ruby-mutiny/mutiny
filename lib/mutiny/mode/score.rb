@@ -15,22 +15,22 @@ module Mutiny
 
       def summary
         Output::Table.new.tap do |summary|
-          summary.add_row("Mutant", "Status", "# Tests", "Time")
-          results.group_by_subject.each do |_, mutants|
-            mutants.each_with_index do |mutant, index|
-              summary.add_row(*summarise(mutant, index))
-            end
-          end
+          summary.add_row(summary_header)
+          summary.add_rows(results.mutants.ordered.map { |m| summarise(m) })
         end
       end
 
-      def summarise(mutant, index)
-        filename = mutant.subject.relative_path.sub(/\.rb$/, ".#{index}.rb")
+      def summary_header
+        ["Mutant", "Status", "# Tests", "Time"]
+      end
+
+      def summarise(mutant)
+        identifier = mutant.identifier
         status = results.survived?(mutant) ? "survived" : "killed"
         executed_count = results.test_run_for(mutant).executed_count
         total_count = results.test_run_for(mutant).tests.size
         runtime = results.test_run_for(mutant).runtime
-        [filename, status, "#{executed_count} (of #{total_count})", runtime]
+        [identifier, status, "#{executed_count} (of #{total_count})", runtime]
       end
 
       def results

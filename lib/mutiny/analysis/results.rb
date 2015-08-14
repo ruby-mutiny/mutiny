@@ -2,7 +2,7 @@ module Mutiny
   module Analysis
     class Results
       def add(mutant, test_run)
-        all << mutant
+        mutants << mutant
         test_runs[mutant] = test_run
         killed << mutant if test_run.failed?
       end
@@ -23,18 +23,14 @@ module Mutiny
         test_runs[mutant]
       end
 
-      def group_by_subject(&block)
-        all.group_by_subject(&block)
+      def mutants
+        @mutants ||= Mutants::MutantSet.new
       end
 
       private
 
       def killed
         @killed ||= []
-      end
-
-      def all
-        @all ||= Mutants::MutantSet.new
       end
 
       def test_runs

@@ -1,13 +1,18 @@
 module Mutiny
   module Tests
     class TestRun
-      attr_reader :tests, :failed_tests, :output, :runtime
+      attr_reader :tests, :passed_tests, :failed_tests, :output, :runtime
 
-      def initialize(tests:, failed_tests:, output:, runtime:)
+      def initialize(tests:, passed_tests:, failed_tests:, output:, runtime:)
         @tests = tests
+        @passed_tests = passed_tests
         @failed_tests = failed_tests
         @output = output
         @runtime = runtime
+      end
+
+      def executed_count
+        passed_tests.size + failed_tests.size
       end
 
       def passed?

@@ -23,11 +23,13 @@ module Mutiny
         private
 
         def reset
+          @passed_examples = []
           @failed_examples = []
         end
 
         def prepare
           filter_examples
+          configuration.reporter.register_listener(self, :example_passed)
           configuration.reporter.register_listener(self, :example_failed)
         end
 
@@ -42,10 +44,15 @@ module Mutiny
         def create_test_run(output, runtime)
           Tests::TestRun.new(
             tests: @test_set.generalise,
+            passed_tests: @test_set.subset_for_examples(@passed_examples).generalise,
             failed_tests: @test_set.subset_for_examples(@failed_examples).generalise,
             output: output,
             runtime: runtime
           )
+        end
+
+        def example_passed(notification)
+          @passed_examples << notification.example
         end
 
         def example_failed(notification)

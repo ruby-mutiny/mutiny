@@ -1,4 +1,5 @@
 require_relative "mutant"
+require "delegate"
 
 module Mutiny
   module Mutants

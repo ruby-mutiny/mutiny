@@ -7,8 +7,10 @@ module Mutiny
       extend Forwardable
       def_delegators :mutants, :size, :<<, :concat
 
-      def mutants
-        @mutants ||= []
+      attr_reader :mutants
+
+      def initialize(*mutants)
+        @mutants = mutants
       end
 
       def group_by_subject
@@ -25,6 +27,16 @@ module Mutiny
 
       def store(mutant_directory = ".mutants")
         ordered.each { |m| m.store(mutant_directory) }
+      end
+
+      def eql?(other)
+        other.mutants == mutants
+      end
+
+      alias_method "==", "eql?"
+
+      def hash
+        mutants.hash
       end
 
       class OrderedMutant < SimpleDelegator

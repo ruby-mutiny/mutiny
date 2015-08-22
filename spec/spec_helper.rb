@@ -25,6 +25,12 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 
+  # Ensure that mocks responds only to messages that the real object would also
+  # respond to
+  config.mock_with :rspec do |mocks|
+    mocks.verify_doubled_constant_names = true
+  end
+
   # Isolate mutiny-under-test from its own test suite
   config.around(:example) do |example|
     RSpec::Core::Sandbox.sandboxed do

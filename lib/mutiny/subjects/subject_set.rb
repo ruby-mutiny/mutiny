@@ -1,16 +1,16 @@
 module Mutiny
   module Subjects
     class SubjectSet
+      include Enumerable
+      extend Forwardable
+      def_delegators :@subjects, :each, :product
+
       def initialize(subjects)
         @subjects = subjects
       end
 
       def names
-        @names ||= @subjects.map(&:name).sort
-      end
-
-      def each(&block)
-        @subjects.each(&block)
+        @names ||= map(&:name).sort
       end
     end
   end

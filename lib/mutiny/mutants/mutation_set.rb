@@ -1,8 +1,11 @@
 require_relative "mutant_set"
+require_relative "mutation/error"
 
 module Mutiny
   module Mutants
     class MutationSet
+      attr_reader :mutations
+
       def initialize(*mutations)
         @mutations = mutations
       end
@@ -12,19 +15,21 @@ module Mutiny
       # several mutation operators could be matched simulatenously during a single AST traversal
       def mutate(subjects)
         MutantSet.new.tap do |mutants|
-          @mutations.each do |mutation|
-            subjects.each do |subject|
-              mutated_codes = mutation.mutate_file(subject.path)
-              mutants.concat(create_mutants(subject, mutated_codes))
-            end
+          subjects.product(mutations).each do |subject, mutation|
+            mutants.concat(mutate_one(subject, mutation))
           end
         end
       end
 
       private
 
-      def create_mutants(subject, mutated_codes)
-        mutated_codes.map { |code| Mutant.new(subject: subject, code: code) }
+      def mutate_one(subject, mutation)
+        mutation
+          .mutate_file(subject.path)
+          .map { |code| Mutant.new(subject: subject, code: code) }
+      rescue
+        msg = "Error encountered whilst mutating file at '#{subject.path}' with #{mutation.name}"
+        raise Mutation::Error, msg
       end
     end
   end

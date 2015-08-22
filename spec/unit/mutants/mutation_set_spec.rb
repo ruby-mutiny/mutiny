@@ -59,7 +59,7 @@ module Mutiny
       end
 
       def mutation_for(*codes)
-        double.tap do |mutation|
+        instance_double(Mutation).tap do |mutation|
           allow(mutation).to receive(:mutate_file) { codes }
         end
       end
@@ -69,7 +69,7 @@ module Mutiny
       end
 
       def subject_for(path)
-        double.tap do |subject|
+        instance_double(Subjects::Subject).tap do |subject|
           allow(subject).to receive(:path) { path }
         end
       end

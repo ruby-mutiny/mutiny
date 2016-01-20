@@ -1,3 +1,4 @@
+require_relative "mutiny/version"
 require_relative "mutiny/integration"
 require_relative "mutiny/configuration"
 require_relative "mutiny/subjects"

@@ -26,11 +26,31 @@ module Mutiny
 
       def summarise(mutant)
         identifier = mutant.identifier
-        status = results.survived?(mutant) ? "survived" : "killed"
-        executed_count = results.test_run_for(mutant).executed_count
-        total_count = results.test_run_for(mutant).tests.size
-        runtime = results.test_run_for(mutant).runtime
-        [identifier, status, "#{executed_count} (of #{total_count})", runtime]
+        status = status_for_mutant(mutant)
+        [identifier, status] + summarise_tests(mutant)
+      end
+
+      def status_for_mutant(mutant)
+        if mutant.stillborn?
+          "stillborn"
+        elsif results.survived?(mutant)
+          "survived"
+        else
+          "killed"
+        end
+      end
+
+      def summarise_tests(mutant)
+        if mutant.stillborn?
+          number_of_tests = "n/a"
+          runtime = "n/a"
+        else
+          executed_count = results.test_run_for(mutant).executed_count
+          total_count = results.test_run_for(mutant).tests.size
+          runtime = results.test_run_for(mutant).runtime
+          number_of_tests = "#{executed_count} (of #{total_count})"
+        end
+        [number_of_tests, runtime]
       end
 
       def results

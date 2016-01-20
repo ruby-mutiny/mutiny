@@ -4,7 +4,7 @@ module Mutiny
       def add(mutant, test_run)
         mutants << mutant
         test_runs[mutant] = test_run
-        killed << mutant if test_run.failed?
+        killed << mutant if mutant.stillborn? || test_run.failed?
       end
 
       def kill_count

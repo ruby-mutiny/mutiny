@@ -20,7 +20,7 @@ module Mutiny
       def analyse_all
         mutant_set.mutants.each do |mutant|
           mutant.apply
-          test_run = integration.test(mutant.subject)
+          test_run = integration.test(mutant.subject) unless mutant.stillborn?
           results.add(mutant, test_run)
         end
       end

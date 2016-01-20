@@ -28,25 +28,26 @@ module Mutiny
         end
 
         def loadable?
-          !load_path.nil?
+          !source_files.empty?
         end
 
         def load_path
           configuration.load_paths.detect do |load_path|
-            source_locations.any? { |locs| locs.start_with?(load_path) }
+            source_files.any? { |locs| locs.start_with?(load_path) }
           end
         end
 
-        def source_locations
+        def source_files
           mod.instance_methods(false)
             .map { |method_name| mod.instance_method(method_name).source_location }
             .reject(&:nil?)
             .map(&:first)
+            .select { |source_file| configuration.can_load?(source_file) }
             .uniq
         end
 
         def absolute_path
-          source_locations.first
+          source_files.first
         end
       end
     end

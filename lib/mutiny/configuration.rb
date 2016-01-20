@@ -21,5 +21,9 @@ module Mutiny
     def load_paths
       loads.map(&File.method(:expand_path))
     end
+
+    def can_load?(source_path)
+      load_paths.any? { |load_path| source_path.start_with?(load_path) }
+    end
   end
 end

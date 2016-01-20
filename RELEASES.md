@@ -1,5 +1,10 @@
 # Release History
 
+## v0.2.2 (20 January 2016)
+* Add rudimentary support for stillborn mutants
+* Better error reporting during mutant generation
+* Reduce chance that irrelevant subjects are selected for mutation
+
 ## v0.2.1 (20 August 2015)
 * Fix [#1](https://github.com/mutiny/mutiny/issues/1) - "Uninitialized constant" exception for all commands
 

@@ -3,12 +3,13 @@ require 'fileutils'
 module Mutiny
   module Mutants
     class Mutant
-      attr_reader :subject, :code, :stillborn
+      attr_reader :subject, :code, :mutation_name, :stillborn
       alias_method :stillborn?, :stillborn
 
-      def initialize(subject: nil, code:)
+      def initialize(subject: nil, code:, mutation_name: nil)
         @subject = subject
         @code = code
+        @mutation_name = mutation_name
         @stillborn = false
       end
 

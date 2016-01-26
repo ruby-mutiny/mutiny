@@ -24,11 +24,15 @@ module Mutiny
       private
 
       def mutate_one(subject, mutation)
-        mutation
-          .mutate_file(subject.path)
-          .map { |code| Mutant.new(subject: subject, code: code) }
+        safely_mutate_file(subject.path, mutation).map do |code|
+          Mutant.new(subject: subject, code: code, mutation_name: mutation.short_name)
+        end
+      end
+
+      def safely_mutate_file(path, mutation)
+        mutation.mutate_file(path)
       rescue
-        msg = "Error encountered whilst mutating file at '#{subject.path}' with #{mutation.name}"
+        msg = "Error encountered whilst mutating file at '#{path}' with #{mutation.name}"
         raise Mutation::Error, msg
       end
     end

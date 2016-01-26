@@ -32,4 +32,25 @@ describe "Using Mutiny to generate mutants" do
     check_file_content(".mutants/calculator/max.5.rb", /if right != left/)
     check_file_content(".mutants/calculator/max.6.rb", /if right >= left/)
   end
+
+  it "should write mutation name to each mutant" do
+    cd "calculator"
+    run "bundle exec mutiny mutate"
+
+    check_file_content(".mutants/calculator/min.0.rb", /# RelationalExpressionReplacement/)
+    check_file_content(".mutants/calculator/min.1.rb", /# RelationalExpressionReplacement/)
+    check_file_content(".mutants/calculator/min.2.rb", /# RelationalOperatorReplacement/)
+    check_file_content(".mutants/calculator/min.3.rb", /# RelationalOperatorReplacement/)
+    check_file_content(".mutants/calculator/min.4.rb", /# RelationalOperatorReplacement/)
+    check_file_content(".mutants/calculator/min.5.rb", /# RelationalOperatorReplacement/)
+    check_file_content(".mutants/calculator/min.6.rb", /# RelationalOperatorReplacement/)
+
+    check_file_content(".mutants/calculator/max.0.rb", /# RelationalExpressionReplacement/)
+    check_file_content(".mutants/calculator/max.1.rb", /# RelationalExpressionReplacement/)
+    check_file_content(".mutants/calculator/max.2.rb", /# RelationalOperatorReplacement/)
+    check_file_content(".mutants/calculator/max.3.rb", /# RelationalOperatorReplacement/)
+    check_file_content(".mutants/calculator/max.4.rb", /# RelationalOperatorReplacement/)
+    check_file_content(".mutants/calculator/max.5.rb", /# RelationalOperatorReplacement/)
+    check_file_content(".mutants/calculator/max.6.rb", /# RelationalOperatorReplacement/)
+  end
 end

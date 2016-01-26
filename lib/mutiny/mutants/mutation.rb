@@ -9,6 +9,10 @@ module Mutiny
       def name
         self.class.name
       end
+
+      def short_name
+        name.split("::").last
+      end
     end
   end
 end

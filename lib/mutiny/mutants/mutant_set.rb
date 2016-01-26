@@ -52,7 +52,11 @@ module Mutiny
         def store(directory)
           path = File.join(directory, identifier)
           FileUtils.mkdir_p(File.dirname(path))
-          File.open(path, 'w') { |f| f.write(code) }
+          File.open(path, 'w') { |f| f.write(serialised) }
+        end
+
+        def serialised
+          "# " + mutation_name + "\n" + code
         end
       end
     end

@@ -61,6 +61,7 @@ module Mutiny
       def mutation_for(*codes)
         instance_double(Mutation).tap do |mutation|
           allow(mutation).to receive(:mutate_file) { codes }
+          allow(mutation).to receive(:short_name) { "Mutation for #{codes}" }
         end
       end
 

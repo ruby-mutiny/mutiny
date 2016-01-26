@@ -1,5 +1,9 @@
 # Release History
 
+## v0.2.3 (26 January 2016)
+* Add mutation name to each mutant written to disk
+* Update to Ruby 2.2.3
+
 ## v0.2.2 (20 January 2016)
 * Add rudimentary support for stillborn mutants
 * Better error reporting during mutant generation

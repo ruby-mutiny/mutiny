@@ -20,7 +20,7 @@ module Mutiny
       def ordered
         group_by_subject.flat_map do |_, mutants|
           mutants.map.with_index do |mutant, index|
-            OrderedMutant.new(mutant, index)
+            OrderedMutant.new(mutant, mutant.identifier || index)
           end
         end
       end
@@ -56,7 +56,9 @@ module Mutiny
         end
 
         def serialised
-          "# " + mutation_name + "\n" + code
+          "# " + subject.name + "\n" \
+          "# " + mutation_name + "\n" +
+            code
         end
       end
     end

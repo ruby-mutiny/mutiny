@@ -62,7 +62,15 @@ module Mutiny
       end
 
       def mutant_set
-        @mutant_set ||= configuration.mutator.mutants_for(environment.subjects)
+        @mutant_set ||= initialize_mutant_set
+      end
+
+      def initialize_mutant_set
+        if options[:cached]
+          configuration.mutant_store.load_for(environment.subjects)
+        else
+          configuration.mutator.mutants_for(environment.subjects)
+        end
       end
     end
   end

@@ -1,4 +1,4 @@
-describe "Using Mutiny to generate mutants" do
+describe "Using Mutiny to score mutants" do
   before(:each) do
     cd "calculator"
     run "bundle exec mutiny mutate"

@@ -4,11 +4,12 @@ require_relative "mode/score"
 
 module Mutiny
   class Mode
-    attr_reader :configuration, :environment
+    attr_reader :configuration, :environment, :options
 
-    def initialize(configuration)
+    def initialize(configuration, **options)
       @configuration = configuration
       @environment = Subjects::Environment.new(configuration)
+      @options = options
     end
 
     private

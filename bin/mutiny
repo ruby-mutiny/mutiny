@@ -39,8 +39,11 @@ end
 desc 'Calculates a mutation score for your project'
 long_desc 'Calculates a mutation score for your project and displays a list of surviving mutants'
 command :score do |c|
-  c.action do
-    Mutiny::Mode::Score.new(@configuration).run
+  cached_desc = 'Use the mutants in "./.mutants" rather than generating mutants before scoring'
+  c.switch [:c, :cached], desc: cached_desc, negatable: false
+  c.action do |_, options, _|
+    cached = options.fetch(:cached, false)
+    Mutiny::Mode::Score.new(@configuration, cached: cached).run
   end
 end
 

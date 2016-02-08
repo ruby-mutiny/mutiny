@@ -28,10 +28,6 @@ module Mutiny
       def results
         @results ||= Results.new
       end
-
-      def mutant_set
-        @mutant_set ||= configuration.mutator.mutants_for(environment.subjects)
-      end
     end
   end
 end

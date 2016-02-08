@@ -11,22 +11,20 @@ module Mutiny
       end
 
       def call
-        analyse_all
+        results = Results.new
+
+        mutant_set.mutants.each do |mutant|
+          results.add(mutant, analyse(mutant))
+        end
+
         results
       end
 
       private
 
-      def analyse_all
-        mutant_set.mutants.each do |mutant|
-          mutant.apply
-          test_run = integration.test(mutant.subject) unless mutant.stillborn?
-          results.add(mutant, test_run)
-        end
-      end
-
-      def results
-        @results ||= Results.new
+      def analyse(mutant)
+        mutant.apply
+        mutant.stillborn? ? nil : integration.test(mutant.subject)
       end
     end
   end

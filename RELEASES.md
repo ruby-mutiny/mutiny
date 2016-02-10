@@ -1,5 +1,9 @@
 # Release History
 
+## v0.2.4 (10 February 2016)
+* Add --cached switch to the score command, which loads mutants from disk rather than generating them anew.
+* Various changes to improve extensibility (i.e., mutant storage, test selection) and capabilities (i.e., mutant location and test hooks).
+
 ## v0.2.3 (26 January 2016)
 * Add mutation name to each mutant written to disk
 * Update to Ruby 2.2.3

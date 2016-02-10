@@ -24,7 +24,7 @@ module Mutiny
         end
 
         def index_of(path)
-          path.match(/.*.(\d+).rb/)[1].to_i
+          path.match(/.*\.(\d+)\.rb/)[1].to_i
         end
       end
     end

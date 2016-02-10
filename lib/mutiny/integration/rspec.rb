@@ -1,6 +1,7 @@
 require_relative "rspec/context"
 require_relative "rspec/parser"
 require_relative "rspec/runner"
+require_relative "rspec/hook"
 
 module Mutiny
   class Integration
@@ -11,8 +12,9 @@ module Mutiny
         Parser.new(context(options)).call
       end
 
-      def run(test_set, options = {})
-        Runner.new(test_set, context(options)).call
+      def run(test_set, hooks: [], **options)
+        rspec_hooks = hooks.map { |hook| RSpec::Hook.new(hook) }
+        Runner.new(test_set, context(options), rspec_hooks).call
       end
 
       private

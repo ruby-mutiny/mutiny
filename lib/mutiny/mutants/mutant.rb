@@ -1,18 +1,20 @@
 require 'fileutils'
+require_relative "mutant/location"
 
 module Mutiny
   module Mutants
     class Mutant
-      attr_reader :subject, :code, :mutation_name, :stillborn
+      attr_reader :subject, :code, :mutation_name, :stillborn, :location
       attr_accessor :index
       alias_method :stillborn?, :stillborn
 
-      def initialize(subject: nil, code:, mutation_name: nil, index: nil)
+      def initialize(subject: nil, code:, mutation_name: nil, index: nil, position: nil)
         @subject = subject
         @code = code
         @mutation_name = mutation_name
         @index = index
         @stillborn = false
+        @location = Location.new(position: position, content: code)
       end
 
       def identifier

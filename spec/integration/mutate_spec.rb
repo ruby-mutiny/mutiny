@@ -53,4 +53,25 @@ describe "Using Mutiny to generate mutants" do
     check_file_content(".mutants/calculator/max.5.rb", /# RelationalOperatorReplacement/)
     check_file_content(".mutants/calculator/max.6.rb", /# RelationalOperatorReplacement/)
   end
+
+  it "should write position to each mutant" do
+    cd "calculator"
+    run "bundle exec mutiny mutate"
+
+    check_file_content(".mutants/calculator/min.0.rb", /# 93..96/)
+    check_file_content(".mutants/calculator/min.1.rb", /# 93..97/)
+    check_file_content(".mutants/calculator/min.2.rb", /# 93..105/)
+    check_file_content(".mutants/calculator/min.3.rb", /# 93..105/)
+    check_file_content(".mutants/calculator/min.4.rb", /# 93..105/)
+    check_file_content(".mutants/calculator/min.5.rb", /# 93..105/)
+    check_file_content(".mutants/calculator/min.6.rb", /# 93..104/)
+
+    check_file_content(".mutants/calculator/max.0.rb", /# 93..96/)
+    check_file_content(".mutants/calculator/max.1.rb", /# 93..97/)
+    check_file_content(".mutants/calculator/max.2.rb", /# 93..104/)
+    check_file_content(".mutants/calculator/max.3.rb", /# 93..105/)
+    check_file_content(".mutants/calculator/max.4.rb", /# 93..105/)
+    check_file_content(".mutants/calculator/max.5.rb", /# 93..105/)
+    check_file_content(".mutants/calculator/max.6.rb", /# 93..105/)
+  end
 end

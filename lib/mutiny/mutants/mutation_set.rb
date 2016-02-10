@@ -24,13 +24,27 @@ module Mutiny
       private
 
       def mutate_one(subject, mutation)
-        safely_mutate_file(subject.path, mutation).map do |code|
-          Mutant.new(subject: subject, code: code, mutation_name: mutation.short_name)
+        safely_mutate_file(subject.path, mutation).map do |code, position|
+          Mutant.new(
+            subject: subject,
+            mutation_name: mutation.short_name,
+            code: code,
+            position: position
+          )
         end
       end
 
       def safely_mutate_file(path, mutation)
-        mutation.mutate_file(path)
+        positions = []
+
+        code = mutation.mutate_file(path) do |change|
+          starting_position = change.original_position.begin
+          ending_position   = change.original_position.begin + change.transformed_code.size - 1
+
+          positions << (starting_position..ending_position)
+        end
+
+        code.zip(positions)
       rescue
         msg = "Error encountered whilst mutating file at '#{path}' with #{mutation.name}"
         raise Mutation::Error, msg

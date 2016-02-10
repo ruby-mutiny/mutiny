@@ -1,4 +1,3 @@
-require 'fileutils'
 require_relative "mutant/location"
 
 module Mutiny

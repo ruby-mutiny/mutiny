@@ -1,3 +1,4 @@
+require "fileutils"
 require_relative "path"
 require_relative "mutant_file_name"
 require_relative "mutant_file_contents"

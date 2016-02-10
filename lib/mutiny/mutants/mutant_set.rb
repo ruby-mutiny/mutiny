@@ -20,13 +20,10 @@ module Mutiny
       def ordered
         group_by_subject.flat_map do |_, mutants|
           mutants.map.with_index do |mutant, index|
-            OrderedMutant.new(mutant, mutant.identifier || index)
+            mutant.index ||= index
+            mutant
           end
         end
-      end
-
-      def store(mutant_directory = ".mutants")
-        ordered.each { |m| m.store(mutant_directory) }
       end
 
       def eql?(other)
@@ -37,29 +34,6 @@ module Mutiny
 
       def hash
         mutants.hash
-      end
-
-      class OrderedMutant < SimpleDelegator
-        def initialize(mutant, number)
-          super(mutant)
-          @number = number
-        end
-
-        def identifier
-          subject.relative_path.sub(/\.rb$/, ".#{@number}.rb")
-        end
-
-        def store(directory)
-          path = File.join(directory, identifier)
-          FileUtils.mkdir_p(File.dirname(path))
-          File.open(path, 'w') { |f| f.write(serialised) }
-        end
-
-        def serialised
-          "# " + subject.name + "\n" \
-          "# " + mutation_name + "\n" +
-            code
-        end
       end
     end
   end

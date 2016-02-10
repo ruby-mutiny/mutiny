@@ -3,15 +3,20 @@ require 'fileutils'
 module Mutiny
   module Mutants
     class Mutant
-      attr_reader :subject, :code, :mutation_name, :identifier, :stillborn
+      attr_reader :subject, :code, :mutation_name, :stillborn
+      attr_accessor :index
       alias_method :stillborn?, :stillborn
 
-      def initialize(subject: nil, code:, mutation_name: nil, identifier: nil)
+      def initialize(subject: nil, code:, mutation_name: nil, index: nil)
         @subject = subject
         @code = code
         @mutation_name = mutation_name
-        @identifier = identifier
+        @index = index
         @stillborn = false
+      end
+
+      def identifier
+        subject.relative_path.sub(/\.rb$/, ".#{index}.rb")
       end
 
       def apply

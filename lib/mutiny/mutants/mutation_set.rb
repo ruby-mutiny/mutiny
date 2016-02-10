@@ -14,11 +14,11 @@ module Mutiny
       # Probably could improve (more) if metamorpher also supported composite transformers so that
       # several mutation operators could be matched simulatenously during a single AST traversal
       def mutate(subjects)
-        MutantSet.new.tap do |mutants|
-          subjects.product(mutations).each do |subject, mutation|
-            mutants.concat(mutate_one(subject, mutation))
-          end
+        mutants = MutantSet.new
+        subjects.product(mutations).each do |subject, mutation|
+          mutants.concat(mutate_one(subject, mutation))
         end
+        mutants
       end
 
       private

@@ -2,11 +2,11 @@ require_relative 'pattern'
 require_relative 'reporter/stdout'
 require_relative 'integration/rspec'
 require_relative 'mutants/ruby'
-require_relative 'mutants/store'
+require_relative 'mutants/storage'
 
 module Mutiny
   class Configuration
-    attr_reader :loads, :requires, :patterns, :reporter, :integration, :mutator, :mutant_store
+    attr_reader :loads, :requires, :patterns, :reporter, :integration, :mutator, :mutant_storage
 
     def initialize(loads: [], requires: [], patterns: [])
       @loads = loads
@@ -17,7 +17,7 @@ module Mutiny
       @reporter = Reporter::Stdout.new
       @integration = Integration::RSpec.new
       @mutator = Mutants::Ruby.new
-      @mutant_store = Mutants::Store.new
+      @mutant_storage = Mutants::Storage.new
     end
 
     def load_paths

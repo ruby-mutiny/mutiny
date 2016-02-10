@@ -1,10 +1,11 @@
+require_relative "tests/selection/default"
 require_relative "isolation"
 
 module Mutiny
   class Integration
     attr_reader :test_selection
 
-    def initialize(test_selection)
+    def initialize(test_selection = Tests::Selection::Default.new)
       @test_selection = test_selection
     end
 

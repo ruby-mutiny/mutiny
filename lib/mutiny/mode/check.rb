@@ -51,11 +51,11 @@ module Mutiny
       end
 
       def test_set
-        @test_set ||= configuration.integration.tests.for_all(environment.subjects)
+        @test_set ||= configuration.tests.integration.tests.for_subjects(environment.subjects)
       end
 
       def test_run
-        @test_run ||= configuration.integration.run(test_set)
+        @test_run ||= configuration.tests.integration.run(test_set)
       end
     end
   end

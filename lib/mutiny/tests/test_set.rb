@@ -18,12 +18,12 @@ module Mutiny
         tests.map(&:location)
       end
 
-      def for_all(subject_set)
-        subset { |test| subject_set.names.include?(test.expression) }
+      def for_subject(subject)
+        subset { |test| subject.name == test.expression }
       end
 
-      def for(subject)
-        subset { |test| subject.name == test.expression }
+      def for_subjects(subjects)
+        subset { |test| subjects.names.include?(test.expression) }
       end
 
       def subset(&block)

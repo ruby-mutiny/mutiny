@@ -1,12 +1,13 @@
 require_relative 'pattern'
 require_relative 'reporter/stdout'
+require_relative 'tests/selection/default'
 require_relative 'integration/rspec'
 require_relative 'mutants/ruby'
 require_relative 'mutants/storage'
 
 module Mutiny
   class Configuration
-    attr_reader :loads, :requires, :patterns, :reporter, :integration, :mutator, :mutant_storage
+    attr_reader :loads, :requires, :patterns, :reporter, :mutants, :tests
 
     def initialize(loads: [], requires: [], patterns: [])
       @loads = loads
@@ -15,9 +16,8 @@ module Mutiny
       @patterns.map!(&Pattern.method(:new))
 
       @reporter = Reporter::Stdout.new
-      @integration = Integration::RSpec.new
-      @mutator = Mutants::Ruby.new
-      @mutant_storage = Mutants::Storage.new
+      @mutants = Mutants.new
+      @tests = Tests.new
     end
 
     def load_paths
@@ -26,6 +26,24 @@ module Mutiny
 
     def can_load?(source_path)
       load_paths.any? { |load_path| source_path.start_with?(load_path) }
+    end
+
+    class Mutants
+      attr_reader :mutator, :storage
+
+      def initialize
+        @mutator = Mutiny::Mutants::Ruby.new
+        @storage = Mutiny::Mutants::Storage.new
+      end
+    end
+
+    class Tests
+      attr_reader :selection, :integration
+
+      def initialize
+        @selection = Mutiny::Tests::Selection::Default.new
+        @integration = Mutiny::Integration::RSpec.new(@selection)
+      end
     end
   end
 end

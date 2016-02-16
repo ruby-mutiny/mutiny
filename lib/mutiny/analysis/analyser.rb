@@ -3,14 +3,13 @@ require_relative "results"
 module Mutiny
   module Analysis
     class Analyser
-      attr_reader :mutant_set, :integration
+      attr_reader :integration
 
-      def initialize(mutant_set:, integration:)
-        @mutant_set = mutant_set
+      def initialize(integration:)
         @integration = integration
       end
 
-      def call
+      def call(mutant_set)
         results = Results.new
 
         mutant_set.mutants.each do |mutant|

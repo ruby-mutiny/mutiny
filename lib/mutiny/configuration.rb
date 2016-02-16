@@ -6,7 +6,8 @@ require_relative 'mutants/storage'
 
 module Mutiny
   class Configuration
-    attr_reader :loads, :requires, :patterns, :reporter, :integration, :mutator, :mutant_storage
+    attr_reader :loads, :requires, :patterns
+    attr_reader :reporter, :integration, :mutator, :mutant_storage, :analyser
 
     def initialize(loads: [], requires: [], patterns: [])
       @loads = loads
@@ -18,6 +19,7 @@ module Mutiny
       @integration = Integration::RSpec.new
       @mutator = Mutants::Ruby.new
       @mutant_storage = Mutants::Storage.new
+      @analyser = Analysis::Analyser.new(integration: @integration)
     end
 
     def load_paths

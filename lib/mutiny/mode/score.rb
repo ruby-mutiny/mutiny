@@ -54,11 +54,7 @@ module Mutiny
       end
 
       def results
-        @results ||= analyser.call
-      end
-
-      def analyser
-        Analysis::Analyser.new(mutant_set: mutant_set, integration: configuration.integration)
+        @results ||= configuration.analyser.call(mutant_set)
       end
 
       def mutant_set

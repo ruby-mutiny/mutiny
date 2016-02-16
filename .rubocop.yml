@@ -3,7 +3,7 @@ AllCops:
     - Gemfile
     - Rakefile
   Exclude:
-    - vendor/*
+    - vendor/**/*
 
 StringLiterals:
   Enabled: false

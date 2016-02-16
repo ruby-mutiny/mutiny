@@ -24,7 +24,7 @@ module Mutiny
 
       def analyse(mutant)
         mutant.apply
-        mutant.stillborn? ? nil : integration.test(mutant)
+        mutant.stillborn? ? nil : integration.test(mutant.subject)
       end
     end
   end

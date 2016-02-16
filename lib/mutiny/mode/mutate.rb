@@ -22,11 +22,11 @@ module Mutiny
       end
 
       def mutant_set
-        @mutant_set ||= configuration.mutants.mutator.mutants_for(environment.subjects)
+        @mutant_set ||= configuration.mutator.mutants_for(environment.subjects)
       end
 
       def mutant_storage
-        @store ||= configuration.mutants.storage
+        @store ||= configuration.mutant_storage
       end
     end
   end

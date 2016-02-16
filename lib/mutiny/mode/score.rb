@@ -58,10 +58,7 @@ module Mutiny
       end
 
       def analyser
-        Analysis::Analyser.new(
-          mutant_set: mutant_set,
-          integration: configuration.tests.integration
-        )
+        Analysis::Analyser.new(mutant_set: mutant_set, integration: configuration.integration)
       end
 
       def mutant_set
@@ -70,9 +67,9 @@ module Mutiny
 
       def initialize_mutant_set
         if options[:cached]
-          configuration.mutants.storage.load_for(environment.subjects)
+          configuration.mutant_storage.load_for(environment.subjects)
         else
-          configuration.mutants.mutator.mutants_for(environment.subjects)
+          configuration.mutator.mutants_for(environment.subjects)
         end
       end
     end

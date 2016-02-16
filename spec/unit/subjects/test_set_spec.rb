@@ -33,84 +33,42 @@ module Mutiny
         end
       end
 
-      context "for all" do
+      context "for" do
         it "should return only those tests (whose expression) matches a subject" do
           subjects = subject_set_for("Max", "Min")
           test_set = test_set_for("Subtract", "Min", "Add")
-          selected = test_set.for_subjects(subjects)
 
-          expect(selected).to eq(test_set.subset { |t| t.expression == "Min" })
+          expect(test_set.for_all(subjects)).to eq(test_set.subset { |t| t.expression == "Min" })
         end
 
         it "should return multiple tests for a single subject" do
           subjects = subject_set_for("Min")
           test_set = test_set_for("Min", "Max", "Min", "Max", "Min")
-          selected = test_set.for_subjects(subjects)
 
-          expect(selected).to eq(test_set.subset { |t| t.expression == "Min" })
+          expect(test_set.for_all(subjects)).to eq(test_set.subset { |t| t.expression == "Min" })
         end
 
         it "should return no tests when there are no tests" do
           subjects = subject_set_for("Max", "Min")
           test_set = TestSet.empty
-          selected = test_set.for_subjects(subjects)
 
-          expect(selected).to eq(TestSet.empty)
+          expect(test_set.for_all(subjects)).to eq(TestSet.empty)
         end
 
         it "should return no tests when there are no relevant subjects" do
           subjects = subject_set_for("Max", "Min")
           test_set = test_set_for("Subtract", "Add")
-          selected = test_set.for_subjects(subjects)
 
-          expect(selected).to eq(TestSet.empty)
+          expect(test_set.for_all(subjects)).to eq(TestSet.empty)
         end
 
         def subject_set_for(*names)
           Subjects::SubjectSet.new(names.map { |n| Subjects::Subject.new(name: n) })
         end
-      end
 
-      context "for" do
-        it "should return only those tests (whose expression) matches the mutant's subject" do
-          subject = subject_for("Min")
-          test_set = test_set_for("Subtract", "Min", "Add")
-          selected = test_set.for_subject(subject)
-
-          expect(selected).to eq(test_set.subset { |t| t.expression == "Min" })
+        def test_set_for(*expressions)
+          TestSet.new(expressions.map { |e| Test.new(expression: e) })
         end
-
-        it "should return multiple tests for a single mutant" do
-          subject = subject_for("Min")
-          test_set = test_set_for("Min", "Max", "Min", "Max", "Min")
-          selected = test_set.for_subject(subject)
-
-          expect(selected).to eq(test_set.subset { |t| t.expression == "Min" })
-        end
-
-        it "should return no tests when there are no tests" do
-          subject = subject_for("Min")
-          test_set = TestSet.empty
-          selected = test_set.for_subject(subject)
-
-          expect(selected).to eq(TestSet.empty)
-        end
-
-        it "should return no tests when mutant is irrelevant" do
-          subject = subject_for("Min")
-          test_set = test_set_for("Subtract", "Add")
-          selected = test_set.for_subject(subject)
-
-          expect(selected).to eq(TestSet.empty)
-        end
-
-        def subject_for(name)
-          Subjects::Subject.new(name: name)
-        end
-      end
-
-      def test_set_for(*expressions)
-        TestSet.new(expressions.map { |e| Test.new(expression: e) })
       end
     end
   end

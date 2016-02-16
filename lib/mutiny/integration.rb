@@ -1,18 +1,11 @@
-require_relative "tests/selection/default"
 require_relative "isolation"
 
 module Mutiny
   class Integration
-    attr_reader :test_selection
-
-    def initialize(test_selection = Tests::Selection::Default.new)
-      @test_selection = test_selection
-    end
-
-    def test(mutant)
+    def test(subject)
       Isolation.call do
-        selected_tests = test_selection.for(mutant, from: tests)
-        run(selected_tests, fail_fast: true)
+        test_set = tests.for(subject) # TODO: is this correctly minimal?
+        run(test_set, fail_fast: true)
       end
     end
   end

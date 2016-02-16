@@ -13,6 +13,10 @@ module Mutiny
         @mutants = mutants
       end
 
+      def subjects
+        mutants.map(&:subject).uniq
+      end
+
       def group_by_subject
         mutants.group_by(&:subject).dup
       end

@@ -1,4 +1,3 @@
-require_relative "../analysis/analyser"
 require_relative "../output/table"
 
 module Mutiny

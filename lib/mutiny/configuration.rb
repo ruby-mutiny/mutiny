@@ -3,6 +3,7 @@ require_relative 'reporter/stdout'
 require_relative 'integration/rspec'
 require_relative 'mutants/ruby'
 require_relative 'mutants/storage'
+require_relative 'analysis/analyser'
 
 module Mutiny
   class Configuration

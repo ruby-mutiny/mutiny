@@ -70,7 +70,7 @@ module Mutiny
 
       def initialize_mutant_set
         if options[:cached]
-          configuration.mutants.storage.load
+          configuration.mutants.storage.load_for(environment.subjects)
         else
           configuration.mutants.mutator.mutants_for(environment.subjects)
         end

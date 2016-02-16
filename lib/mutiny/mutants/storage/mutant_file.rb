@@ -15,9 +15,7 @@ module Mutiny
 
         def load(absolute_path)
           path = Path.from_absolute(path: absolute_path, root: mutant_directory)
-          deserialise
-            .merge(deserialised_contents(path)) { |_, left, right| left.merge(right) }
-            .merge(deserialised_filename(path)) { |_, left, right| left.merge(right) }
+          deep_merge(deserialised_contents(path), deserialised_filename(path))
         end
 
         def store(mutant)
@@ -28,10 +26,8 @@ module Mutiny
 
         private
 
-        def deserialise
-          {
-            subject: { root: mutant_directory }
-          }
+        def deep_merge(hash1, hash2)
+          hash1.merge(hash2) { |_, h1_member, h2_member| h1_member.merge(h2_member) }
         end
 
         def deserialised_filename(path)

@@ -1,5 +1,10 @@
 # Release History
 
+## v0.2.5 (16 February 2016)
+* Fix bug in the --cached switch of the score command, which was preventing mutants being correctly loaded from disk on Linux.
+* Fix bug in the --cached switch of the score command, which was causing mutiny to report the incorrect path to subject files.
+* Improve extensibility by supporting different implementations of the analyser. This has removed the need to have test selection as an extension point (for now).
+
 ## v0.2.4 (10 February 2016)
 * Add --cached switch to the score command, which loads mutants from disk rather than generating them anew.
 * Various changes to improve extensibility (i.e., mutant storage, test selection) and capabilities (i.e., mutant location and test hooks).

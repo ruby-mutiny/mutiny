@@ -3,7 +3,7 @@ require_relative 'reporter/stdout'
 require_relative 'integration/rspec'
 require_relative 'mutants/ruby'
 require_relative 'mutants/storage'
-require_relative 'analysis/analyser'
+require_relative 'analysis/analyser/default'
 
 module Mutiny
   class Configuration
@@ -20,7 +20,7 @@ module Mutiny
       @integration = Integration::RSpec.new
       @mutator = Mutants::Ruby.new
       @mutant_storage = Mutants::Storage.new
-      @analyser = Analysis::Analyser.new(integration: @integration)
+      @analyser = Analysis::Analyser::Default.new(integration: @integration)
     end
 
     def load_paths

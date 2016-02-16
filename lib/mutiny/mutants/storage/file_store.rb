@@ -19,7 +19,7 @@ module Mutiny
 
         def load_all
           absolute_paths = Dir.glob(File.join(mutant_directory, "**", "*.rb"))
-          absolute_paths.map { |path| strategy.load(path) }
+          absolute_paths.sort.map { |path| strategy.load(path) }
         end
       end
     end

@@ -1,5 +1,8 @@
 # Release History
 
+## v0.2.6 (17 February 2016)
+* A mutant's position now carries information about the affected range in the subject, as well as in the mutated code.
+
 ## v0.2.5 (16 February 2016)
 * Fix bug in the --cached switch of the score command, which was preventing mutants being correctly loaded from disk on Linux.
 * Fix bug in the --cached switch of the score command, which was causing mutiny to report the incorrect path to subject files.

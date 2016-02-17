@@ -2,17 +2,19 @@ module Mutiny
   module Mutants
     class Mutant
       class Location
-        attr_reader :position, :content
+        attr_reader :old_position, :new_position, :content
 
         def initialize(position:, content:)
-          @position = position.freeze
+          position ||= {}
+          @old_position = position[:old].freeze
+          @new_position = position[:new].freeze
           @content = content
         end
 
         def lines
           Range.new(
-            line_number_of_offset(position.begin),
-            line_number_of_offset(position.end)
+            line_number_of_offset(new_position.begin),
+            line_number_of_offset(new_position.end)
           )
         end
 

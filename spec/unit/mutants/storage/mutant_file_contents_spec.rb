@@ -16,7 +16,7 @@ module Mutiny
             code: "2 - 2",
             index: 0,
             mutation_name: "BAOR",
-            position: 2..3
+            position: { old: 2..3, new: 3..5 }
           )
         end
 
@@ -32,6 +32,7 @@ module Mutiny
           "# Two\n"  \
           "# BAOR\n" \
           "# 2..3\n" \
+          "# 3..5\n" \
           "2 - 2"
         end
 
@@ -40,7 +41,7 @@ module Mutiny
             subject: { name: "Two" },
             mutation_name: "BAOR",
             code: "2 - 2",
-            position: 2..3
+            position: { old: 2..3, new: 3..5 }
           }
         end
       end

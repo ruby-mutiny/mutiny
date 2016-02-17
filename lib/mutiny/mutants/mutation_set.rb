@@ -38,16 +38,22 @@ module Mutiny
         positions = []
 
         code = mutation.mutate_file(path) do |change|
-          starting_position = change.original_position.begin
-          ending_position   = change.original_position.begin + change.transformed_code.size - 1
-
-          positions << (starting_position..ending_position)
+          positions << extract_position(change)
         end
 
         code.zip(positions)
       rescue
         msg = "Error encountered whilst mutating file at '#{path}' with #{mutation.name}"
         raise Mutation::Error, msg
+      end
+
+      def extract_position(change)
+        old_start = change.original_position.begin
+        old_end   = change.original_position.end
+        new_start = change.original_position.begin
+        new_end   = change.original_position.begin + change.transformed_code.size - 1
+
+        { old: old_start..old_end, new: new_start..new_end }
       end
     end
   end

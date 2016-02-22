@@ -35,11 +35,12 @@ module Mutiny
 
       def analyse(mutant)
         mutant.apply
-        mutant.stillborn? ? nil : run_tests(select_tests(mutant))
+        mutant.stillborn? ? nil : run_tests(mutant)
       end
 
-      def run_tests(test_set)
+      def run_tests(mutant)
         Isolation.call do
+          test_set = select_tests(mutant)
           integration.run(test_set, fail_fast: true)
         end
       end

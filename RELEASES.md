@@ -1,5 +1,8 @@
 # Release History
 
+## v0.2.7 (22 February 2016)
+* Fix bug whereby analysis was incorrectly reusing test results for all previous mutants when evaluating current mutant.
+
 ## v0.2.6 (17 February 2016)
 * A mutant's position now carries information about the affected range in the subject, as well as in the mutated code.
 

@@ -9,7 +9,7 @@ module Mutiny
             builder.either!(
               builder.true,
               builder.false,
-              builder.literal!(:send, nil, builder.VAL)
+              builder.literal!(:send, nil, builder.VAL { |val| !keyword?(val.name) })
             )
           end
 
@@ -17,6 +17,12 @@ module Mutiny
             builder.derivation! :& do |root|
               builder.literal!(:send, root, :!)
             end
+          end
+
+          private
+
+          def keyword?(word)
+            %i(private protected).include?(word)
           end
         end
       end

@@ -3,7 +3,7 @@ PATH
   specs:
     mutiny (0.2.7)
       gli (~> 2.13.0)
-      metamorpher (~> 0.2.2)
+      metamorpher (~> 0.2.4)
       parser (~> 2.2.2)
       unparser (~> 0.2.4)
 
@@ -47,11 +47,11 @@ GEM
     ffi (1.9.10)
     gherkin (3.2.0)
     gli (2.13.4)
-    ice_nine (0.11.1)
+    ice_nine (0.11.2)
     json (1.8.3)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
-    metamorpher (0.2.3)
+    metamorpher (0.2.4)
       attributable (~> 0.1.0)
       parser (~> 2.2.2)
       unparser (~> 0.2.4)

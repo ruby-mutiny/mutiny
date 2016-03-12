@@ -3,7 +3,7 @@ PATH
   specs:
     mutiny (0.2.7)
       gli (~> 2.13.0)
-      metamorpher (~> 0.2.4)
+      metamorpher (~> 0.2.5)
       parser (~> 2.2.2)
       unparser (~> 0.2.4)
 
@@ -51,7 +51,7 @@ GEM
     json (1.8.3)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
-    metamorpher (0.2.4)
+    metamorpher (0.2.5)
       attributable (~> 0.1.0)
       parser (~> 2.2.2)
       unparser (~> 0.2.4)
@@ -60,7 +60,7 @@ GEM
     parser (2.2.3.0)
       ast (>= 1.1, < 3.0)
     powerpack (0.1.1)
-    procto (0.0.2)
+    procto (0.0.3)
     rainbow (2.1.0)
     rake (10.4.2)
     rspec (3.3.0)

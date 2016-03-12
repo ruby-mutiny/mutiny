@@ -1,5 +1,9 @@
 # Release History
 
+## v0.2.8 (22 February 2016)
+* Prevent insertion operators from incorrectly mutating private and protected keywords.
+* Fix bugs in mutating overlapping ASTs (by upgrading to metamorpher v0.2.5).
+
 ## v0.2.7 (22 February 2016)
 * Fix bug whereby analysis was incorrectly reusing test results for all previous mutants when evaluating current mutant.
 

@@ -12,7 +12,7 @@ module Mutiny
       end
 
       def subjects
-        SubjectSet.new(modules.select(&:relevant?).map(&:to_subject))
+        SubjectSet.new(modules.select(&:relevant?).map(&:to_subject)).per_file
       end
 
       private

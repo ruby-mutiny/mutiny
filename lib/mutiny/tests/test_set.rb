@@ -19,11 +19,11 @@ module Mutiny
       end
 
       def for_all(subject_set)
-        subset { |test| subject_set.names.include?(test.expression) }
+        subset { |test| subject_set.any? { |subject| related?(subject, test) } }
       end
 
       def for(subject)
-        subset { |test| subject.name == test.expression }
+        subset { |test| related?(subject, test) }
       end
 
       def subset(&block)
@@ -43,6 +43,12 @@ module Mutiny
       protected
 
       attr_reader :tests
+
+      private
+
+      def related?(subject, test)
+        subject.name.start_with?(test.expression)
+      end
     end
   end
 end

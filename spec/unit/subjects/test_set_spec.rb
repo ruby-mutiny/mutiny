@@ -33,7 +33,7 @@ module Mutiny
         end
       end
 
-      context "for" do
+      context "for all" do
         it "should return only those tests (whose expression) matches a subject" do
           subjects = subject_set_for("Max", "Min")
           test_set = test_set_for("Subtract", "Min", "Add")
@@ -43,6 +43,13 @@ module Mutiny
 
         it "should return multiple tests for a single subject" do
           subjects = subject_set_for("Min")
+          test_set = test_set_for("Min", "Max", "Min", "Max", "Min")
+
+          expect(test_set.for_all(subjects)).to eq(test_set.subset { |t| t.expression == "Min" })
+        end
+
+        it "should return nested subjects for a test" do
+          subjects = subject_set_for("Min::Batch", "Min::Parallel")
           test_set = test_set_for("Min", "Max", "Min", "Max", "Min")
 
           expect(test_set.for_all(subjects)).to eq(test_set.subset { |t| t.expression == "Min" })

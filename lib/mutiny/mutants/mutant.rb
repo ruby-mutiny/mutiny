@@ -27,7 +27,7 @@ module Mutiny
         # rubocop:disable Eval
         eval(code, TOPLEVEL_BINDING)
         # rubocop:enable Eval
-      rescue
+      rescue StandardError, ScriptError
         @stillborn = true
       end
 

@@ -1,4 +1,6 @@
 require "forwardable"
+require_relative "test_set/filterable"
+require_relative "test_set/filter/default"
 
 module Mutiny
   module Tests
@@ -18,24 +20,22 @@ module Mutiny
         tests.map(&:location)
       end
 
-      def for_all(subject_set)
-        subset { |test| subject_set.any? { |subject| related?(subject, test) } }
-      end
-
-      def for(subject)
-        subset { |test| related?(subject, test) }
-      end
-
       def subset(&block)
-        self.class.new(tests.select(&block))
+        derive(tests.select(&block))
       end
 
       def take(n)
-        self.class.new(tests.take(n))
+        derive(tests.take(n))
       end
 
       def eql?(other)
         is_a?(other.class) && other.tests == tests
+      end
+
+      def filterable(subjects, filtering_strategy: Filter::Default)
+        extend(Filterable)
+        self.filter = filtering_strategy.new(subject_names: subjects.names)
+        self
       end
 
       alias_method "==", "eql?"
@@ -44,10 +44,13 @@ module Mutiny
 
       attr_reader :tests
 
-      private
-
-      def related?(subject, test)
-        subject.name.start_with?(test.expression)
+      def derive(tests)
+        self.class.new(tests).tap do |derived|
+          if respond_to?(:filter)
+            derived.extend(Filterable)
+            derived.filter = filter
+          end
+        end
       end
     end
   end

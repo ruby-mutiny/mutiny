@@ -1,11 +1,21 @@
 module Mutiny
   module Tests
     class Test
-      attr_reader :location, :expression
+      attr_reader :location, :name
 
-      def initialize(location: nil, expression:)
+      def initialize(location: nil, name:)
         @location = location
-        @expression = expression
+        @name = name
+      end
+
+      def eql?(other)
+        other.location == location && other.name == name
+      end
+
+      alias_method "==", "eql?"
+
+      def hash
+        [location, name].hash
       end
     end
   end

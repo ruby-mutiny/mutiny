@@ -6,7 +6,7 @@ module Mutiny
       def run
         report "Checking..."
 
-        if test_set.empty?
+        if relevant_test_set.empty?
           report_invalid
 
         elsif test_run.passed?
@@ -25,7 +25,7 @@ module Mutiny
       end
 
       def report_warning
-        report "  At least one relevant test found (#{test_set.size} in total)"
+        report "  At least one relevant test found (#{relevant_test_set.size} in total)"
         report "  Not all relevant tests passed. The failing tests are:\n"
 
         failed_test_locations.each do |location|
@@ -37,7 +37,7 @@ module Mutiny
       end
 
       def report_valid
-        report "  At least one relevant test found (#{test_set.size} in total)"
+        report "  At least one relevant test found (#{relevant_test_set.size} in total)"
         report "  All relevant tests passed"
         report "Looks good!"
       end
@@ -50,12 +50,16 @@ module Mutiny
         test_run.failed_tests.locations
       end
 
-      def test_set
-        @test_set ||= configuration.integration.tests.for_all(environment.subjects)
+      def relevant_test_set
+        @test_set ||= complete_test_set.for_all(environment.subjects)
+      end
+
+      def complete_test_set
+        @complete_test_set ||= configuration.integration.tests.filterable(environment.subjects)
       end
 
       def test_run
-        @test_run ||= configuration.integration.run(test_set)
+        @test_run ||= configuration.integration.run(relevant_test_set)
       end
     end
   end

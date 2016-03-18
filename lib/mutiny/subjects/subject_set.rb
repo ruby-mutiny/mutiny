@@ -14,6 +14,10 @@ module Mutiny
         @names ||= map(&:name).sort
       end
 
+      def [](index)
+        subjects.detect { |s| s.name == index }
+      end
+
       # Returns a new SubjectSet which contains only one subject per source file
       # For source files that contain more than one subject (i.e., Ruby module),
       # the subjects are ordered by name alphabetically and only the first is used

@@ -7,8 +7,6 @@ module Mutiny
       # This code originally based on Markus Schirp's implementation of Mutant::Integration::Rspec
       #  https://github.com/mbj/mutant/blob/master/lib/mutant/integration/rspec.rb
       class Parser
-        EXPRESSION_DELIMITER = " "
-
         def initialize(context = Context.new)
           @world = context.world
         end
@@ -26,9 +24,9 @@ module Mutiny
         def parse_example(example)
           metadata = example.metadata
           location = metadata.fetch(:location)
-          expression = metadata.fetch(:full_description).split(EXPRESSION_DELIMITER, 2).first
+          name = metadata.fetch(:full_description)
 
-          Test.new(location: location, expression: expression, example: example)
+          Test.new(location: location, name: name, example: example)
         end
       end
     end

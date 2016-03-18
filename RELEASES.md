@@ -1,5 +1,11 @@
 # Release History
 
+## v0.3.0 (18 March 2016)
+* Implement more sophisticated test filtering, which works well with targeted tests (e.g., "List#empty should have size 0") and with generic tests (e.g., "Users should be able to log out").
+* Capture more forms of stillborn mutant, including those arising from instances of `ScriptError`.
+* Fix bug in which mutation would be repeated if there was more than one subject in a single source file.
+* Fix bugs in mutations of hash literals and array literals.
+
 ## v0.2.8 (22 February 2016)
 * Prevent insertion operators from incorrectly mutating private and protected keywords.
 * Fix bugs in mutating overlapping ASTs (by upgrading to metamorpher v0.2.5).
